@@ -65,8 +65,57 @@ echo -e "${GREEN}Compilation successful!${NC}"
 echo -e "${GREEN}Output: ${MAIN_FILE}.pdf${NC}"
 echo -e "${GREEN}========================================${NC}"
 
-# Optional: Clean up auxiliary files (uncomment if desired)
-# echo -e "\n${YELLOW}Cleaning up auxiliary files...${NC}"
-# rm -f *.aux *.log *.out *.toc *.lof *.lot *.bbl *.blg *.idx *.ind *.ilg
+# Optional: Clean up auxiliary files (use -c/--clean to remove aux files after successful compilation)
+CLEAN=0
+KEEP_BBL=0
+
+# Parse optional flags (checked after compilation)
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -c|--clean)
+            CLEAN=1
+            shift
+            ;;
+        --keep-bbl)
+            KEEP_BBL=1
+            shift
+            ;;
+        -h|--help)
+            echo -e "${YELLOW}Usage: $0 [-c|--clean] [--keep-bbl]${NC}"
+            echo -e "${YELLOW}  -c, --clean    Remove auxiliary files after successful compilation${NC}"
+            echo -e "${YELLOW}  --keep-bbl     Keep the generated .bbl file (ignored if not cleaning)${NC}"
+            exit 0
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
+# If requested, remove common LaTeX auxiliary files but keep essential sources and outputs
+if [ "$CLEAN" -eq 1 ]; then
+    echo -e "\n${YELLOW}Cleaning up auxiliary files...${NC}"
+    # Make globs that don't match expand to empty
+    shopt -s nullglob
+    patterns=( \
+        "*.aux" "*.log" "*.out" "*.toc" "*.lof" "*.lot" \
+        "*.blg" "*.brf" "*.idx" "*.ind" "*.ilg" "*.xwm" \
+        "*.nav" "*.snm" "*.synctex.gz" "*.fdb_latexmk" "*.fls" \
+        "*.run.xml" "*~" "*.bak" "*.dvi" "*.ps" "*.spl" \
+    )
+
+    # Remove .bbl by default unless user asked to keep it
+    if [ "$KEEP_BBL" -eq 0 ]; then
+        patterns+=("*.bbl")
+    fi
+
+    for p in "${patterns[@]}"; do
+        for f in $p; do
+            rm -f "$f" 2>/dev/null || true
+        done
+    done
+    shopt -u nullglob
+    echo -e "${GREEN}Cleanup complete. Kept: ${MAIN_FILE}.pdf, *.tex, *.bib, *.bst, *.sty, *.cls, and image files.${NC}"
+fi
 
 exit 0

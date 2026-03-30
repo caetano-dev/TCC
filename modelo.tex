@@ -1,0 +1,659 @@
+\documentclass[a4paper,12pt,oneside,onecolumn,final,fleqn]{repUERJ}
+
+% ---
+% OBRIGATÓRIO
+% Pacotes fundamentais 
+% ---
+\usepackage[brazilian]{babel}    % adequação para o português Brasil
+\usepackage[utf8]{inputenc}   % Determina a codificação utilizada
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+                              % (conversão automática dos acentos)
+\usepackage[T1]{fontenc}
+\usepackage{indentfirst}      % Indenta o primeiro paragrafo de
+                              % cada seção.
+\usepackage{graphicx}         % Inclusão de gráficos
+\usepackage{subfig}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb}  % pacotes matemáticos
+\usepackage[maxfloats=25]{morefloats}
+
+\usepackage{makeidx}                % Cria o índice
+
+\usepackage[hyphens]{url}
+\usepackage[pagebackref]{hyperref}  % Controla a formação dos hyperlinks
+\makeatletter
+\pdfstringdefDisableCommands{\let\uline\relax}
+\makeatother
+\hfuzz=20pt
+\vfuzz=20pt
+\hbadness=10000
+\vbadness=10000
+\AtBeginDocument{\hfuzz=20pt\vfuzz=20pt\hbadness=10000\vbadness=10000}
+
+% ----------------------------------------------------------------
+% OBRIGATÓRIO 
+% ----------------------------------------------------------------
+% para referências no estilo autor-data (recomendado pela ABNT)
+% ----------------------------------------------------------------
+\usepackage[alf]{abntex2cite} % pacote para citacoes autor-data
+% ----------------------------------------------------------------
+
+% ----------------------------------------------------------------
+% OBRIGATÓRIO: repUERJformat
+% * Estilo que implementa os comandos principais do pacote repUERJ
+%   pacote para as normas da UERJ
+%       font=default
+%           --> Fontes tipográficas
+%          font=default  : fonte computer roman (latex) : remomendado
+%          font=times    : fonte times new roman (próximo da fonte MS)
+%          font=sans     : fonte sans (helvética)
+%          font=lmodern  : fonte sans (próximo Adobe Arial)
+%          font=palatino : fonte serif palatino
+%
+%       frame=no
+%           --> Grade de margeamento do texto
+%           frame=yes : ativa exibição da moldura
+%           frame=no  : desativa exibição da moldura (recomendado)
+%
+%       backref=yes
+%           --> Hiperlink retroativo das citações na Referência
+%               para simples conferência
+%           backref=yes : citação retroativa ativada
+%           backref=no  : citação retroativa desativada (recomendado)
+%
+%       ilustrations=yes
+%           --> Controla a geração da lista de ilustrações:
+%           ilustrations=yes : lista única de ilustrações
+%               permite gerar
+%                   LISTA DE ILUSTRAÇÕES: juntos: figuras, quadros e gráficos
+%           ilustrations=no  : listas separadas
+%               permite gerar
+%                   LISTA DE FIGURAS: somente figuras
+%                   LISTA DE QUADROS: somente quadros
+%                   LISTA DE GRÁFICOS: somente gráficos
+%
+% ----------------------------------------------------------------
+\usepackage[font=default,frame=no,backref=no,ilustrations=yes]{repUERJformat} 
+
+\usepackage[dots=yes,num=yes]{repUERJpseudocode}
+
+\usepackage{xwatermark}
+
+
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+% FIM DO PREÂMBULO DO DOCUMENTO (preamble latex documento)
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+
+% ----------------------------------------------------------------
+% OPCIONAL
+% verbatim para os campos do bibtex 
+% configura a apresentação dos exemplos
+% ----------------------------------------------------------------
+
+\usepackage{framed,color,verbatim}
+\definecolor{shadecolor}{rgb}{.9, .9, .9}
+\newenvironment{vrbcode}%
+   {\snugshade\verbatim}%
+   {\endverbatim\endsnugshade}
+
+\newcommand{\cmd}[1]{\noindent\texttt{\textbackslash #1}}
+\newcommand{\opc}[1]{\texttt{\{#1\}}}
+
+\newcommand{\printcite}[1]{
+    \noindent%
+    \begin{minipage}[t]{\textwidth}
+        \rule{\textwidth}{.4pt}\\[5pt]
+        \singlespacing\citetext{#1}\\[-3pt]
+        \rule{\textwidth}{.4pt}
+    \end{minipage}~\\
+}
+
+\newcommand{\printcitations}[1]{
+    \noindent
+    \cmd{cite}\opc{#1}: \cite{#1}\\
+    \cmd{citeauthor}\opc{#1}: \citeauthor{#1}\\
+    \cmd{citeyear}\opc{#1}: \citeyear{#1}\\
+    \cmd{citeonline}\opc{#1}: \citeonline{#1}\\
+    \cmd{citeauthoronline}\opc{#1}: \citeauthoronline{#1}
+}
+
+% ----------------------------------------------------------------
+
+%----------------------------------------------------------------
+% Imagens pretextuais (precisam estar no diretório de imagens)
+%----------------------------------------------------------------
+
+\logo{imagens/logo_uerj_cinza.png}
+\marcadagua{imagens/marcadagua_uerj_cinza.png}{1}{160}{255}
+
+%----------------------------------------------------------------
+% Informações da instituição
+%----------------------------------------------------------------
+
+\instituicao{Universidade do Estado do Rio de Janeiro}
+            {Centro setorial}  
+            {Unidade}{Patrono} 
+
+%----------------------------------------------------------------
+% Informações da autoria do documento
+%----------------------------------------------------------------
+
+\autor{Pedro}{Caetano Pires}
+      {P.C.P.} % iniciais do nome
+
+\titulo{Modelo de dissertação e tese (modelo.tex: v.2026.03, repUERJ.cls: v.2026.03, repUERJformat.sty: v.2026.03, repUERJpseudocode.sty: v.2025.07a)}
+
+\palavraschaves{Primeira palavra-chave}
+               {Segunda palavra-chave}
+               {Terceira palavra-chave}
+               {}
+%               {Quarta palavra-chave (opcional) ou vazio}
+
+\title{Título do trabalho em inglês}
+\keywords{First keyword}
+         {Second keyword}
+         {Third keyword}
+         {}
+%         {Fourth keyword or empty}
+
+% Aqui deve-se inserir as informações sobre orientador e coorientados (se houver)
+\orientador{Prof. D.Sc.} 
+           {Bruno}{Porto Masquio} 
+           {Unidade -- UERJ} 
+
+
+\grau{Bacharel} % Doutor, Mestre, Bacharel, Licenciado
+\curso{Ciência da Computação}
+%\areadeconcentracao{linha de pesquisa} % opcional
+
+%----------------------------------------------------------------
+% Informações adicionais (local e data da apresentação)
+%----------------------------------------------------------------
+
+\local{Rio de Janeiro} 
+\data{dia}{mês}{2026} 
+
+% informações do PDF
+\hypersetup{
+  unicode=false,
+  pdftitle={\UERJtitulo{}},
+  pdfauthor={\UERJautor{}},
+  pdfsubject={\UERJpdfpreambulo{}},
+  pdfkeywords={PALAVRAS-CHAVES:}{ \chaveA}{ \chaveB}{ \chaveC}{ \chaveD},
+  pdfproducer={\packagename{}}, % producer of the document
+  bookmarksdepth=4,
+  hypertexnames=false,
+%  pagebackref=true,
+%  bookmarks=true,
+  colorlinks=true,    % false: boxed links; true: colored links
+  % ----------------------------------------------------------------
+  % para tirar as cores dos links, mude tudo para preto (black)
+  % ----------------------------------------------------------------
+  linkcolor=blue,     % color of internal links blue
+  citecolor=red,   % color of links to bibliography blue
+  filecolor=green,      % color of file links magenta
+  urlcolor=magenta,
+}
+
+% ***************************************************************
+% Índice remissivo
+% ***************************************************************
+%
+%\makeindex % compila o índice; se não for usar, comentar
+%
+% ***************************************************************
+% Fim do preâmbulo
+% ***************************************************************
+
+\begin{document}
+
+% ELEMENTOS PRE-TEXTUAIS
+\frontmatter % inicia a área dos elementos pré-textuais
+
+\capa
+\folhaderosto
+%
+% ----------------------------------------------------------
+% Inserir a ficha catalográfica
+% ----------------------------------------------------------
+% ---
+% A biblioteca deverá providenciar a ficha catalográfica. 
+% Salve a ficha no formato PDF. Use o nome do arquivo PDF 
+% como argumento do comando. 
+%
+% Exemplo: ficha catalográfica no arquivo 'ficha.pdf'
+%     \fichacatalografica{ficha.pdf}
+%
+% Enquanto não possuir a ficha catalográfica, use o comando sem
+% argumentos.
+% ---
+%
+\fichacatalografica{}
+%
+% ----------------------------------------------------------
+% Folha de aprovação
+% ----------------------------------------------------------
+%
+\begin{folhadeaprovacao}
+  \assinatura{Cargo Título Nome Completo}
+             {Instituição por extenso}
+  \assinatura{Cargo Título Nome Completo}
+             {Instituição por extenso}
+  \assinatura{Cargo Título Nome Completo}
+             {\UERJunidade \UERJunidadenome\ -- UERJ}
+  \assinatura{Cargo Título Nome Completo}
+             {\UERJunidade \UERJunidadenome\ -- UERJ}
+  \assinatura{Cargo Título Nome Completo}
+             {\UERJunidade \UERJunidadenome\ -- UERJ}
+\end{folhadeaprovacao}
+%
+% ----------------------------------------------------------
+% Dedicatória
+% ----------------------------------------------------------
+%
+\pretextualchapter{Dedicatória}
+\vfill
+Conforme \citeonline[p.38]{bib:RoteiroUERJ2ed}, é um elemento opcional. [...] O texto da dedicatória deve estar localizado na parte inferior da folha, seguindo as regras gerais de apresentação gráfica.
+%
+% ----------------------------------------------------------
+% Agradecimentos
+% ----------------------------------------------------------
+%
+\pretextualchapter{Agradecimentos}
+
+Segundo \citeonline[p.39]{bib:RoteiroUERJ2ed}, é um elemento opcional. O texto dos agradecimentos deve ser separado do título por duas linhas em branco com espaçamento 1,5 e digitado de acordo as regras gerais de apresentação gráfica. Se houver necessidade, o texto pode continuar nas folhas seguintes, sem incluir a palavra Agradecimentos.
+%
+% ----------------------------------------------------------
+% Epigrafe (opcional)
+% ----------------------------------------------------------
+%
+\pretextualchapter{}
+  \vfill
+  \begin{center}
+    \fbox{\begin{minipage}{10cm}
+        Epígrafe -- elemento opcional (\cfcite[p.40]{bib:RoteiroUERJ2ed}).\\
+        É uma citação sem aspas – em fonte 12, estilo normal, com espaço 1,5 – seguida da indicação de autoria, grafada em fonte 12 e em itálico.\\
+        O texto deve estar localizado no terço inferior da folha, com o alinhamento livre, necessário à epígrafe.\\
+        É um pequeno texto em prosa ou verso, com uma citação, pensamento ou provérbio.\\
+        Tem por função introduzir o leitor ao tema, servir de reflexão ou inspiração, e estabelecer uma conexão com o conteúdo da monografia.
+    \end{minipage}}
+  \end{center}
+  \vfill
+  \begin{flushright}
+  Texto da epígrafe\\
+  Pensamento, reflexão\\    
+  \textit{autor}
+  \end{flushright}
+%
+% ----------------------------------------------------------
+% RESUMO
+% ----------------------------------------------------------
+%
+\pretextualchapter{Resumo}
+\referencia % linha em branco depois
+
+Conforme \citeonline[p.42]{bib:RoteiroUERJ2ed}, é elemento obrigatório. Consiste na apresentação sucinta dos pontos relevantes do texto, em um único parágrafo. O resumo deve conter entre 150 e 500 palavras e fornecer uma visão rápida e clara dos objetivos, da metodologia, dos resultados e das conclusões do trabalho. Na elaboração do resumo, deve-se usar o verbo na voz ativa, na terceira pessoa do singular.
+~\\
+
+\imprimirchaves % linha em branco antes
+%
+% ----------------------------------------------------------
+% Abstract
+% ----------------------------------------------------------
+%
+\pretextualchapter{Abstract}
+\reference % linha em branco depois
+
+De acordo com \citeonline[p.44]{bib:RoteiroUERJ2ed}, consiste em uma tradução do resumo em português para uma língua estrangeira (em inglês, ABSTRACT; em espanhol, RESUMEN; em francês, RÉSUMÉ), em um único parágrafo, seguido das palavras--chave representativas do conteúdo do trabalho, na língua estrangeira escolhida. O resumo em outra língua também é precedido pela referência do trabalho, substituindo-se o título em português pelo título na língua estrangeira adotada. No caso de teses, é possível incluir dois resumos em língua estrangeira. A apresentação gráfica e a ordem dos elementos seguem a mesma orientação do resumo em português.
+~\\
+
+\printkeys % linha em branco antes
+%
+% ----------------------------------------------------------
+% Listas de ilustrações e tabelas
+% ----------------------------------------------------------
+%
+% Pelas recomendações contidas no roteiro para elaboração de
+%     teses e dissertações, se o total de figuras, gráficos e/ou 
+%     quadros for menor que 3 (três) estes elementos devem ser 
+%     agrupados em um único título de lista: LISTA DE ILUSTRAÇÕES.
+% 
+% Isso deve ser feito manualmente (por enquanto) atribuindo o 
+%     valor 'yes' ao parâmetro de entrada ilustration do pacote
+%     repUERJformat:
+% 
+%     \usepackage[ilustrations=yes]{repUERJformat} 
+% 
+% Se 'ilustrations=yes', então o comando '\listadeilustracoes'
+%     gerará uma lista ÚNICA de ilustrações juntando figuras,
+%     gráficos e quadros.
+% 
+% Se 'ilustrations=no', então o comando '\listadeilustracoes'
+%     gerará listas SEPARADAS de figuras, gráficos e quadros.
+
+\listadeilustracoes
+
+\listadetabelas         %\begin{table}{largura}...\end{table}
+                        %\begin{tabela}{largura}...\end{tabela}
+%
+% ----------------------------------------------------------
+% Outras listas
+% ----------------------------------------------------------
+%
+\listadealgoritmos % opcional %\begin{algorithm}...\end{algorithm}
+%
+%===========================================================
+\pretextualchapter{Lista de abreviaturas e siglas} %(opcional)
+%===========================================================
+\abreviatura{sigla 1}{por extenso}
+\abreviatura{sigla 2}{por extenso}
+\abreviatura{sigla 3}{por extenso}
+
+% apagar este texto a seguir
+\begin{center}
+    \fbox{\begin{minipage}{10cm}
+        É elemento opcional. Os elementos dessa lista são descritos em ordem alfabética, seguidos de seu significado grafado por extenso. Recomenda-se a elaboração dessa lista quando existirem abreviaturas e siglas específicas da área e incluídas no trabalho. Ressalta-se que, uma vez formada, a lista deverá conter todas as abreviaturas e siglas que aparecerem no trabalho. \cite[p.51]{bib:RoteiroUERJ2ed}
+    \end{minipage}
+    }
+\end{center}
+%
+%===========================================================
+\pretextualchapter{Lista de símbolos} % (opcional) 
+%===========================================================
+\simbolo{$simbolo 1$}{significado e/ou valor}
+\simbolo{$simbolo 2$}{significado e/ou valor}
+\simbolo{$simbolo 3$}{significado e/ou valor}
+
+\begin{center}
+    \fbox{\begin{minipage}{10cm}
+        É elemento opcional. Os elementos dessa lista são descritos na mesma ordem em que aparecem no texto, seguidos de seu significado grafado por extenso. \cite[p.52]{bib:RoteiroUERJ2ed}
+    \end{minipage}
+    }
+\end{center}
+
+\sumario
+\mainmatter 
+
+\chapter*{Introdução}
+
+\begin{epigrafeonline}
+\hfill Texto da epígrafe \textit{in locu} (opcional).\\
+\hspace*{\fill}\textit{Autor}\\
+\end{epigrafeonline}
+
+A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de forma ilícita, ocultando sua origem. Segundo \citeonline{unodc2011estimating}, esse crime movimenta entre 2\% e 5\% do PIB mundial por ano, o que exige das instituições financeiras sistemas de monitoramento em larga escala. Tradicionalmente, a detecção de anomalias em AML (\textit{Anti-Money Laundering}) baseia-se em heurísticas e regras estáticas, centradas em limites de valor e frequência transacional. Essa abordagem tende a gerar altas taxas de falsos positivos, sobrecarregar equipes de \textit{compliance} e falhar na identificação de tipologias criminosas mais recentes, nas quais os fraudadores fragmentam os valores em múltiplas contas e camadas de ofuscação \cite{jensen2023fighting}.
+
+Como forma de mascarar suas atividades, agentes ilícitos realizam suas operações explorando propriedades topológicas específicas, como \textit{smurfing}, ciclos de transferência e nós de dispersão, para cortar o rastro do dinheiro \cite{cheng2025graph}. Enquanto a análise tabular tradicional avalia o comportamento de uma conta de forma isolada, a aplicação de Ciência de Dados de Grafos permite extrair métricas de centralidade, detecção de comunidades, informações topológicas e anomalias de vizinhança que capturam dados sobre o comportamento dos participantes da rede \cite{baigabyl2025using}.
+
+Algoritmos de \textit{Gradient Boosting}, como o XGBoost, são amplamente utilizados para análise de dados estruturados devido à eficiência computacional e robustez no tratamento do desbalanceamento extremo de classes, típico da detecção de fraudes \cite{alarab2020comparative}. No entanto, o XGBoost puro não processa estruturas relacionais nativamente: existe a necessidade de isolar e quantificar o ganho real de performance que as \textit{features} baseadas em grafos injetam nesses modelos tabulares \cite{karim2024scalable}. Além disso, é necessário estabelecer se a complexidade extra de treinar um modelo de \textit{Machine Learning} se justifica frente ao uso direto de algoritmos de grafos isolados atuando como detectores de fraude.
+
+O objetivo principal deste trabalho é investigar e quantificar o impacto da adição de variáveis topológicas de grafos na eficácia do algoritmo XGBoost para a detecção de entidades participantes em esquemas de lavagem de dinheiro, utilizando o \textit{dataset} AMLworld \cite{altman2023realistic}.
+
+Como objetivos específicos, definem-se:
+\begin{itemize}
+    \item Modelar o \textit{dataset} transacional como uma rede temporal e extrair atributos topológicos, preservando a cronologia estrita através de janelas temporais para impedir o vazamento de dados (\textit{data leakage}).
+    \item Avaliar a capacidade preditiva de algoritmos de grafos atuando de forma isolada na identificação de entidades fraudulentas.
+    \item Implementar uma arquitetura \textit{Two-Stage Cascade} baseada em XGBoost, utilizando pesagem algorítmica fracionária para mitigar o alto volume de falsos positivos inerente a cenários de detecção de anomalias.
+    \item Conduzir um estudo de ablação sob validação \textit{forward-chaining}, comparando estatisticamente o impacto no desempenho gerado pela adição das \textit{features} topológicas em relação a um modelo de base puramente comportamental.
+    \item Otimizar a eficiência computacional do modelo para \textit{deploy} operacional através de um método de poda de atributos combinando filtros de colinearidade e eliminação recursiva guiada por SHAP (\textit{SHAP-RFE}).
+    \item Mensurar o impacto operacional e quantificar a captura real de infratores através de diferentes métricas de avaliação de desempenho.
+\end{itemize}
+
+\chapter{Fundamentação Teórica}
+
+Neste capítulo, são apresentadas as principais métricas de avaliação de modelos de
+classificação aplicados à detecção de fraudes no contexto de lavagem de dinheiro.
+
+\section{Métricas de Avaliação}
+
+A avaliação de modelos preditivos no contexto de \textit{Anti-Money Laundering} (AML) exige métricas robustas ao desbalanceamento extremo de classes, uma vez que a proporção de transações ilícitas é tipicamente inferior a 1\% do volume total \cite{shukla2025smote}. 
+
+\subsection{Matriz de Confusão}
+Em problemas de classificação binária, cada entidade é rotulada como fraude (classe positiva) ou não fraude (classe negativa). A partir das previsões do modelo, obtêm-se quatro resultados possíveis que compõem a matriz de confusão:
+\begin{itemize}
+    \item \textit{True Positive} (TP): a entidade era fraudulenta e foi corretamente classificada;
+    \item \textit{True Negative} (TN): a entidade não era fraudulenta e foi corretamente classificada;
+    \item \textit{False Positive} (FP): a entidade não era fraudulenta, mas o modelo gerou um alerta falso;
+    \item \textit{False Negative} (FN): a entidade era fraudulenta e não foi detectada.
+\end{itemize}
+
+\subsection{Métricas de Desempenho e o Problema do Desbalanceamento}
+
+O \textit{Recall} (Sensibilidade) mede a capacidade de recuperar exemplos positivos, indicando a proporção de fraudadores reais que foram efetivamente detectados:
+\begin{equation}
+    \mathrm{Recall} = \frac{TP}{TP+FN}
+\end{equation}
+
+A \textit{Precision} mede a exatidão dos alertas gerados, ou seja, a proporção de predições de fraude que estavam corretas:
+\begin{equation}
+    \mathrm{Precision} = \frac{TP}{TP+FP}
+\end{equation}
+
+O \textit{F1-score} combina ambas através de uma média harmônica, oferecendo uma visão equilibrada do modelo \cite{alarab2020comparative}:
+\begin{equation}
+    F1 = 2 \cdot \frac{\mathrm{Precision} \cdot \mathrm{Recall}}{\mathrm{Precision} + \mathrm{Recall}}
+\end{equation}
+
+Embora a \textit{Accuracy} (Acurácia) meça a proporção total de classificações corretas, a sua utilização isolada em cenários de fraude pode levar à interpretações errôneas: um modelo que preveja a classe majoritária (não-fraude) alcançará uma acurácia próxima de 100\%, falhando completamente no seu objetivo \cite{vassallo2021application}.
+
+Por esta razão, a literatura privilegia métricas que avaliam o poder de separação entre classes em diferentes limiares. A \textit{ROC-AUC} (\textit{Receiver Operating Characteristic Area Under the Curve}) relaciona a taxa de verdadeiros positivos (TPR) com a taxa de falsos positivos (FPR). No entanto, em cenários de desbalanceamento severo, a \textit{AUPRC} (Precisão-Recall Area Under the Curve) é considerada mais informativa, pois foca o desempenho estritamente no impacto sobre a classe positiva \cite{liu2022bond}.
+
+Para efeitos de implantação em ambiente real, as equipes de \textit{compliance} possuem capacidade finita de investigação diária. Assim, a \textit{Precision@k} avalia a fração de verdadeiros positivos entre os $k$ primeiros exemplos com maior probabilidade de fraude ranqueados pelo modelo, refletindo a eficácia operacional do sistema \cite{karim2024scalable}.
+
+\section{Teoria dos Grafos}
+
+A Teoria dos Grafos fornece ferramentas matemáticas capazes de modelar interações complexas do mundo real no formato de vértices e arestas. No contexto de transações financeiras, as interações não ocorrem como eventos estáticos e isolados, mas sim como múltiplos fluxos paralelos que variam no tempo. Por isso, a rede é modelada como um grafo direcionado, ponderado por múltiplos atributos e subdividido em janelas temporais \cite{oliveira2025complex}.
+
+Formalmente, define-se este grafo como $G = (V, E)$, onde $V$ representa o conjunto de vértices (entidades ou contas bancárias) e $E$ representa o conjunto de arestas direcionadas (fluxos financeiros agregados). 
+
+Diferentemente de abordagens tradicionais que utilizam um único peso ou transações individuais, a agregação das transações entre duas entidades $u$ e $v$ dentro de uma janela temporal resulta em uma aresta direcionada $e = (u, v) \in E$ que possui dois atributos quantitativos extraídos na etapa de consolidação dos dados:
+\begin{itemize}
+    \item $w_{vol}$: o volume financeiro transferido do vértice de origem $u$ para o vértice de destino $v$ no período.
+    \item $w_{count}$: a quantidade de transações realizadas de $u$ para $v$ no período.
+\end{itemize}
+
+A representação de múltiplos pesos nas arestas permite a extração de métricas de centralidade relacionadas à diferentes comportamentos. Neste trabalho, algoritmos como o \textit{PageRank} são calculados em múltiplas formulações independentes, utilizando tanto a matriz de adjacência ponderada pelo volume ($w_{vol}$) quanto a ponderada pela frequência transacional ($w_{count}$). Essa abordagem permite que o modelo identifique não apenas a concentração de grandes volumes de capital, mas também o comportamento de dispersão e estruturação repetitiva (como o \textit{smurfing}), que muitas vezes envolve valores financeiros menores, mas com alto número de operações \cite{vilella2025weirdnodes}.
+
+\subsection{Grafos Temporais}
+A análise estática de um grafo financeiro, a qual agrega todas as transações em uma única topologia atemporal, introduz vazamento de dados (\textit{data leakage}) ao permitir que eventos futuros influenciem a extração de características de eventos passados. Para preservar a causalidade estrita, o sistema deve ser modelado como um grafo temporal estruturado em janelas cronológicas \cite{sizan2025machine}.
+
+Matematicamente, a rede temporal é dividida em uma sequência de grafos instantâneos (ou \textit{snapshots}) $G=\{G_1, G_2, \ldots, G_T\}$. Cada grafo $G_i = (V_i, E_i)$ é construído a partir de uma janela deslizante (\textit{sliding window}) de tamanho fixo $\Delta t$, que avança progressivamente com um passo temporal definido (\textit{stride}). A extração de propriedades topológicas para avaliar um vértice na janela $i$ restringe-se exclusivamente às arestas $E_i$ observadas dentro desse intervalo específico. Essa delimitação garante que o cálculo das métricas não seja contaminado por transações fora do escopo temporal analisado, operando sob as mesmas restrições informacionais de um ambiente de produção real \cite{sizan2025machine}.
+
+\subsection{Atributos Topológicos}
+A topologia local e global da rede fornece sinais preditivos estruturais que são invisíveis à análise comportamental isolada de um vértice. Os atributos extraídos dividem-se em três categorias principais:
+
+\subsubsection{Métricas de Centralidade e Coesão}
+As métricas de centralidade quantificam a importância ou influência de um vértice na rede, enquanto as de coesão avaliam seu aninhamento estrutural.
+
+\begin{itemize}
+\item \textbf{Grau (\textit{Degree}):} Subdividido em grau de entrada (\textit{in-degree}) e de saída (\textit{out-degree}), mede o número de conexões distintas de um nó. Matematicamente, dado a matriz de adjacência $A$ do grafo, os graus de um vértice $i$ são definidos como:
+\begin{equation}
+    k_i^{in} = \sum_{j \in V} A_{ji}, \quad k_i^{out} = \sum_{j \in V} A_{ij}
+\end{equation}
+Contas utilizadas como vértices de passagem ou que possuem uma concentração alta de fundos ilícitos exibem graus altos.
+
+
+\item \textbf{Algoritmo HITS (\textit{Hyperlink-Induced Topic Search}):} Atribui a cada vértice uma pontuação de \textit{Hub} ($h$) e uma pontuação de \textit{Authority} ($a$). Estas pontuações são atualizadas iterativamente através da relação mutuamente recursiva:
+\begin{equation}
+    h(u) = \sum_{v \in N_{out}(u)} a(v), \quad a(v) = \sum_{u \in N_{in}(v)} h(u)
+\end{equation}
+onde $N_{out}(u)$ e $N_{in}(v)$ representam os conjuntos de vizinhos de saída de $u$ e de entrada de $v$, respectivamente.
+
+
+\item \textbf{Centralidade de Intermediação (\textit{Betweenness Centrality}):} Mede a frequência com que um vértice aparece nos caminhos mais curtos entre outros pares de nós. A centralidade do vértice $v$ é dada por:
+\begin{equation}
+    C_B(v) = \sum_{s \neq v \neq t \in V} \frac{\sigma_{st}(v)}{\sigma_{st}}
+\end{equation}
+Onde $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$, e $\sigma_{st}(v)$ é o número desses caminhos que passam obrigatoriamente por $v$. Na lavagem de dinheiro, contas de ofuscação atuam frequentemente como pontes entre diferentes aglomerados da rede.
+
+\item \textbf{\textit{PageRank} de Múltiplas Profundidades:} Processado com diferentes fatores de amortecimento ($\alpha$). A pontuação de um vértice $u$ é calculada iterativamente por:
+\begin{equation}
+    PR(u) = \frac{1-\alpha}{N} + \alpha \sum_{v \in B_u} \frac{PR(v)}{L(v)}
+\end{equation}
+Sendo $N$ o número total de vértices, $B_u$ o conjunto de vértices que apontam para $u$, e $L(v)$ o número de links de saída do vértice $v$. A formulação com $\alpha=0.85$ (\textit{deep}) permite ao algoritmo encontrar padrões mais longos  na rede, enquanto $\alpha=0.75$ (\textit{shallow}) foca na influência local, otimizando a detecção de anéis de lavagem curtos e rápidos.
+
+\item \textbf{Decomposição \textit{K-Core}:} Avalia a profundidade de aninhamento de uma conta na rede. Dado um grafo $G = (V, E)$, um subgrafo induzido $H = (V_k, E_k)$ é definido como um \textit{k-core} se for o subgrafo maximal onde o grau de todo vértice $v \in V_k$, restrito a $H$, é maior ou igual a $k$:
+\begin{equation}
+    \forall v \in V_k, \quad d_H(v) \ge k
+\end{equation}
+A métrica individual extraída para o modelo preditivo é o valor de \textit{coreness} (ou número \textit{core}) de um vértice, denotado por $c(v)$. Este valor representa o grau máximo $k$ para o qual o vértice $v$ ainda pertence a um \textit{k-core}:
+\begin{equation}
+    c(v) = \max \{ k \mid v \in V_k \}
+\end{equation}
+Vértices com altos valores de $c(v)$ pertencem ao núcleo denso e estruturalmente coeso do grafo. No contexto financeiro, isso frequentemente está associado a contas controladoras que orquestram e centralizam a fraude, sendo muito mais difíceis de desmantelar do que contas de periferia.
+\end{itemize}
+
+\subsubsection{Detecção de Comunidades}
+A detecção de comunidades visa particionar o grafo em subconjuntos de vértices densamente conectados internamente e esparsamente conectados com o restante da rede.
+\begin{itemize}
+\item \textbf{Algoritmo Leiden:} Utilizado pela sua eficiência e garantia de conectividade interna. O algoritmo busca particionar a rede de modo a maximizar a modularidade ($Q$), que compara a densidade de arestas dentro das comunidades com a densidade esperada em um grafo aleatório:
+\begin{equation}
+    Q = \frac{1}{2m} \sum_{i,j} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(c_i, c_j)
+\end{equation}
+Onde $A_{ij}$ representa o peso da aresta entre $i$ e $j$, $k_i$ é o grau do vértice $i$, $m$ é a soma de todos os pesos das arestas e a função indicadora $\delta(c_i, c_j)$ assume valor 1 se $i$ e $j$ pertencem à mesma comunidade e 0 caso contrário. Fundamentalmente, a modularidade das macro e microcomunidades quantifica o quão isolado e compartimentado está um anel financeiro ilícito em relação à economia lícita adjacente.
+\end{itemize}
+
+\subsubsection{Padrões de Vizinhança e \textit{Motifs}}
+A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs}) captura a mecânica exata das tipologias de fraude.
+\begin{itemize}
+
+\item \textbf{Atributos de \textit{Egonet} (Rede de Ego):} Avaliam a vizinhança imediata (1-hop) do vértice. A extração da densidade da egorrede, quantidade de nós, arestas e peso total consolidado medem a coesão local ao redor da entidade. O coeficiente de agrupamento (\textit{local clustering coefficient}) e a contagem de triângulos refinam essa análise validando a interconectividade dos vizinhos.
+
+\item \textbf{Padrões Direcionais e \textit{Motifs} Complexos:} A contagem de estruturas simples de dispersão (\textit{fan-out}) e concentração (\textit{fan-in}) é expandida para \textit{motifs} compostos, como o \textit{scatter-gather} e o \textit{gather-scatter}. Estas topologias são as representações matemáticas exatas das fases de pulverização (\textit{layering}) e integração (\textit{integration}) de recursos. A contagem de ciclos (\textit{cycle count}) mapeia as trajetórias circulares utilizadas para criar a ilusão de atividade econômica legítima.
+
+\item \textbf{Agregação de Vizinhança e Dinâmica Temporal:} Sinais de fraude propagam-se topologicamente. O comportamento dos sucessores imediatos (volume médio e máximo transferido por eles) sinaliza o destino do capital pós-transferência. Adicionalmente, \textit{motifs} temporais (\textit{temporal fan-out} e \textit{temporal fan-in}) medem a estruturação de fluxos de forma estritamente cronológica e agressiva, capturando operações que ocorrem em frações de tempo reduzidas, complementando a abstração estática da janela temporal.
+
+\end{itemize}
+
+\chapter{Metodologia e Desenvolvimento}
+
+\begin{epigrafeonline}
+\hfill Texto da epígrafe \textit{in locu} (opcional).\\
+\hspace*{\fill}\textit{Autor}\\
+\end{epigrafeonline}
+
+Este capítulo detalha a metodologia proposta para investigar e quantificar o impacto da adição de variáveis topológicas na detecção de esquemas de lavagem de dinheiro. O desenvolvimento do trabalho é estruturado de forma a replicar os desafios de um ambiente de \textit{compliance} do mundo real, considerando a avaliação cronológica e eficiência computacional.
+
+\section{Base de Dados}
+
+Para o treinamento e a validação da arquitetura proposta, este estudo utiliza o \textit{dataset} sintético AMLworld \cite{altman2023realistic}. A escolha por uma base de dados sintética justifica-se pelas restrições de privacidade e confidencialidade que limitam o acesso público a dados transacionais bancários reais. Além disso, há o problema de que parte das fraudes que ocorrem no mundo real passam desapercebidas pelas autoridades, o que torna as bases de dados baseadas em transações reais deficitárias. O AMLworld foi projetado especificamente para simular padrões de lavagem de dinheiro em larga escala e oferecer rótulos confiáveis para transações lícitas e ilícitas, o que viabiliza o treinamento supervisionado.
+
+A base de dados oferece, ao todo, seis variações que combinam escala (\textit{Small},
+\textit{Medium} e \textit{Large}) e nível de atividade ilícita (HI: \textit{High Illicit};
+LI: \textit{Low Illicit}), conforme apresentado na Tabela~\ref{tab:amlworld-datasets}.
+
+\begin{table}{\linewidth}
+    \centering
+    \caption{Resumo das variações do \textit{dataset} AMLworld}
+    \label{tab:amlworld-datasets}
+    \resizebox{\linewidth}{!}{%
+    \begin{tabular}{lcccccc}
+        \hline
+        \textbf{Métrica} & \textbf{Small HI} & \textbf{Small LI} & \textbf{Medium HI} & \textbf{Medium LI} & \textbf{Large HI} & \textbf{Large LI} \\
+        \hline
+        Intervalo de datas (2022) & Sep 1--10 & Sep 1--10 & Sep 1--16 & Sep 1--16 & Aug 1--Nov 5 & Aug 1--Nov 5 \\
+        Dias cobertos & 10 & 10 & 16 & 16 & 97 & 97 \\
+        Contas bancárias & 515K & 705K & 2{,}077K & 2{,}028K & 2{,}116K & 2{,}064K \\
+        Transações & 5M & 7M & 32M & 31M & 180M & 176M \\
+        Transações de lavagem & 5{,}1K & 4{,}0K & 35K & 16K & 223K & 100K \\
+        Taxa de lavagem (1 em N transações) & 981 & 1{,}942 & 905 & 1{,}948 & 807 & 1{,}750 \\
+        Tamanho (GB) & 0{,}5 & 0{,}6 & 3 & 3 & 17 & 16 \\
+        \hline
+    \end{tabular}%
+    }
+\end{table}
+
+Neste trabalho, foram utilizados os \textit{datasets} HI Small e HI Medium.
+
+\subsection{Pré-processamento e Padronização dos Dados}
+
+Devido ao volume massivo de registros gerados pelas variações do \textit{dataset} AMLworld (alcançando até 180 milhões de transações na variação \textit{Large}), o tratamento da base bruta exigiu estratégias específicas de engenharia de dados. 
+
+A leitura do arquivo original em formato de texto (\textit{CSV}) foi implementada em blocos de 3 milhões de linhas utilizando a biblioteca Pandas em Python (versão 3.12)\footnote{Python Software Foundation. Disponível em: \url{https://www.python.org/}.},. Durante a iteração, os cabeçalhos foram padronizados, as datas convertidas para o formato ISO 8601 e, para garantir viabilidade computacional no processamento subsequente, os dados foram persistidos no formato colunar Apache Parquet \footnote{Apache Parquet. Disponível em: \url{https://parquet.apache.org/}.}. Esta conversão reduziu drasticamente o espaço de armazenamento e otimizou a velocidade de leitura (\textit{I/O}) nas etapas de agregação.
+
+Adicionalmente, o \textit{dataset} simula um ambiente global, contendo transações realizadas em 14 moedas fiduciárias distintas (incluindo Euro, Libra, Real e Iene), bem como em criptomoedas (Bitcoin). A modelagem de um grafo financeiro ponderado exige que todas as arestas utilizem a mesma escala de grandeza. Caso contrário, a soma direta de valores nominais distorceria os algoritmos de centralidade.
+
+Para resolver este problema, desenvolveu-se uma etapa de padronização monetária. Utilizando a API do \textit{Yahoo Finance} (\texttt{yfinance}), foram extraídas as taxas de câmbio diárias de fechamento em relação ao Dólar Americano (USD) para todo o período de cobertura do \textit{dataset} (agosto a novembro de 2022). Esta tabela histórica de conversão foi salva de forma independente e utilizada posteriormente para calibrar o peso financeiro ($w_{vol}$) de cada aresta com base na data exata da transação original, garantindo a coerência econômica da rede construída.
+
+\section{Modelagem da Janela Deslizante e Agregação de Arestas}
+
+Para mitigar o risco de vazamento de dados (\textit{data leakage}) e preservar a causalidade estrita dos eventos financeiros \cite{sizan2025machine}, o fluxo de transações do \textit{dataset} AMLworld foi processado cronologicamente como um grafo temporal. 
+
+A extração das janelas cronológicas (\textit{snapshots}) e a agregação do grafo foram implementadas utilizando o sistema de gerenciamento de banco de dados analítico em memória DuckDB \cite{raasveldt2019duckdb}. A adoção do DuckDB justifica-se pela sua alta eficiência de \textit{I/O} e otimização \textit{multithreading} (configurado para 8 \textit{threads} e limite de memória de 6 GB) ao processar os milhões de registros transacionais armazenados no formato colunar Apache Parquet.
+
+A definição do tamanho da janela deslizante ($\Delta t$) e do passo temporal (\textit{stride}) baseou-se em uma etapa de otimização empírica. Foram testadas diferentes configurações com o objetivo de maximizar o desempenho preditivo (métricas de avaliação extraídas do modelo) garantindo, simultaneamente, a viabilidade computacional do processamento das métricas topológicas em um ambiente com recursos limitados de memória (8 GB de RAM). 
+
+Dentro de cada janela de 3 dias, as transações individuais (multiarestas) foram agregadas. É importante ressaltar que os vértices do grafo ($V$) foram modelados para representar \textbf{entidades financeiras} (indivíduos ou empresas) e não contas bancárias isoladas. Essa etapa de mapeamento (realizada através do cruzamento com o cadastro de entidades) é crucial no contexto de \textit{Anti-Money Laundering} (AML). Frequentemente, fraudadores utilizam múltiplas contas para praticar \textit{smurfing}) e tentar simular comportamentos normais. Com a agregação o grafo por entidade, é possível observar o fluxo real de capital.
+
+Dessa forma, as transações ocorridas entre uma entidade de origem $u$ e uma entidade de destino $v$ foram consolidadas, resultando em um grafo direcionado simples onde cada aresta $e = (u, v)$ resume o fluxo financeiro do período. 
+
+Essa etapa de simplificação estrutural é necessária devido ao fato de algoritmos como o \textit{PageRank}, \textit{Betweenness Centrality} e os algoritmos de detecção de comunidades exigirem uma matriz de adjacência simples ponderada, não operando nativamente sobre multigrafos \cite{baigabyl2025using}. Ao consolidar as multiarestas em uma única aresta direcional, o modelo preserva a magnitude e a frequência do fluxo financeiro por meio dos atributos de peso, viabilizando o processamento matemático da rede \cite{vilella2025weirdnodes}.
+
+Durante este processo de agrupamento via banco de dados (SQL), os seguintes atributos consolidados de aresta foram extraídos:
+
+\begin{itemize}
+    \item \textbf{Volume Agregado em USD ($w_{vol}$):} Utilizando a tabela histórica de taxas de câmbio, combinando a moeda de pagamento e a data exata da transação original.
+    \item \textbf{Frequência por Formato de Pagamento ($w_{count}$):} Além do número absoluto de transações consolidadas, a agregação também identifica a volumetria pela contagem de meios de pagamento específicos utilizados na janela (e.g., \textit{cash}, \textit{bitcoin}, \textit{cheque}, \textit{credit card} e \textit{ACH}). 
+\end{itemize}
+
+Esta agregação gerou a matriz de adjacência ponderada final do \textit{snapshot}, a qual serviu como estrutura base para a extração computacional das \textit{features} topológicas na etapa subsequente.
+
+\section{Engenharia de \textit{Features} Topológicas}
+
+A extração de atributos topológicos foi aplicada individualmente a cada um dos grafos instantâneos ($G_i$) gerados na etapa anterior. Para viabilizar o processamento em tempo hábil das centenas de milhares de transações por janela, a rotina de extração foi implementada com suporte a multiprocessamento (através da biblioteca \texttt{concurrent.futures} do Python), distribuindo a carga computacional das janelas temporais de forma paralela. A base principal para o cálculo das métricas foi a biblioteca \texttt{NetworkX}, com exceção da detecção de comunidades, a qual foi implementada utilizando a biblioteca \texttt{iGraph}.
+
+Além das heurísticas de vértice pré-calculadas na rotina de banco de dados (como uso de moedas em espécie, \textit{bitcoin} e contagem direcional temporal), as rotinas em Python extraíram os seguintes conjuntos de atributos estruturais:
+
+\subsection{Métricas de Centralidade e Coesão}
+
+O cálculo exato de certas métricas de centralidade em grafos de grande escala apresenta complexidade de tempo proibitiva. Portanto, foram adotadas abordagens de otimização e parametrização específicas para o ambiente de \textit{Big Data}:
+
+\begin{itemize}
+  \item \textbf{Centralidade de Intermediação (\textit{Betweenness}):} O cálculo exato do \textit{betweenness} requer o cálculo de todos os caminhos mais curtos do grafo, o que é inviável em redes de milhões de nós. Para contornar esta limitação de \textit{hardware}, adotou-se o método de aproximação por amostragem de vértices \cite{riondato2016fast}. A métrica foi calculada extraindo-se caminhos a partir de uma amostra de $k=80$ nós sentinelas (\textit{seed} = 42), garantindo um equilíbrio entre tempo de processamento e fidelidade estrutural.
+    
+    \item \textbf{\textit{PageRank}:} A fim de capturar diferentes dinâmicas de fluxo, o \textit{PageRank} foi instanciado em quatro variações. Em relação à profundidade, utilizou-se o fator de amortecimento (\textit{damping factor}) tradicional $\alpha=0.85$ (capturando difusão de longo alcance) e um fator modificado $\alpha=0.75$ (focado em vizinhanças curtas). Ambas as profundidades foram calculadas duas vezes: uma utilizando a matriz ponderada pelo volume financeiro ($w_{vol}$) e outra pela contagem de transações ($w_{count}$). O limite de convergência foi fixado em 100 iterações.
+    
+    \item \textbf{Algoritmo HITS:} O processamento das pontuações de \textit{Hub} e \textit{Authority} foi parametrizado com um limite máximo de 500 iterações (\textit{max\_iter} = 500), com o objetivo de garantir a convergência mesmo em janelas temporais de com alta densidade de vértices e arestas.
+    
+    \item \textbf{Decomposição \textit{K-Core}:} Devido à exigência topológica do algoritmo, o grafo direcionado ponderado foi primeiramente convertido para uma projeção simples não-direcionada e sem auto-laços (\textit{self-loops}). A partir dessa projeção, extraiu-se o valor de \textit{coreness} máximo atingido por cada entidade na referida janela temporal.
+\end{itemize}
+
+\subsection{Detecção de Comunidades (Leiden)}
+
+Embora o \texttt{NetworkX} possua ampla gama de algoritmos de grafos, ele apresenta gargalos de performance para detecção avançada de comunidades. Por isso, a rede foi convertida para a estrutura da biblioteca \texttt{igraph}, permitindo a aplicação da biblioteca \texttt{leidenalg} \cite{traag2019leiden}.
+
+A otimização de modularidade foi realizada empregando o modelo \textit{RBConfigurationVertexPartition}. Para identificar tanto as macrorredes de cooperação ilícita quanto os pequenos anéis fechados de ofuscação, o algoritmo de Leiden foi executado em duas resoluções distintas:
+\begin{itemize}
+    \item \textbf{Macro-resolução:} Com parâmetro de resolução $\gamma = 1.0$.
+    \item \textbf{Micro-resolução:} Com parâmetro de resolução $\gamma = 2.0$.
+\end{itemize}
+Para cada resolução, extraiu-se o tamanho da comunidade na qual o vértice foi inserido e a pontuação de modularidade local, injetando esses metadados como \textit{features} tubulares do nó correspondente.
+
+\subsection{Padrões de Vizinhança, Agregação e \textit{Motifs}}
+
+Os padrões comportamentais de vizinhança (1-salto) foram extraídos para mapear o grau de estruturação no entorno imediato das entidades financeiras \cite{dong2025spacegnn}.
+
+\begin{itemize}
+    \item \textbf{\textit{Egonets} e Coesão Local:} Para cada vértice, gerou-se o seu subgrafo de raio 1 (\textit{ego graph}). A partir dele, calculou-se a densidade local, a contagem de nós periféricos e a soma do peso total circulante (\textit{volume}). Em paralelo, calculou-se o coeficiente de agrupamento local (\textit{local clustering coefficient}) utilizando os pesos financeiros, além da contagem de triângulos baseada na projeção não-direcionada da rede.
+    
+    \item \textbf{Agregação de Sucessores:} Como forma de avaliar o risco de pulverização, extraiu-se a volumetria enviada aos sucessores de cada nó. Foram calculados o grau médio da vizinhança e os volumes médio e máximo enviados aos nós destinos no \textit{snapshot}.
+    
+    \item \textbf{Mapeamento de \textit{Motifs} Complexos:} Uma rotina de busca de subgrafos isomorfos foi implementada para contar táticas explícitas de lavagem. O limiar de dispersão e concentração (\textit{fan-out} e \textit{fan-in}) foi estipulado em $k \ge 5$ vizinhos, respeitando um grau máximo de 16 conexões para evitar ruído de contas institucionais gigantes. Com base nessa filtragem, calculou-se as ocorrências encadeadas de \textit{scatter-gather} e \textit{gather-scatter}. Adicionalmente, buscou-se a ocorrência de ciclos simples fechados limitados a até 5 saltos de distância (\textit{length\_bound} = 5), aplicando-se uma trava computacional máxima de 1.000 ciclos processados por nó (\textit{max\_cycles} = 1000).
+\end{itemize}
+
+Ao término dessa bateria de extração estrutural, as tabelas tabulares isoladas de cada \textit{chunk} foram concatenadas pelo \texttt{DuckDB}, construindo o \textit{dataset} final enriquecido (\textit{sliding\_window\_features.parquet}) que servirá de matriz de entrada ($X$) para o modelo preditivo.
+
+
+\section{Arquitetura \textit{Two-Stage Cascade} com XGBoost}
+
+
+\subsection{Estudo de Ablação e Otimização (\textit{SHAP-RFE})}
+
+\chapter{Conclusão}
+
+
+\bibliography{bibliografia,exemplos,abnt-options}
+
+\end{document}

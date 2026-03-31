@@ -658,18 +658,29 @@ O processo de modelagem preditiva foi desenhado para lidar com os dois maiores d
 
 Para garantir a validade estatística do experimento e evitar o vazamento de informações futuras para o passado (\textit{look-ahead bias}), empregou-se a validação cruzada temporal (\textit{forward-chaining cross-validation}), na qual os \textit{snapshots} temporais do grafo foram estritamente ordenados de forma cronológica \cite{sizan2025machine}. O modelo foi treinado recursivamente em uma janela histórica de dados e testado exclusivamente nas janelas temporais subsequentes (futuras em relação ao treino). Essa abordagem simula fielmente o ambiente de produção de uma instituição financeira, onde o algoritmo de \textit{compliance} não possui qualquer conhecimento sobre os padrões transacionais que ocorrerão no dia seguinte.
 
-\subsection{Modelagem em Cascata (Funneling)}
+\section{Modelagem Preditiva e Tratamento de Desbalanceamento com XGBoost} 
 
-A aplicação direta de um classificador sobre dezenas de milhões de transações frequentemente resulta em um alto número de alertas falsos, esgotando a capacidade operacional de investigação manual. Para contornar este gargalo, o fluxo de classificação foi dividido em duas fases distintas:
+O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: o extremo desbalanceamento de classes (onde as fraudes representam uma fração minúscula do volume total, muitas vezes inferior a 0.1\%) e a preservação estrita da cronologia temporal dos fluxos financeiros.
+
+Para garantir a validade dos resultados e evitar o viés de amostragem geométrica que algoritmos baseados em distância euclidiana impõem sobre espaços de dados não-lineares, optou-se por uma abordagem focada na ponderação algorítmica nativa do \textit{Gradient Boosting}. A avaliação ocorre através de dois modelos preditivos independentes treinados sob validação \textit{forward-chaining}:
 
 \begin{itemize}
-    \item \textbf{Estágio 1 (Filtro de Alto Recall):} O objetivo desta etapa inicial é atuar como uma rede ampla para reter a maior quantidade possível de anomalias, priorizando a métrica de \textit{Recall}. O desbalanceamento extremo inerente à base AMLworld não é tratado via pesagem estática, mas através de \textit{hard-negative mining} baseado em densidade. Utiliza-se o algoritmo \textit{MiniBatchKMeans} restrito ao espaço de variáveis comportamentais para agrupar as instâncias lícitas e extrair amostras estritamente daquelas contidas nos \textit{clusters} mais próximos ao centroide da classe ilícita. O limiar de decisão do modelo gerado é calibrado em um conjunto de validação \textit{out-of-fold} para garantir a manutenção de um \textit{Recall} mínimo predefinido de 85\%. Apenas as transações avaliadas com probabilidade superior a esse limiar avançam para a fase seguinte.
-
-    \item \textbf{Estágio 2 (Filtro de Alta Precisão):} Este segundo estágio recebe exclusivamente o subconjunto restrito de dados filtrado pelo Estágio 1. Operando sobre um espaço de dados com alta concentração de \textit{hard-negatives}, o modelo XGBoost atua com o objetivo central de maximizar a \textit{Precision}. Nesta etapa, alimentado pelas \textit{features} topológicas (como \textit{coreness}, comunidades do algoritmo Leiden e \textit{motifs} de \textit{scatter-gather}), aplica-se uma pesagem algorítmica dinâmica (\texttt{scale\_pos\_weight}) para penalizar assimetrias remanescentes. O modelo refina as predições iniciais e tem seu limiar recalibrado para buscar 95\% de \textit{Recall} dentro da subpopulação já filtrada, emitindo a probabilidade calibrada final de fraude para a entidade.
-
+    \item \textbf{Modelo Base (\textit{Baseline}):} O objetivo deste modelo é estabelecer o piso de desempenho preditivo do sistema. Ele é treinado exclusivamente com as \textit{features} tabulares comportamentais e financeiras (e.g., volume de transações, razão de fluxo).
+    
+    \item \textbf{Modelo Completo (\textit{Full Model}):} Este classificador ingere o conjunto total de dados enriquecido, unindo as variáveis comportamentais do \textit{Baseline} às \textit{features} topológicas de grafos (como \textit{coreness}, comunidades do algoritmo Leiden e \textit{motifs} de \textit{scatter-gather}). O objetivo é isolar e quantificar o ganho real de informação (LIFT) gerado pela topologia da rede no poder preditivo do sistema.
 \end{itemize}
-O desempenho do sistema foi mensurado através da métrica Área Sob a Curva de Precisão-Recall (\textit{AUPRC}) e do ranqueamento de \textit{Precision@k} (onde $k$ assume valores fixos de capacidade investigativa diária, como 100, 300 e 500 contas). O uso do \textit{Precision@k} garante que o modelo seja avaliado com base na efetividade dos primeiros alertas gerados, otimizando o tempo dos analistas de risco.
 
+\subsection{Ponderação Dinâmica da Função de Perda}
+Para lidar com a assimetria extrema do \textit{dataset} de transações lícitas contra a escassez de anomalias, substituiu-se o uso tradicional de \textit{undersampling} (que descarta dados) pela ponderação da função de perda logística do próprio XGBoost (\texttt{scale\_pos\_weight}). 
+
+Durante cada iteração da validação temporal, a razão exata de desbalanceamento do conjunto de treino é calculada dinamicamente:
+\begin{equation}
+    scale\_pos\_weight = \frac{\sum (y_{train} == 0)}{\sum (y_{train} == 1)}
+\end{equation}
+
+Ao injetar este fator diretamente no cálculo do gradiente das árvores de decisão, o algoritmo aumenta severamente a penalidade por cada falso negativo (fraude não detectada), forçando o modelo a mapear as complexas fronteiras de decisão das instâncias ilícitas sem destruir a densidade informacional da classe majoritária \cite{shukla2025smote}.
+
+O desempenho do sistema foi mensurado através da métrica Área Sob a Curva de Precisão-Recall (\textit{AUPRC}) e do ranqueamento de \textit{Precision@k} (onde $k$ assume valores fixos de capacidade investigativa diária, como 100, 300 e 500 entidades). O uso estrito destas métricas garante que o modelo seja avaliado com base na efetividade dos primeiros alertas gerados perante um alto índice de desbalanceamento, refletindo de forma realista o ganho de tempo dos analistas de risco \cite{karim2024scalable}.
 \subsection{Estudo de Ablação e Otimização (\textit{SHAP-RFE})}
 
 \chapter{Resultados e Discussão}

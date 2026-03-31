@@ -1,1 +1,3 @@
 venv/
+results/sliding_window_features.parquet
+results/1_filtered_transactions.parquet

@@ -1,0 +1,8 @@
+\contentsline {figure}{\numberline {Figura\ 1\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model}}{33}{figure.caption.67}%
+\contentsline {figure}{\numberline {Figura\ 2\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model}}{34}{figure.caption.68}%
+\contentsline {figure}{\numberline {Figura\ 3\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model}}{36}{figure.caption.77}%
+\contentsline {figure}{\numberline {Figura\ 4\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo}}{39}{figure.caption.81}%
+\contentsline {figure}{\numberline {Figura\ 5\hfill \ - }{\ignorespaces Comparação estatística das métricas de ablação}}{40}{figure.caption.86}%
+\contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Trajetória de degradação durante o processo SHAP-RFE}}{41}{figure.caption.90}%
+\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Evolução das métricas durante o processo iterativo de eliminação de features}}{42}{figure.caption.91}%
+\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação}}{43}{figure.caption.94}%

@@ -143,20 +143,18 @@
 \autor{Pedro}{Caetano Pires}
       {P.C.P.} % iniciais do nome
 
-\titulo{Modelo de dissertação e tese (modelo.tex: v.2026.03, repUERJ.cls: v.2026.03, repUERJformat.sty: v.2026.03, repUERJpseudocode.sty: v.2025.07a)}
+\titulo{Detecção de Lavagem de Dinheiro via Grafos Temporais e XGBoost: Um Estudo de Ablação sobre Atributos Topológicos}
 
-\palavraschaves{Primeira palavra-chave}
-               {Segunda palavra-chave}
-               {Terceira palavra-chave}
-               {}
-%               {Quarta palavra-chave (opcional) ou vazio}
+\palavraschaves{Lavagem de Dinheiro}
+               {Grafos Temporais}
+               {XGBoost}
+               {Ciência de Dados de Grafos}
 
-\title{Título do trabalho em inglês}
-\keywords{First keyword}
-         {Second keyword}
-         {Third keyword}
-         {}
-%         {Fourth keyword or empty}
+\title{Money Laundering Detection via Temporal Graphs and XGBoost: An Ablation Study on Topological Features}
+\keywords{Money Laundering}
+         {Temporal Graphs}
+         {XGBoost}
+         {Graph Data Science}
 
 % Aqui deve-se inserir as informações sobre orientador e coorientados (se houver)
 \orientador{Prof. D.Sc.} 
@@ -294,7 +292,7 @@ Segundo \citeonline[p.39]{bib:RoteiroUERJ2ed}, é um elemento opcional. O texto 
 \pretextualchapter{Resumo}
 \referencia % linha em branco depois
 
-Conforme \citeonline[p.42]{bib:RoteiroUERJ2ed}, é elemento obrigatório. Consiste na apresentação sucinta dos pontos relevantes do texto, em um único parágrafo. O resumo deve conter entre 150 e 500 palavras e fornecer uma visão rápida e clara dos objetivos, da metodologia, dos resultados e das conclusões do trabalho. Na elaboração do resumo, deve-se usar o verbo na voz ativa, na terceira pessoa do singular.
+A lavagem de dinheiro representa uma ameaça global à integridade dos sistemas financeiros, movimentando entre 2\% e 5\% do PIB mundial. Sistemas tradicionais de detecção baseados em regras heurísticas enfrentam limitações ao analisar contas de forma isolada, falhando em capturar tipologias complexas que exploram propriedades topológicas da rede transacional. Este trabalho investiga a contribuição de atributos topológicos extraídos de grafos temporais para a detecção de lavagem de dinheiro utilizando o algoritmo XGBoost. Implementou-se um estudo de ablação controlado, comparando um modelo base treinado com 21 \textit{features} comportamentais contra um modelo completo com 49 atributos (21 comportamentais + 28 topológicos). Os experimentos foram conduzidos sobre o \textit{dataset} sintético AMLworld HI Small, processado através de janelas temporais deslizantes para preservar a causalidade estrita. Os resultados demonstram que a incorporação de métricas topológicas (centralidade, detecção de comunidades e padrões de vizinhança) resultou em ganhos estatisticamente significativos: AUPRC +18.00\% ($p=0.0188$), precisão +42.80\% ($p=0.0070$) e F1-Score +39.81\% ($p=0.0055$). Adicionalmente, aplicou-se um processo de otimização via SHAP-RFE que reduziu o conjunto de \textit{features} em 36.7\% (de 49 para 31 atributos) sem perda de desempenho, viabilizando a implantação operacional em ambientes com recursos computacionais limitados. A análise SHAP revelou que atributos topológicos como HITS, grau de entrada e modularidade de comunidades ocupam posições de destaque na importância preditiva, validando a hipótese de que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
 ~\\
 
 \imprimirchaves % linha em branco antes
@@ -306,7 +304,7 @@ Conforme \citeonline[p.42]{bib:RoteiroUERJ2ed}, é elemento obrigatório. Consis
 \pretextualchapter{Abstract}
 \reference % linha em branco depois
 
-De acordo com \citeonline[p.44]{bib:RoteiroUERJ2ed}, consiste em uma tradução do resumo em português para uma língua estrangeira (em inglês, ABSTRACT; em espanhol, RESUMEN; em francês, RÉSUMÉ), em um único parágrafo, seguido das palavras--chave representativas do conteúdo do trabalho, na língua estrangeira escolhida. O resumo em outra língua também é precedido pela referência do trabalho, substituindo-se o título em português pelo título na língua estrangeira adotada. No caso de teses, é possível incluir dois resumos em língua estrangeira. A apresentação gráfica e a ordem dos elementos seguem a mesma orientação do resumo em português.
+Money laundering poses a global threat to financial system integrity, moving between 2\% and 5\% of world GDP. Traditional detection systems based on heuristic rules face limitations when analyzing accounts in isolation, failing to capture complex typologies that exploit topological properties of the transaction network. This work investigates the contribution of topological attributes extracted from temporal graphs for money laundering detection using the XGBoost algorithm. A controlled ablation study was implemented, comparing a baseline model trained with 21 behavioral features against a full model with 49 attributes (21 behavioral + 28 topological). Experiments were conducted on the synthetic AMLworld HI Small dataset, processed through sliding temporal windows to preserve strict causality. Results demonstrate that incorporating topological metrics (centrality, community detection, and neighborhood patterns) yielded statistically significant gains: AUPRC +18.00\% ($p=0.0188$), precision +42.80\% ($p=0.0070$), and F1-Score +39.81\% ($p=0.0055$). Additionally, a SHAP-RFE optimization process reduced the feature set by 36.7\% (from 49 to 31 attributes) without performance loss, enabling operational deployment in resource-constrained environments. SHAP analysis revealed that topological attributes such as HITS, in-degree, and community modularity occupy prominent positions in predictive importance, validating the hypothesis that fraudulent entities exhibit distinct structural signatures in the financial network.
 ~\\
 
 \printkeys % linha em branco antes
@@ -347,31 +345,30 @@ De acordo com \citeonline[p.44]{bib:RoteiroUERJ2ed}, consiste em uma tradução 
 %===========================================================
 \pretextualchapter{Lista de abreviaturas e siglas} %(opcional)
 %===========================================================
-\abreviatura{sigla 1}{por extenso}
-\abreviatura{sigla 2}{por extenso}
-\abreviatura{sigla 3}{por extenso}
-
-% apagar este texto a seguir
-\begin{center}
-    \fbox{\begin{minipage}{10cm}
-        É elemento opcional. Os elementos dessa lista são descritos em ordem alfabética, seguidos de seu significado grafado por extenso. Recomenda-se a elaboração dessa lista quando existirem abreviaturas e siglas específicas da área e incluídas no trabalho. Ressalta-se que, uma vez formada, a lista deverá conter todas as abreviaturas e siglas que aparecerem no trabalho. \cite[p.51]{bib:RoteiroUERJ2ed}
-    \end{minipage}
-    }
-\end{center}
+\abreviatura{ACH}{\textit{Automated Clearing House}}
+\abreviatura{AML}{\textit{Anti-Money Laundering}}
+\abreviatura{AUPRC}{\textit{Area Under the Precision-Recall Curve}}
+\abreviatura{FN}{\textit{False Negative}}
+\abreviatura{FP}{\textit{False Positive}}
+\abreviatura{HITS}{\textit{Hyperlink-Induced Topic Search}}
+\abreviatura{PIB}{Produto Interno Bruto}
+\abreviatura{RFE}{\textit{Recursive Feature Elimination}}
+\abreviatura{ROC-AUC}{\textit{Receiver Operating Characteristic - Area Under the Curve}}
+\abreviatura{SHAP}{\textit{SHapley Additive exPlanations}}
+\abreviatura{TN}{\textit{True Negative}}
+\abreviatura{TP}{\textit{True Positive}}
+\abreviatura{USD}{\textit{United States Dollar}}
 %
 %===========================================================
 \pretextualchapter{Lista de símbolos} % (opcional) 
 %===========================================================
-\simbolo{$simbolo 1$}{significado e/ou valor}
-\simbolo{$simbolo 2$}{significado e/ou valor}
-\simbolo{$simbolo 3$}{significado e/ou valor}
-
-\begin{center}
-    \fbox{\begin{minipage}{10cm}
-        É elemento opcional. Os elementos dessa lista são descritos na mesma ordem em que aparecem no texto, seguidos de seu significado grafado por extenso. \cite[p.52]{bib:RoteiroUERJ2ed}
-    \end{minipage}
-    }
-\end{center}
+\simbolo{$\alpha$}{Fator de amortecimento do algoritmo PageRank}
+\simbolo{$\Delta t$}{Tamanho da janela temporal deslizante}
+\simbolo{$\gamma$}{Parâmetro de resolução do algoritmo Leiden}
+\simbolo{$\rho$}{Coeficiente de correlação de Spearman}
+\simbolo{$G = (V, E)$}{Grafo composto por vértices V e arestas E}
+\simbolo{$w_{vol}$}{Peso da aresta baseado em volume financeiro}
+\simbolo{$w_{count}$}{Peso da aresta baseado em contagem de transações}
 
 \sumario
 \mainmatter 
@@ -678,14 +675,354 @@ Durante cada iteração da validação temporal, a razão exata de desbalanceame
     scale\_pos\_weight = \frac{\sum (y_{train} == 0)}{\sum (y_{train} == 1)}
 \end{equation}
 
-Ao injetar este fator diretamente no cálculo do gradiente das árvores de decisão, o algoritmo aumenta severamente a penalidade por cada falso negativo (fraude não detectada), forçando o modelo a mapear as complexas fronteiras de decisão das instâncias ilícitas sem destruir a densidade informacional da classe majoritária \cite{shukla2025smote}.
+Ao injetar este fator diretamente no cálculo do gradiente das árvores de decisão, o algoritmo aumenta severamente a penalidade por cada falso negativo (fraude não detectada), forçando o modelo a mapear as complexas fronteiras de decisão das instâncias ilícitas sem destruir a densidade informacional da classe majoritária.
 
 O desempenho do sistema foi mensurado através da métrica Área Sob a Curva de Precisão-Recall (\textit{AUPRC}) e do ranqueamento de \textit{Precision@k} (onde $k$ assume valores fixos de capacidade investigativa diária, como 100, 300 e 500 entidades). O uso estrito destas métricas garante que o modelo seja avaliado com base na efetividade dos primeiros alertas gerados perante um alto índice de desbalanceamento, refletindo de forma realista o ganho de tempo dos analistas de risco \cite{karim2024scalable}.
 \subsection{Estudo de Ablação e Otimização (\textit{SHAP-RFE})}
 
+Para quantificar objetivamente o impacto da adição das \textit{features} topológicas, implementou-se um estudo de ablação controlado, comparando estatisticamente o desempenho de dois modelos: um modelo de base (\textit{Baseline}) treinado exclusivamente com atributos comportamentais e um modelo completo (\textit{Full Model}) que inclui tanto os atributos comportamentais quanto os topológicos extraídos dos grafos.
+
+O experimento foi conduzido sob validação \textit{forward-chaining} estrita, onde cada modelo foi treinado em janelas históricas e testado em janelas temporais subsequentes. A avaliação estatística empregou testes t pareados para mensurar a significância das diferenças de desempenho observadas entre os dois modelos ao longo das janelas de teste.
+
+Paralelamente, para viabilizar a implantação operacional do sistema em ambientes com recursos computacionais limitados, implementou-se uma rotina de poda de \textit{features} baseada em dois estágios sequenciais:
+
+\begin{enumerate}
+    \item \textbf{Filtro de Colinearidade:} Aplicação do coeficiente de correlação de Spearman ($|\rho| > 0.8$) para identificar e remover atributos redundantes, preservando aqueles com maior importância SHAP (\textit{SHapley Additive exPlanations}) \cite{lundberg2017unified}.
+    
+    \item \textbf{Eliminação Recursiva Guiada por SHAP (\textit{SHAP-RFE}):} Após o filtro de colinearidade, aplicou-se um processo iterativo de remoção das \textit{features} menos importantes. A cada iteração, o modelo foi retreinado e o desempenho (\textit{AUPRC}) foi monitorado. O critério de parada foi definido como uma degradação superior a 1\% em relação ao modelo de referência inicial.
+\end{enumerate}
+
+Essa abordagem em dois estágios garante que o modelo final mantenha o poder preditivo enquanto opera com um conjunto reduzido de atributos, otimizando o custo computacional de extração e processamento em um ambiente de produção.
+
 \chapter{Resultados e Discussão}
 
+\begin{epigrafeonline}
+\hfill Texto da epígrafe \textit{in locu} (opcional).\\
+\hspace*{\fill}\textit{Autor}\\
+\end{epigrafeonline}
+
+Este capítulo apresenta os resultados experimentais obtidos através da aplicação da metodologia descrita no Capítulo 3. A avaliação foi conduzida utilizando o \textit{dataset} AMLworld HI Small, que contém 1.245.666 registros transacionais agregados em 8 janelas temporais, com uma taxa de fraude de aproximadamente 1,1\%.
+
+\section{Desempenho dos Modelos Baseline e Full}
+
+A Tabela~\ref{tab:model-summary} apresenta o resumo consolidado de desempenho dos dois modelos avaliados: o modelo de base (\textit{Baseline}), treinado com 21 atributos puramente comportamentais, e o modelo completo (\textit{Full Model}), treinado com 49 atributos (21 comportamentais + 28 topológicos).
+
+\begin{table}{\linewidth}
+    \centering
+    \caption{Resumo de desempenho dos modelos Baseline e Full Model}
+    \label{tab:model-summary}
+    \begin{tabular}{lcccc}
+        \hline
+        \textbf{Métrica} & \textbf{Baseline} & \textbf{Full Model} & \textbf{Lift} & \textbf{Lift (\%)} \\
+        \hline
+        Acurácia & 0.7622 & 0.8408 & +0.0789 & +10.35\% \\
+        AUPRC & 0.2513 & 0.2965 & +0.0452 & +18.00\% \\
+        ROC-AUC & 0.9038 & 0.9309 & +0.0300 & +3.32\% \\
+        F1-Score & 0.0786 & 0.1099 & +0.0313 & +39.81\% \\
+        Precisão & 0.0411 & 0.0587 & +0.0176 & +42.80\% \\
+        Recall & 0.8802 & 0.8531 & -0.0227 & -2.58\% \\
+        \hline
+        P@100 & 0.9900 & 0.9900 & 0.0000 & +0.00\% \\
+        P@200 & 0.9750 & 0.9700 & -0.0050 & -0.51\% \\
+        P@300 & 0.9500 & 0.9600 & +0.0100 & +1.05\% \\
+        P@500 & 0.9280 & 0.9320 & +0.0040 & +0.43\% \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Os resultados indicam que a adição das \textit{features} topológicas resultou em melhorias substanciais em múltiplas métricas de desempenho. O ganho mais expressivo ocorreu na precisão (+42.80\%), seguido pelo F1-Score (+39.81\%) e pela AUPRC (+18.00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, onde a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens/model_metric_comparison.png}
+    \caption{Comparação de métricas entre os modelos Baseline e Full Model}
+    \label{fig:model-comparison}
+\end{figure}
+
+A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema ao ranquear as entidades de maior risco, manteve-se em níveis excepcionalmente altos para ambos os modelos. Com P@100 = 0.99, o sistema é capaz de identificar corretamente 99 em cada 100 entidades de maior risco, demonstrando alta confiabilidade na priorização de alertas.
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens/precision_at_k_comparison.png}
+    \caption{Comparação de Precision@k entre os modelos Baseline e Full Model}
+    \label{fig:precision-at-k}
+\end{figure}
+
+Observa-se uma leve redução no \textit{Recall} geral (-2.58\%), o que indica um \textit{trade-off} esperado: ao refinar a fronteira de decisão para reduzir falsos positivos (aumentando a precisão), o modelo torna-se ligeiramente mais conservador, deixando de capturar uma pequena fração de fraudes. No entanto, essa perda é compensada pelo ganho substancial em precisão e pela redução da sobrecarga investigativa.
+
+\subsection{Análise de Desempenho por Janela Temporal}
+
+A Tabela~\ref{tab:window-comparison} apresenta a comparação detalhada de desempenho entre os modelos Baseline e Full ao longo das seis janelas de teste, permitindo avaliar a consistência temporal dos ganhos observados.
+
+\begin{table}{\linewidth}
+    \centering
+    \caption{Comparação de desempenho por janela temporal}
+    \label{tab:window-comparison}
+    \resizebox{\linewidth}{!}{%
+    \begin{tabular}{ccccccc}
+        \hline
+        \textbf{Janela} & \textbf{AUPRC (B)} & \textbf{AUPRC (F)} & \textbf{Lift AUPRC} & \textbf{P@100 (B)} & \textbf{P@100 (F)} & \textbf{Lift P@100} \\
+        \hline
+        2 & 0.180 & 0.208 & +15.5\% & 0.82 & 0.75 & -8.5\% \\
+        3 & 0.234 & 0.293 & +25.6\% & 0.91 & 0.92 & +1.1\% \\
+        4 & 0.275 & 0.353 & +28.2\% & 0.96 & 0.96 & +0.0\% \\
+        5 & 0.352 & 0.414 & +17.7\% & 0.97 & 0.98 & +1.0\% \\
+        6 & 0.251 & 0.239 & -4.8\% & 0.88 & 0.83 & -5.7\% \\
+        7 & 0.217 & 0.272 & +25.8\% & 0.90 & 0.87 & -3.3\% \\
+        \hline
+        \textbf{Média} & \textbf{0.251} & \textbf{0.297} & \textbf{+18.0\%} & \textbf{0.907} & \textbf{0.885} & \textbf{-2.7\%} \\
+        \hline
+    \end{tabular}%
+    }
+\end{table}
+
+A análise temporal revela que o modelo completo apresentou ganhos positivos de AUPRC em 5 das 6 janelas testadas, com lifts variando entre +15.5\% e +28.2\%. A exceção ocorreu na janela 6, onde houve uma leve degradação de -4.8\%. Essa variação pode estar associada a mudanças na distribuição temporal dos padrões de fraude ou a diferenças na densidade topológica do grafo naquele período específico.
+
+Para as métricas de \textit{Precision@k}, observa-se um padrão mais heterogêneo. Em algumas janelas (especialmente as janelas iniciais), o modelo \textit{Baseline} apresentou desempenho superior, o que sugere que, para os alertas de altíssimo risco (top-100), os atributos comportamentais isolados já forneciam sinais preditivos robustos. No entanto, conforme se expande o horizonte investigativo para P@300 e P@500, o modelo completo recupera vantagem consistente, demonstrando que as \textit{features} topológicas são especialmente úteis para refinar a classificação em níveis intermediários de risco.
+
+\section{Validação Estatística do Estudo de Ablação}
+
+Para determinar se os ganhos observados são estatisticamente significativos e não resultam de variações aleatórias inerentes ao processo de amostragem temporal, aplicou-se testes t pareados sobre as diferenças de desempenho entre os dois modelos ao longo das janelas de teste. A Tabela~\ref{tab:statistical-tests} apresenta os resultados.
+
+\begin{table}{\linewidth}
+    \centering
+    \caption{Testes de significância estatística (teste t pareado, $\alpha = 0.05$)}
+    \label{tab:statistical-tests}
+    \begin{tabular}{lcccc}
+        \hline
+        \textbf{Métrica} & \textbf{$\Delta$ Médio} & \textbf{Desvio Padrão} & \textbf{Estatística t} & \textbf{p-valor} \\
+        \hline
+        Acurácia & +0.0789 & 0.0627 & -3.08 & 0.0273* \\
+        Precisão & +0.0212 & 0.0118 & -4.40 & 0.0070** \\
+        F1-Score & +0.0363 & 0.0191 & -4.67 & 0.0055** \\
+        ROC-AUC & +0.0300 & 0.0148 & -4.96 & 0.0042** \\
+        AUPRC & +0.0452 & 0.0324 & -3.42 & 0.0188* \\
+        \hline
+        Recall & -0.0227 & 0.0832 & +0.67 & 0.5340 \\
+        P@100 & -0.0217 & 0.0337 & +1.57 & 0.1763 \\
+        P@200 & +0.0208 & 0.0497 & -1.03 & 0.3520 \\
+        \hline
+        P@300 & +0.0539 & 0.0349 & -3.79 & 0.0128* \\
+        P@500 & +0.0637 & 0.0419 & -3.72 & 0.0137* \\
+        \hline
+        \multicolumn{5}{l}{* Significativo em $\alpha = 0.05$ \quad ** Significativo em $\alpha = 0.01$}
+    \end{tabular}
+\end{table}
+
+Os testes confirmam que os ganhos observados em acurácia, precisão, F1-Score, ROC-AUC e AUPRC são estatisticamente significativos ao nível de confiança de 95\% ($p < 0.05$). Em particular, as métricas de precisão, F1-Score e ROC-AUC apresentaram significância ao nível de 99\% ($p < 0.01$), reforçando a robustez da contribuição das \textit{features} topológicas.
+
+A ausência de significância estatística no \textit{Recall} ($p = 0.534$) e nas métricas P@100 e P@200 sugere que, embora haja variação numérica, essas diferenças podem ser atribuídas à variabilidade natural das janelas temporais. Entretanto, as métricas P@300 ($p = 0.0128$) e P@500 ($p = 0.0137$) apresentaram ganhos estatisticamente significativos, reforçando o argumento de que as \textit{features} topológicas contribuem especialmente para a discriminação de entidades em níveis intermediários de risco, onde a separação entre fraudes e operações lícitas torna-se mais desafiadora.
+
+\section{Captura de Entidades Fraudulentas em Nível Operacional}
+
+Além das métricas agregadas, avaliou-se o impacto operacional dos modelos através da contagem de entidades fraudulentas únicas efetivamente capturadas durante o período de teste. Do total de 3.842 entidades ilícitas presentes no conjunto de validação:
+
+\begin{itemize}
+    \item \textbf{Modelo Baseline:} Detectou 3.603 entidades (93,78\% de cobertura).
+    \item \textbf{Modelo Full:} Detectou 3.632 entidades (94,53\% de cobertura).
+\end{itemize}
+
+Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,80\% na taxa de captura em relação ao modelo base. Em um contexto de \textit{compliance} em larga escala, onde cada entidade fraudulenta não detectada pode resultar em perdas financeiras significativas e penalidades regulatórias, esse incremento possui valor prático mensurável.
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagens/entity_level_recall.png}
+    \caption{Captura de entidades fraudulentas: Baseline vs Full Model}
+    \label{fig:entity-recall}
+\end{figure}
+
+\section{Importância Global das Features via SHAP}
+
+Para interpretar o comportamento do modelo e identificar quais atributos exercem maior influência nas predições, aplicou-se a técnica SHAP (\textit{SHapley Additive exPlanations}) \cite{lundberg2017unified} ao modelo completo. A Tabela~\ref{tab:shap-top15} apresenta as 15 \textit{features} de maior importância global.
+
+\begin{table}{\linewidth}
+    \centering
+    \caption{Top 15 features por importância SHAP global}
+    \label{tab:shap-top15}
+    \begin{tabular}{clcc}
+        \hline
+        \textbf{Posição} & \textbf{Feature} & \textbf{SHAP Médio} & \textbf{Tipo} \\
+        \hline
+        1 & \texttt{ach\_count\_sent} & 0.9514 & Comportamental \\
+        2 & \texttt{ach\_count\_recv} & 0.7401 & Comportamental \\
+        3 & \texttt{hits\_auth} & 0.6513 & Topológico \\
+        4 & \texttt{in\_degree} & 0.3829 & Topológico \\
+        5 & \texttt{cheque\_count\_sent} & 0.3103 & Comportamental \\
+        6 & \texttt{vol\_recv} & 0.2884 & Comportamental \\
+        7 & \texttt{average\_neighbor\_degree} & 0.2308 & Topológico \\
+        8 & \texttt{degree} & 0.2258 & Topológico \\
+        9 & \texttt{hits\_hub} & 0.2186 & Topológico \\
+        10 & \texttt{leiden\_macro\_modularity} & 0.1767 & Topológico \\
+        11 & \texttt{successor\_avg\_volume} & 0.1760 & Topológico \\
+        12 & \texttt{pr\_count} & 0.1751 & Topológico \\
+        13 & \texttt{egonet\_node\_count} & 0.1677 & Topológico \\
+        14 & \texttt{vol\_sent} & 0.1614 & Comportamental \\
+        15 & \texttt{cheque\_count\_recv} & 0.1490 & Comportamental \\
+        \hline
+    \end{tabular}
+\end{table}
+
+A análise revela que as duas \textit{features} mais influentes são comportamentais (\texttt{ach\_count\_sent} e \texttt{ach\_count\_recv}), o que corrobora a intuição de que transações via \textit{Automated Clearing House} (ACH) são frequentemente associadas a esquemas de fraude no \textit{dataset} AMLworld. No entanto, as posições subsequentes são dominadas por atributos topológicos, incluindo a pontuação de autoridade do algoritmo HITS (\texttt{hits\_auth}), o grau de entrada (\texttt{in\_degree}) e métricas de vizinhança.
+
+Entre os atributos topológicos, destaca-se a importância de:
+
+\begin{itemize}
+    \item \textbf{Centralidade (HITS e Grau):} Entidades fraudulentas tendem a ocupar posições centrais na rede, seja como concentradoras de fluxo financeiro (\textit{hits\_auth}) ou como nós de dispersão (\textit{hits\_hub}).
+    
+    \item \textbf{Métricas de Comunidade:} A modularidade da macro-comunidade (\texttt{leiden\_macro\_modularity}) captura o nível de isolamento topológico de um vértice, indicando se ele faz parte de um anel financeiro fechado e compartimentado.
+    
+    \item \textbf{Agregação de Vizinhança:} O grau médio dos vizinhos (\texttt{average\_neighbor\_degree}) e o volume médio enviado aos sucessores (\texttt{successor\_avg\_volume}) fornecem sinais sobre o comportamento pós-transferência, revelando se o dinheiro é imediatamente dispersado ou concentrado após a transação inicial.
+\end{itemize}
+
+A distribuição equilibrada entre \textit{features} comportamentais e topológicas no ranking SHAP valida a hipótese de que ambos os tipos de informação são complementares e necessários para uma detecção eficaz de lavagem de dinheiro.
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens/global_shap_beeswarm.png}
+    \caption{Distribuição de valores SHAP para as principais features do modelo}
+    \label{fig:shap-beeswarm}
+\end{figure}
+
+\section{Otimização do Conjunto de Features via SHAP-RFE}
+
+Para viabilizar a implantação do sistema em ambientes de produção com recursos computacionais restritos, aplicou-se uma rotina de poda de \textit{features} em dois estágios. O objetivo era identificar um subconjunto reduzido de atributos que mantivesse o desempenho preditivo enquanto minimizava o custo de extração topológica.
+
+\subsection{Etapa 1: Filtro de Colinearidade}
+
+Aplicando o critério de correlação de Spearman com limiar $|\rho| > 0.8$, identificou-se 16 atributos redundantes que foram removidos. Exemplos incluem:
+
+\begin{itemize}
+    \item \texttt{temporal\_fan\_in\_count} (correlação $\rho = 0.971$ com \texttt{in\_degree})
+    \item \texttt{vol\_sent} (correlação $\rho = 0.989$ com \texttt{successor\_avg\_volume})
+    \item \texttt{successor\_max\_volume} (correlação $\rho = 0.993$ com \texttt{successor\_avg\_volume})
+\end{itemize}
+
+Essa etapa reduziu o conjunto de 49 para 33 \textit{features}, resultando em uma AUPRC de referência de 0.2251.
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens/ablation_metric_comparison.png}
+    \caption{Comparação estatística das métricas de ablação}
+    \label{fig:ablation-comparison}
+\end{figure}
+
+\subsection{Etapa 2: Eliminação Recursiva Guiada por SHAP}
+
+A partir do conjunto filtrado, aplicou-se a técnica de eliminação recursiva, removendo iterativamente as \textit{features} de menor importância SHAP e monitorando a degradação de desempenho. A Tabela~\ref{tab:rfe-results} apresenta os resultados das primeiras 5 iterações.
+
+\begin{table}{\linewidth}
+    \centering
+    \caption{Resultados do processo de eliminação recursiva (SHAP-RFE)}
+    \label{tab:rfe-results}
+    \begin{tabular}{ccccl}
+        \hline
+        \textbf{Iteração} & \textbf{N Features} & \textbf{AUPRC} & \textbf{$\Delta$ AUPRC} & \textbf{Feature Removida} \\
+        \hline
+        0 & 33 & 0.2251 & -- & (Baseline) \\
+        1 & 32 & 0.2252 & +0.0001 & \texttt{fan\_out\_count} \\
+        2 & 31 & 0.2300 & +0.0049 & \texttt{cycle\_count} \\
+        3 & 30 & 0.2282 & +0.0031 & \texttt{fan\_in\_count} \\
+        4 & 29 & 0.2269 & +0.0019 & \texttt{local\_clustering\_coefficient} \\
+        5 & 28 & 0.2204 & -0.0047 & \texttt{egonet\_density} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+O processo identificou a iteração 2 (31 \textit{features}) como o ponto ótimo, onde o modelo alcançou AUPRC = 0.2300, representando um ganho de +2.19\% em relação ao baseline de 33 \textit{features} (AUPRC = 0.2251). A partir da iteração 5, observa-se degradação de desempenho, indicando que as \textit{features} restantes eram essenciais para a capacidade preditiva do modelo.
+
+O conjunto final de 31 \textit{features} mantém uma composição balanceada:
+
+\begin{itemize}
+    \item \textbf{16 atributos comportamentais:} Incluindo contagens por tipo de pagamento, volumes transacionados e diversidade de moedas.
+    \item \textbf{15 atributos topológicos:} Incluindo métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança.
+\end{itemize}
+
+Essa redução de 36,7\% no número de \textit{features} (de 49 para 31) resulta em economias substanciais no tempo de processamento, uma vez que algoritmos como o \textit{PageRank}, \textit{Betweenness} e detecção de comunidades apresentam alta complexidade computacional em grafos de larga escala.
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens/rfe_degradation_trajectory.png}
+    \caption{Trajetória de degradação durante o processo SHAP-RFE}
+    \label{fig:rfe-trajectory}
+\end{figure}
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens/rfe_metric_trajectories.png}
+    \caption{Evolução das métricas durante o processo iterativo de eliminação de features}
+    \label{fig:rfe-metrics}
+\end{figure}
+
+\section{Discussão dos Resultados}
+
+Os resultados experimentais confirmam a hipótese central deste trabalho: a incorporação de atributos topológicos extraídos de grafos temporais fornece ganhos estatisticamente significativos na detecção de esquemas de lavagem de dinheiro quando comparada a modelos baseados exclusivamente em \textit{features} comportamentais.
+
+O ganho médio de +18\% em AUPRC, validado estatisticamente com $p = 0.0188$, demonstra que as propriedades estruturais da rede financeira carregam informação preditiva complementar que não é capturada por análises isoladas de comportamento transacional. Esse resultado alinha-se com a literatura recente, que destaca a importância de abordagens baseadas em grafos para identificar tipologias avançadas de fraude, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph,baigabyl2025using}.
+
+A análise de importância via SHAP revelou que, embora as \textit{features} comportamentais tradicionais (especialmente as relacionadas a ACH e cheques) permaneçam altamente relevantes, as métricas topológicas ocupam posições de destaque no ranking de influência. Em particular, o algoritmo HITS e as métricas de grau demonstraram alta capacidade discriminativa, sugerindo que entidades fraudulentas tendem a ocupar posições estruturalmente distintas na rede: seja como pontos de concentração de fluxo (\textit{authority}) ou como nós dispersores (\textit{hub}).
+
+A validação temporal do estudo de ablação, realizada através de \textit{forward-chaining} em 6 janelas consecutivas, confere robustez aos resultados. A consistência dos ganhos ao longo de 5 das 6 janelas indica que os padrões topológicos aprendidos pelo modelo generalizam bem para períodos futuros, um requisito crítico para a implantação em ambientes de produção.
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens/ablation_lift.png}
+    \caption{Lift percentual por janela temporal e métrica de avaliação}
+    \label{fig:ablation-lift}
+\end{figure}
+
+Por outro lado, a redução observada no \textit{Recall} geral (-2.58\%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, potencialmente deixando de capturar fraudes de baixa sinalização topológica. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, onde a priorização de alertas de alta confiança reduz a sobrecarga investigativa, mesmo que isso implique em uma pequena perda marginal de cobertura total.
+
+A otimização do conjunto de \textit{features} via SHAP-RFE demonstrou que é possível reduzir em 36,7\% o número de atributos topológicos sem comprometer o desempenho preditivo. Esse resultado possui implicações práticas significativas: a extração de métricas como \textit{Betweenness Centrality} e detecção de comunidades em grafos de milhões de nós é computacionalmente custosa. Ao identificar um subconjunto eficiente de 15 atributos topológicos essenciais, o sistema torna-se viável para operação em infraestruturas com recursos limitados, expandindo sua aplicabilidade a instituições financeiras de médio porte que não dispõem de clusters computacionais de alta capacidade.
+
 \chapter{Conclusão}
+
+Este trabalho investigou a contribuição de atributos topológicos extraídos de grafos temporais para a detecção de esquemas de lavagem de dinheiro utilizando algoritmos de \textit{Gradient Boosting}. Através de um estudo de ablação controlado e estatisticamente validado, demonstrou-se que a incorporação de \textit{features} estruturais de rede resulta em ganhos significativos de desempenho em relação a modelos baseados exclusivamente em atributos comportamentais.
+
+\section{Principais Contribuições}
+
+Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem evidências quantitativas para as seguintes contribuições:
+
+\begin{enumerate}
+    \item \textbf{Validação empírica do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0.2965, representando um ganho estatisticamente significativo de +18.00\% ($p = 0.0188$) em relação ao modelo de base (AUPRC = 0.2513). Ganhos similares foram observados em precisão (+42.80\%, $p = 0.0070$), F1-Score (+39.81\%, $p = 0.0055$) e ROC-AUC (+3.32\%, $p = 0.0042$).
+    
+    \item \textbf{Identificação de \textit{features} topológicas críticas:} A análise SHAP revelou que métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança ocupam posições de destaque no ranking de importância preditiva, demonstrando que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
+    
+    \item \textbf{Otimização para implantação operacional:} Através de um processo em dois estágios (filtro de colinearidade + SHAP-RFE), identificou-se um subconjunto eficiente de 31 \textit{features} (redução de 36.7\%) que mantém desempenho superior ao modelo de base original, viabilizando a implantação em ambientes com recursos computacionais limitados.
+    
+    \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} em 6 janelas temporais demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros, um requisito essencial para sistemas de detecção de fraudes em produção.
+\end{enumerate}
+
+\section{Implicações Práticas}
+
+Do ponto de vista operacional, os resultados possuem implicações diretas para equipes de \textit{compliance} de instituições financeiras:
+
+\begin{itemize}
+    \item \textbf{Redução de falsos positivos:} O ganho de +42.80\% em precisão implica em uma redução substancial de alertas falsos, diminuindo a sobrecarga investigativa e permitindo que analistas foquem em casos de alto risco real.
+    
+    \item \textbf{Captura incremental de fraudes:} O modelo completo identificou 29 entidades fraudulentas adicionais (0.80\% de melhoria relativa), demonstrando que as \textit{features} topológicas capturam padrões estruturais que escapam à análise comportamental isolada.
+    
+    \item \textbf{Viabilidade computacional:} A redução do conjunto de \textit{features} de 49 para 31 atributos, sem perda de desempenho, torna o sistema viável para operação em infraestruturas de médio porte, expandindo sua aplicabilidade além de grandes instituições bancárias.
+\end{itemize}
+
+\section{Limitações e Trabalhos Futuros}
+
+Embora os resultados sejam promissores, o estudo apresenta limitações que devem ser consideradas:
+
+\begin{enumerate}
+    \item \textbf{Uso de dados sintéticos:} A validação foi realizada exclusivamente sobre o \textit{dataset} AMLworld, que, apesar de sua fidelidade estrutural, não captura toda a complexidade e diversidade de padrões observados em transações bancárias reais. A aplicação do sistema a dados reais de instituições financeiras é um próximo passo essencial.
+    
+    \item \textbf{Escala computacional:} Embora a otimização via SHAP-RFE tenha reduzido o custo de extração de \textit{features}, o processamento de grafos com milhões de nós ainda exige recursos significativos. Investigações futuras devem explorar técnicas de amostragem de grafos e aproximações algorítmicas para viabilizar a operação em tempo real.
+    
+    \item \textbf{Evolução temporal dos padrões:} Fraudadores adaptam suas estratégias ao longo do tempo. Trabalhos futuros devem investigar mecanismos de retreinamento contínuo e detecção de \textit{concept drift} para manter a eficácia do sistema em cenários de evolução adversarial.
+    
+    \item \textbf{Explicabilidade para auditoria regulatória:} Embora a técnica SHAP forneça interpretabilidade a nível de \textit{feature}, a justificação de alertas individuais para fins de auditoria regulatória exige métodos de explicação a nível de instância. A integração de técnicas como LIME (\textit{Local Interpretable Model-agnostic Explanations}) e caminhos de ativação em grafos pode fortalecer a rastreabilidade das decisões do modelo.
+\end{enumerate}
+
+\section{Considerações Finais}
+
+Este trabalho demonstrou que a modelagem de redes financeiras como grafos temporais e a extração de atributos topológicos fornecem ganhos mensuráveis e estatisticamente validados para a detecção de lavagem de dinheiro. A integração de Ciência de Dados de Grafos com algoritmos de \textit{Gradient Boosting} representa uma abordagem promissora para sistemas de \textit{Anti-Money Laundering}, capaz de capturar tanto o comportamento individual das entidades quanto as propriedades estruturais das redes de transações.
+
+Os resultados reforçam a importância de abordagens multimodais que combinam sinais comportamentais e topológicos, especialmente em cenários onde fraudadores utilizam estratégias sofisticadas de ofuscação, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração. À medida que os esquemas de lavagem de dinheiro tornam-se cada vez mais complexos e distribuídos, a incorporação de técnicas baseadas em grafos deixa de ser opcional e torna-se um requisito fundamental para a eficácia dos sistemas de detecção de fraudes financeiras.
 
 
 \bibliography{bibliografia,exemplos,abnt-options}

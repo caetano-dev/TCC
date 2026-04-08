@@ -1,0 +1,53 @@
+\BOOKMARK [0][-]{section*.2}{Introdução }{}% 1
+\BOOKMARK [0][-]{chapter.3}{Fundamentação Teórica }{}% 2
+\BOOKMARK [1][-]{section*.5}{Métricas de Avaliação}{chapter.3}% 3
+\BOOKMARK [2][-]{section*.7}{Matriz de Confusão}{section*.5}% 4
+\BOOKMARK [2][-]{section*.9}{Métricas de Desempenho e o Problema do Desbalanceamento}{section*.5}% 5
+\BOOKMARK [1][-]{section*.14}{Teoria dos Grafos}{chapter.3}% 6
+\BOOKMARK [2][-]{section*.16}{Grafos Temporais}{section*.14}% 7
+\BOOKMARK [2][-]{section*.18}{Atributos Topológicos}{section*.14}% 8
+\BOOKMARK [3][-]{section*.20}{Métricas de Centralidade e Coesão}{section*.18}% 9
+\BOOKMARK [3][-]{section*.28}{Detecção de Comunidades}{section*.18}% 10
+\BOOKMARK [3][-]{section*.31}{Padrões de Vizinhança e Motifs}{section*.18}% 11
+\BOOKMARK [0][-]{chapter.32}{Metodologia e Desenvolvimento }{}% 12
+\BOOKMARK [1][-]{section*.34}{Base de Dados}{chapter.32}% 13
+\BOOKMARK [2][-]{section*.37}{Pré-processamento e Padronização dos Dados}{section*.34}% 14
+\BOOKMARK [1][-]{section*.41}{Modelagem da Janela Deslizante e Agregação de Arestas}{chapter.32}% 15
+\BOOKMARK [1][-]{section*.43}{Engenharia de Features Topológicas}{chapter.32}% 16
+\BOOKMARK [2][-]{section*.45}{Métricas de Centralidade e Coesão}{section*.43}% 17
+\BOOKMARK [2][-]{section*.47}{Detecção de Comunidades \(Leiden\)}{section*.43}% 18
+\BOOKMARK [2][-]{section*.49}{Padrões de Vizinhança, Agregação e Motifs}{section*.43}% 19
+\BOOKMARK [1][-]{section*.51}{Arquitetura Two-Stage Cascade com XGBoost}{chapter.32}% 20
+\BOOKMARK [2][-]{section*.53}{Divisão Cronológica dos Dados \(Forward-Chaining\)}{section*.51}% 21
+\BOOKMARK [1][-]{section*.55}{Modelagem Preditiva e Tratamento de Desbalanceamento com XGBoost}{chapter.32}% 22
+\BOOKMARK [2][-]{section*.57}{Ponderação Dinâmica da Função de Perda}{section*.55}% 23
+\BOOKMARK [2][-]{section*.60}{Estudo de Ablação e Otimização \(SHAP-RFE\)}{section*.55}% 24
+\BOOKMARK [0][-]{chapter.63}{Resultados e Discussão }{}% 25
+\BOOKMARK [1][-]{section*.65}{Desempenho dos Modelos Baseline e Full}{chapter.63}% 26
+\BOOKMARK [2][-]{section*.67}{Resultados no Dataset HI Small}{section*.65}% 27
+\BOOKMARK [2][-]{section*.71}{Resultados no Dataset HI Medium}{section*.65}% 28
+\BOOKMARK [2][-]{section*.75}{Análise Comparativa Entre Datasets}{section*.65}% 29
+\BOOKMARK [2][-]{section*.77}{Métrica Precision@k e Eficácia Operacional}{section*.65}% 30
+\BOOKMARK [2][-]{section*.81}{Análise de Desempenho Temporal no HI Small}{section*.65}% 31
+\BOOKMARK [2][-]{section*.84}{Análise de Desempenho Temporal no HI Medium}{section*.65}% 32
+\BOOKMARK [1][-]{section*.87}{Validação Estatística do Estudo de Ablação}{chapter.63}% 33
+\BOOKMARK [2][-]{section*.89}{Testes Estatísticos no HI Small}{section*.87}% 34
+\BOOKMARK [2][-]{section*.92}{Testes Estatísticos no HI Medium}{section*.87}% 35
+\BOOKMARK [1][-]{section*.95}{Captura de Entidades Fraudulentas em Nível Operacional}{chapter.63}% 36
+\BOOKMARK [2][-]{section*.97}{Análise em Nível de Entidades \(HI Small\)}{section*.95}% 37
+\BOOKMARK [2][-]{section*.100}{Escalabilidade em Nível de Transações \(HI Medium\)}{section*.95}% 38
+\BOOKMARK [1][-]{section*.102}{Importância Global das Features via SHAP}{chapter.63}% 39
+\BOOKMARK [2][-]{section*.104}{Análise SHAP no HI Small}{section*.102}% 40
+\BOOKMARK [2][-]{section*.108}{Análise SHAP no HI Medium}{section*.102}% 41
+\BOOKMARK [1][-]{section*.112}{Otimização do Conjunto de Features via SHAP-RFE}{chapter.63}% 42
+\BOOKMARK [2][-]{section*.114}{Análise RFE no HI Small}{section*.112}% 43
+\BOOKMARK [3][-]{section*.116}{Etapa 1: Filtro de Colinearidade}{section*.114}% 44
+\BOOKMARK [3][-]{section*.119}{Etapa 2: Eliminação Recursiva Guiada por SHAP}{section*.114}% 45
+\BOOKMARK [2][-]{section*.124}{Análise RFE no HI Medium}{section*.112}% 46
+\BOOKMARK [1][-]{section*.129}{Discussão dos Resultados}{chapter.63}% 47
+\BOOKMARK [0][-]{chapter.132}{Conclusão }{}% 48
+\BOOKMARK [1][-]{section*.134}{Principais Contribuições}{chapter.132}% 49
+\BOOKMARK [1][-]{section*.140}{Implicações Práticas}{chapter.132}% 50
+\BOOKMARK [1][-]{section*.142}{Limitações e Trabalhos Futuros}{chapter.132}% 51
+\BOOKMARK [1][-]{section*.148}{Considerações Finais}{chapter.132}% 52
+\BOOKMARK [0][-]{section*.149}{Refer\352ncias Bibliogr\341ficas }{}% 53

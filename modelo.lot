@@ -1,0 +1,12 @@
+\babel@toc {brazilian}{}\relax 
+\contentsline {table}{\numberline {Tabela\ 1\hfill \ - }{\ignorespaces Resumo das variações do \textit {dataset} AMLworld}}{23}{table.caption.35}%
+\contentsline {table}{\numberline {Tabela\ 2\hfill \ - }{\ignorespaces Desempenho dos modelos no dataset HI Small}}{32}{table.caption.68}%
+\contentsline {table}{\numberline {Tabela\ 3\hfill \ - }{\ignorespaces Desempenho dos modelos no dataset HI Medium}}{33}{table.caption.72}%
+\contentsline {table}{\numberline {Tabela\ 4\hfill \ - }{\ignorespaces Comparação de desempenho por janela temporal}}{36}{table.caption.82}%
+\contentsline {table}{\numberline {Tabela\ 5\hfill \ - }{\ignorespaces Comparação de desempenho por janela temporal (HI Medium - seleção)}}{37}{table.caption.85}%
+\contentsline {table}{\numberline {Tabela\ 6\hfill \ - }{\ignorespaces Testes de significância estatística (HI Small, teste t pareado, $\alpha = 0.05$)}}{38}{table.caption.90}%
+\contentsline {table}{\numberline {Tabela\ 7\hfill \ - }{\ignorespaces Testes de significância estatística (HI Medium, teste t pareado, $\alpha = 0.05$)}}{39}{table.caption.93}%
+\contentsline {table}{\numberline {Tabela\ 8\hfill \ - }{\ignorespaces Top 15 features por importância SHAP global (HI Small)}}{41}{table.caption.105}%
+\contentsline {table}{\numberline {Tabela\ 9\hfill \ - }{\ignorespaces Top 15 features por importância SHAP global (HI Medium)}}{43}{table.caption.109}%
+\contentsline {table}{\numberline {Tabela\ 10\hfill \ - }{\ignorespaces Resultados do processo de eliminação recursiva (SHAP-RFE - HI Small)}}{46}{table.caption.120}%
+\contentsline {table}{\numberline {Tabela\ 11\hfill \ - }{\ignorespaces Resultados do processo de eliminação recursiva (SHAP-RFE - HI Medium)}}{47}{table.caption.125}%

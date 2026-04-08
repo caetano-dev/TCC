@@ -1,0 +1,54 @@
+\babel@toc {brazilian}{}\relax 
+\contentsline {chapter}{\normalfont \numberline {}\nobreak {\bf {\uppercase {Introdução}}} }{15}{section*.2}%
+\contentsline {chapter}{\normalfont \nobreak {\numberline {1}}\nobreak {\bf {\uppercase {Fundamentação Teórica}}} }{17}{chapter.3}%
+\contentsline {section}{\numberline {1.1}\normalfont \normalsize \bfseries {Métricas de Avaliação}}{17}{section*.5}%
+\contentsline {subsection}{\numberline {1.1.1}\normalfont \normalsize \uline {Matriz de Confusão}}{17}{section*.7}%
+\contentsline {subsection}{\numberline {1.1.2}\normalfont \normalsize \uline {Métricas de Desempenho e o Problema do Desbalanceamento}}{17}{section*.9}%
+\contentsline {section}{\numberline {1.2}\normalfont \normalsize \bfseries {Teoria dos Grafos}}{18}{section*.14}%
+\contentsline {subsection}{\numberline {1.2.1}\normalfont \normalsize \uline {Grafos Temporais}}{19}{section*.16}%
+\contentsline {subsection}{\numberline {1.2.2}\normalfont \normalsize \uline {Atributos Topológicos}}{19}{section*.18}%
+\contentsline {subsubsection}{\numberline {1.2.2.1}\normalfont \normalsize {Métricas de Centralidade e Coesão}}{20}{section*.20}%
+\contentsline {subsubsection}{\numberline {1.2.2.2}\normalfont \normalsize {Detecção de Comunidades}}{21}{section*.28}%
+\contentsline {subsubsection}{\numberline {1.2.2.3}\normalfont \normalsize {Padrões de Vizinhança e \textit {Motifs}}}{22}{section*.31}%
+\contentsline {chapter}{\normalfont \nobreak {\numberline {2}}\nobreak {\bf {\uppercase {Metodologia e Desenvolvimento}}} }{23}{chapter.32}%
+\contentsline {section}{\numberline {2.1}\normalfont \normalsize \bfseries {Base de Dados}}{23}{section*.34}%
+\contentsline {subsection}{\numberline {2.1.1}\normalfont \normalsize \uline {Pré-processamento e Padronização dos Dados}}{24}{section*.37}%
+\contentsline {section}{\numberline {2.2}\normalfont \normalsize \bfseries {Modelagem da Janela Deslizante e Agregação de Arestas}}{24}{section*.41}%
+\contentsline {section}{\numberline {2.3}\normalfont \normalsize \bfseries {Engenharia de \textit {Features} Topológicas}}{26}{section*.43}%
+\contentsline {subsection}{\numberline {2.3.1}\normalfont \normalsize \uline {Métricas de Centralidade e Coesão}}{26}{section*.45}%
+\contentsline {subsection}{\numberline {2.3.2}\normalfont \normalsize \uline {Detecção de Comunidades (Leiden)}}{27}{section*.47}%
+\contentsline {subsection}{\numberline {2.3.3}\normalfont \normalsize \uline {Padrões de Vizinhança, Agregação e \textit {Motifs}}}{28}{section*.49}%
+\contentsline {section}{\numberline {2.4}\normalfont \normalsize \bfseries {Arquitetura \textit {Two-Stage Cascade} com XGBoost}}{28}{section*.51}%
+\contentsline {subsection}{\numberline {2.4.1}\normalfont \normalsize \uline {Divisão Cronológica dos Dados (\textit {Forward-Chaining})}}{29}{section*.53}%
+\contentsline {section}{\numberline {2.5}\normalfont \normalsize \bfseries {Modelagem Preditiva e Tratamento de Desbalanceamento com XGBoost}}{29}{section*.55}%
+\contentsline {subsection}{\numberline {2.5.1}\normalfont \normalsize \uline {Ponderação Dinâmica da Função de Perda}}{30}{section*.57}%
+\contentsline {subsection}{\numberline {2.5.2}\normalfont \normalsize \uline {Estudo de Ablação e Otimização (\textit {SHAP-RFE})}}{30}{section*.60}%
+\contentsline {chapter}{\normalfont \nobreak {\numberline {3}}\nobreak {\bf {\uppercase {Resultados e Discussão}}} }{32}{chapter.63}%
+\contentsline {section}{\numberline {3.1}\normalfont \normalsize \bfseries {Desempenho dos Modelos Baseline e Full}}{32}{section*.65}%
+\contentsline {subsection}{\numberline {3.1.1}\normalfont \normalsize \uline {Resultados no Dataset HI Small}}{32}{section*.67}%
+\contentsline {subsection}{\numberline {3.1.2}\normalfont \normalsize \uline {Resultados no Dataset HI Medium}}{33}{section*.71}%
+\contentsline {subsection}{\numberline {3.1.3}\normalfont \normalsize \uline {Análise Comparativa Entre Datasets}}{34}{section*.75}%
+\contentsline {subsection}{\numberline {3.1.4}\normalfont \normalsize \uline {Métrica Precision@k e Eficácia Operacional}}{34}{section*.77}%
+\contentsline {subsection}{\numberline {3.1.5}\normalfont \normalsize \uline {Análise de Desempenho Temporal no HI Small}}{36}{section*.81}%
+\contentsline {subsection}{\numberline {3.1.6}\normalfont \normalsize \uline {Análise de Desempenho Temporal no HI Medium}}{37}{section*.84}%
+\contentsline {section}{\numberline {3.2}\normalfont \normalsize \bfseries {Validação Estatística do Estudo de Ablação}}{37}{section*.87}%
+\contentsline {subsection}{\numberline {3.2.1}\normalfont \normalsize \uline {Testes Estatísticos no HI Small}}{37}{section*.89}%
+\contentsline {subsection}{\numberline {3.2.2}\normalfont \normalsize \uline {Testes Estatísticos no HI Medium}}{38}{section*.92}%
+\contentsline {section}{\numberline {3.3}\normalfont \normalsize \bfseries {Captura de Entidades Fraudulentas em Nível Operacional}}{39}{section*.95}%
+\contentsline {subsection}{\numberline {3.3.1}\normalfont \normalsize \uline {Análise em Nível de Entidades (HI Small)}}{39}{section*.97}%
+\contentsline {subsection}{\numberline {3.3.2}\normalfont \normalsize \uline {Escalabilidade em Nível de Transações (HI Medium)}}{39}{section*.100}%
+\contentsline {section}{\numberline {3.4}\normalfont \normalsize \bfseries {Importância Global das Features via SHAP}}{40}{section*.102}%
+\contentsline {subsection}{\numberline {3.4.1}\normalfont \normalsize \uline {Análise SHAP no HI Small}}{40}{section*.104}%
+\contentsline {subsection}{\numberline {3.4.2}\normalfont \normalsize \uline {Análise SHAP no HI Medium}}{41}{section*.108}%
+\contentsline {section}{\numberline {3.5}\normalfont \normalsize \bfseries {Otimização do Conjunto de Features via SHAP-RFE}}{43}{section*.112}%
+\contentsline {subsection}{\numberline {3.5.1}\normalfont \normalsize \uline {Análise RFE no HI Small}}{43}{section*.114}%
+\contentsline {subsubsection}{\numberline {3.5.1.1}\normalfont \normalsize {Etapa 1: Filtro de Colinearidade}}{43}{section*.116}%
+\contentsline {subsubsection}{\numberline {3.5.1.2}\normalfont \normalsize {Etapa 2: Eliminação Recursiva Guiada por SHAP}}{45}{section*.119}%
+\contentsline {subsection}{\numberline {3.5.2}\normalfont \normalsize \uline {Análise RFE no HI Medium}}{46}{section*.124}%
+\contentsline {section}{\numberline {3.6}\normalfont \normalsize \bfseries {Discussão dos Resultados}}{48}{section*.129}%
+\contentsline {chapter}{\normalfont \nobreak {\numberline {4}}\nobreak {\bf {\uppercase {Conclusão}}} }{52}{chapter.132}%
+\contentsline {section}{\numberline {4.1}\normalfont \normalsize \bfseries {Principais Contribuições}}{52}{section*.134}%
+\contentsline {section}{\numberline {4.2}\normalfont \normalsize \bfseries {Implicações Práticas}}{53}{section*.140}%
+\contentsline {section}{\numberline {4.3}\normalfont \normalsize \bfseries {Limitações e Trabalhos Futuros}}{53}{section*.142}%
+\contentsline {section}{\numberline {4.4}\normalfont \normalsize \bfseries {Considerações Finais}}{54}{section*.148}%
+\contentsline {chapter}{\normalfont \numberline {}\nobreak {\bf {\uppercase {Refer\^encias Bibliogr\'aficas}}} }{55}{section*.149}%

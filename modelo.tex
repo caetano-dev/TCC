@@ -292,7 +292,7 @@ Segundo \citeonline[p.39]{bib:RoteiroUERJ2ed}, é um elemento opcional. O texto 
 \pretextualchapter{Resumo}
 \referencia % linha em branco depois
 
-A lavagem de dinheiro representa uma ameaça global à integridade dos sistemas financeiros, movimentando entre 2\% e 5\% do PIB mundial. Sistemas tradicionais de detecção baseados em regras heurísticas enfrentam limitações ao analisar contas de forma isolada, falhando em capturar tipologias complexas que exploram propriedades topológicas da rede transacional. Este trabalho investiga a contribuição de atributos topológicos extraídos de grafos temporais para a detecção de lavagem de dinheiro utilizando o algoritmo XGBoost. Implementou-se um estudo de ablação controlado, comparando um modelo base treinado com 21 \textit{features} comportamentais contra um modelo completo com 49 atributos (21 comportamentais + 28 topológicos). Os experimentos foram conduzidos sobre dois \textit{datasets} sintéticos do AMLworld: HI Small (1.245.666 transações, 1,15\% de fraude) e HI Medium (7.376.519 transações, 1,35\% de fraude), ambos processados através de janelas temporais deslizantes para preservar a causalidade estrita. Os resultados demonstram que a incorporação de métricas topológicas (centralidade, detecção de comunidades e padrões de vizinhança) resultou em ganhos estatisticamente significativos em ambos os datasets. No HI Small: AUPRC +18.00\% ($p=0.0188$), precisão +42.80\% ($p=0.0070$) e F1-Score +39.81\% ($p=0.0055$). No HI Medium: AUPRC +18.88\%, precisão +32.28\% e F1-Score +29.04\%. Adicionalmente, aplicou-se um processo de otimização via SHAP-RFE que reduziu o conjunto de \textit{features} em 36.7\% (de 49 para 31 atributos) sem perda de desempenho, viabilizando a implantação operacional em ambientes com recursos computacionais limitados. A análise SHAP revelou que atributos topológicos como HITS, grau de entrada e modularidade de comunidades ocupam posições de destaque na importância preditiva, validando a hipótese de que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira independentemente da escala do dataset.
+A lavagem de dinheiro representa uma ameaça global à integridade dos sistemas financeiros, movimentando entre 2\% e 5\% do PIB mundial. Sistemas tradicionais de detecção baseados em regras heurísticas enfrentam limitações ao analisar contas de forma isolada, falhando em capturar tipologias complexas que exploram propriedades topológicas da rede transacional. Este trabalho investiga a contribuição de atributos topológicos extraídos de grafos temporais para a detecção de lavagem de dinheiro utilizando o algoritmo XGBoost. Implementou-se um estudo de ablação controlado, comparando um modelo base treinado com 21 \textit{features} comportamentais contra um modelo completo com 49 atributos (21 comportamentais + 28 topológicos). Os experimentos foram conduzidos sobre dois \textit{datasets} sintéticos do AMLworld: HI Small (1.245.666 transações, 1,15\% de fraude) e HI Medium (7.376.519 transações, 1,35\% de fraude), ambos processados através de janelas temporais deslizantes para preservar a causalidade estrita. Os resultados demonstram que a incorporação de métricas topológicas (centralidade, detecção de comunidades e padrões de vizinhança) resultou em ganhos estatisticamente significativos em ambos os datasets. No HI Small: AUPRC +18.00\% ($p=0.0188$), precisão +42.80\% ($p=0.0070$) e F1-Score +39.81\% ($p=0.0055$). No HI Medium: AUPRC +18.88\%, precisão +32.28\% e F1-Score +29.04\%. Na etapa de otimização SHAP-RFE, o HI Small apresentou redução de 12,2\% no conjunto de atributos (de 49 para 43 \textit{features}) com ganho de AUPRC (+1,36\%). Já os resultados atualizados de SHAP-RFE para o HI Medium permanecem pendentes nesta rodada e foram explicitamente marcados como tarefa em aberto (TODO). A análise SHAP revelou que atributos topológicos como HITS, grau de entrada e modularidade de comunidades ocupam posições de destaque na importância preditiva, validando a hipótese de que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira independentemente da escala do dataset.
 ~\\
 
 \imprimirchaves % linha em branco antes
@@ -304,7 +304,7 @@ A lavagem de dinheiro representa uma ameaça global à integridade dos sistemas 
 \pretextualchapter{Abstract}
 \reference % linha em branco depois
 
-Money laundering poses a global threat to financial system integrity, moving between 2\% and 5\% of world GDP. Traditional detection systems based on heuristic rules face limitations when analyzing accounts in isolation, failing to capture complex typologies that exploit topological properties of the transaction network. This work investigates the contribution of topological attributes extracted from temporal graphs for money laundering detection using the XGBoost algorithm. A controlled ablation study was implemented, comparing a baseline model trained with 21 behavioral features against a full model with 49 attributes (21 behavioral + 28 topological). Experiments were conducted on two synthetic AMLworld datasets: HI Small (1,245,666 transactions, 1.15\% fraud rate) and HI Medium (7,376,519 transactions, 1.35\% fraud rate), both processed through sliding temporal windows to preserve strict causality. Results demonstrate that incorporating topological metrics (centrality, community detection, and neighborhood patterns) yielded statistically significant gains across both datasets. For HI Small: AUPRC +18.00\% ($p=0.0188$), precision +42.80\% ($p=0.0070$), and F1-Score +39.81\% ($p=0.0055$). For HI Medium: AUPRC +18.88\%, precision +32.28\%, and F1-Score +29.04\%. Additionally, a SHAP-RFE optimization process reduced the feature set by 36.7\% (from 49 to 31 attributes) without performance loss, enabling operational deployment in resource-constrained environments. SHAP analysis revealed that topological attributes such as HITS, in-degree, and community modularity occupy prominent positions in predictive importance, validating the hypothesis that fraudulent entities exhibit distinct structural signatures in the financial network regardless of dataset scale.
+Money laundering poses a global threat to financial system integrity, moving between 2\% and 5\% of world GDP. Traditional detection systems based on heuristic rules face limitations when analyzing accounts in isolation, failing to capture complex typologies that exploit topological properties of the transaction network. This work investigates the contribution of topological attributes extracted from temporal graphs for money laundering detection using the XGBoost algorithm. A controlled ablation study was implemented, comparing a baseline model trained with 21 behavioral features against a full model with 49 attributes (21 behavioral + 28 topological). Experiments were conducted on two synthetic AMLworld datasets: HI Small (1,245,666 transactions, 1.15\% fraud rate) and HI Medium (7,376,519 transactions, 1.35\% fraud rate), both processed through sliding temporal windows to preserve strict causality. Results demonstrate that incorporating topological metrics (centrality, community detection, and neighborhood patterns) yielded statistically significant gains across both datasets. For HI Small: AUPRC +18.00\% ($p=0.0188$), precision +42.80\% ($p=0.0070$), and F1-Score +39.81\% ($p=0.0055$). For HI Medium: AUPRC +18.88\%, precision +32.28\%, and F1-Score +29.04\%. In feature-pruning optimization, HI Small achieved a 12.2\% reduction in the feature set (from 49 to 43 attributes) with an AUPRC increase (+1.36\%), while updated SHAP-RFE results for HI Medium are still pending and are explicitly marked as a TODO in this version. SHAP analysis revealed that topological attributes such as HITS, in-degree, and community modularity occupy prominent positions in predictive importance, validating the hypothesis that fraudulent entities exhibit distinct structural signatures in the financial network regardless of dataset scale.
 ~\\
 
 \printkeys % linha em branco antes
@@ -717,12 +717,12 @@ A Tabela~\ref{tab:model-summary} apresenta o resumo consolidado de desempenho do
         \hline
         \textbf{Métrica} & \textbf{Baseline} & \textbf{Full Model} & \textbf{Lift} & \textbf{Lift (\%)} \\
         \hline
-        Acurácia & 0.7622 & 0.8408 & +0.0789 & +10.35\% \\
+        Acurácia & 0.7622 & 0.8408 & +0.0786 & +10.31\% \\
         AUPRC & 0.2513 & 0.2965 & +0.0452 & +18.00\% \\
-        ROC-AUC & 0.9038 & 0.9309 & +0.0300 & +3.32\% \\
+        ROC-AUC & 0.9038 & 0.9309 & +0.0271 & +3.00\% \\
         F1-Score & 0.0786 & 0.1099 & +0.0313 & +39.81\% \\
         Precisão & 0.0411 & 0.0587 & +0.0176 & +42.80\% \\
-        Recall & 0.8802 & 0.8531 & -0.0227 & -2.58\% \\
+        Recall & 0.8802 & 0.8531 & -0.0271 & -3.08\% \\
         \hline
         P@100 & 0.9900 & 0.9900 & 0.0000 & +0.00\% \\
         P@200 & 0.9750 & 0.9700 & -0.0050 & -0.51\% \\
@@ -751,12 +751,17 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
         \hline
         \textbf{Métrica} & \textbf{Baseline} & \textbf{Full Model} & \textbf{Lift} & \textbf{Lift (\%)} \\
         \hline
-        Acurácia & 0.7841 & 0.8357 & +0.0516 & +6.58\% \\
+        Acurácia & 0.8357 & 0.8803 & +0.0446 & +5.34\% \\
         AUPRC & 0.2689 & 0.3197 & +0.0508 & +18.88\% \\
-        ROC-AUC & 0.9152 & 0.9368 & +0.0216 & +2.36\% \\
-        F1-Score & 0.1229 & 0.1585 & +0.0356 & +29.04\% \\
-        Precisão & 0.0662 & 0.0875 & +0.0213 & +32.28\% \\
+        ROC-AUC & 0.9155 & 0.9401 & +0.0246 & +2.69\% \\
+        F1-Score & 0.1229 & 0.1585 & +0.0357 & +29.04\% \\
+        Precisão & 0.0662 & 0.0875 & +0.0214 & +32.28\% \\
         Recall & 0.8550 & 0.8379 & -0.0171 & -2.00\% \\
+        \hline
+        P@100 & 0.9800 & 1.0000 & +0.0200 & +2.04\% \\
+        P@200 & 0.9850 & 1.0000 & +0.0150 & +1.52\% \\
+        P@300 & 0.9800 & 1.0000 & +0.0200 & +2.04\% \\
+        P@500 & 0.9840 & 1.0000 & +0.0160 & +1.63\% \\
         \hline
     \end{tabular}
 \end{table}
@@ -776,7 +781,7 @@ A comparação entre HI Small e HI Medium revela insights importantes sobre a es
 
 \subsection{Métrica Precision@k e Eficácia Operacional}
 
-A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema ao ranquear as entidades de maior risco, manteve-se em níveis excepcionalmente altos para ambos os modelos em ambos os datasets. Com P@100 próximo a 0.99 no HI Small e 0.96 no HI Medium, o sistema demonstra alta confiabilidade na priorização de alertas.
+A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema ao ranquear as entidades de maior risco, manteve-se em níveis excepcionalmente altos para ambos os modelos em ambos os datasets. Com P@100 próximo de 0.99 no HI Small e variando entre 0.98 e 1.00 no HI Medium, o sistema demonstra alta confiabilidade na priorização de alertas.
 
 \begin{figure}{\linewidth}
     \centering
@@ -792,7 +797,7 @@ A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema a
     \label{fig:precision-at-k-medium}
 \end{figure}
 
-Observa-se uma leve redução no \textit{Recall} geral (HI Small: -2.58\%, HI Medium: -2.00\%), o que indica um \textit{trade-off} esperado: ao refinar a fronteira de decisão para reduzir falsos positivos (aumentando a precisão), o modelo torna-se ligeiramente mais conservador, deixando de capturar uma pequena fração de fraudes. No entanto, essa perda é compensada pelo ganho substancial em precisão e pela redução da sobrecarga investigativa.
+Observa-se uma leve redução no \textit{Recall} geral (HI Small: -3.08\%, HI Medium: -2.00\%), o que indica um \textit{trade-off} esperado: ao refinar a fronteira de decisão para reduzir falsos positivos (aumentando a precisão), o modelo torna-se ligeiramente mais conservador, deixando de capturar uma pequena fração de fraudes. No entanto, essa perda é compensada pelo ganho substancial em precisão e pela redução da sobrecarga investigativa.
 
 \subsection{Análise de Desempenho Temporal no HI Small}
 
@@ -826,7 +831,7 @@ Para as métricas de \textit{Precision@k}, observa-se um padrão mais heterogên
 
 \subsection{Análise de Desempenho Temporal no HI Medium}
 
-Para o dataset HI Medium, a análise temporal abrange 12 janelas de teste, oferecendo uma perspectiva mais granular da robustez temporal da abordagem topológica. A Tabela~\ref{tab:window-comparison-medium} apresenta um resumo de 6 janelas selecionadas (as intermediárias), enquanto o padrão completo confirma ganhos significativos de AUPRC em 11 das 12 janelas.
+Para o dataset HI Medium, a análise temporal abrange 12 janelas de teste, oferecendo uma perspectiva mais granular da robustez temporal da abordagem topológica. A Tabela~\ref{tab:window-comparison-medium} apresenta um resumo de 6 janelas selecionadas (as intermediárias), enquanto o padrão completo confirma ganhos positivos de AUPRC em todas as 12 janelas.
 
 \begin{table}{\linewidth}
     \centering
@@ -835,22 +840,24 @@ Para o dataset HI Medium, a análise temporal abrange 12 janelas de teste, ofere
     \resizebox{\linewidth}{!}{%
     \begin{tabular}{ccccccc}
         \hline
-        \textbf{Janela} & \textbf{AUPRC (B)} & \textbf{AUPRC (F)} & \textbf{Lift AUPRC} & \textbf{Prec (B)} & \textbf{Prec (F)} & \textbf{Lift Prec} \\
+        \textbf{Janela} & \textbf{AUPRC (B)} & \textbf{AUPRC (F)} & \textbf{Lift AUPRC} & \textbf{P@100 (B)} & \textbf{P@100 (F)} & \textbf{Lift P@100} \\
         \hline
-        4 & 0.261 & 0.292 & +12.0\% & 0.067 & 0.106 & +58.4\% \\
-        5 & 0.326 & 0.392 & +20.2\% & 0.086 & 0.088 & +2.3\% \\
-        7 & 0.224 & 0.300 & +34.2\% & 0.062 & 0.057 & -8.2\% \\
-        9 & 0.292 & 0.360 & +23.0\% & 0.074 & 0.100 & +34.9\% \\
-        11 & 0.352 & 0.419 & +18.9\% & 0.084 & 0.096 & +14.1\% \\
-        13 & 0.258 & 0.346 & +34.0\% & 0.066 & 0.077 & +16.1\% \\
+        4 & 0.261 & 0.292 & +12.0\% & 0.99 & 0.97 & -2.0\% \\
+        5 & 0.326 & 0.392 & +20.2\% & 1.00 & 1.00 & +0.0\% \\
+        7 & 0.224 & 0.300 & +34.2\% & 0.96 & 0.93 & -3.1\% \\
+        9 & 0.292 & 0.360 & +23.0\% & 1.00 & 1.00 & +0.0\% \\
+        11 & 0.352 & 0.419 & +18.9\% & 0.99 & 1.00 & +1.0\% \\
+        13 & 0.258 & 0.346 & +34.0\% & 1.00 & 1.00 & +0.0\% \\
         \hline
-        \textbf{Média (12 janelas)} & \textbf{0.268} & \textbf{0.319} & \textbf{+18.5\%} & \textbf{0.066} & \textbf{0.088} & \textbf{+36.7\%} \\
+        \textbf{Média (12 janelas)} & \textbf{0.269} & \textbf{0.320} & \textbf{+19.0\%} & \textbf{0.973} & \textbf{0.961} & \textbf{-1.2\%} \\
         \hline
     \end{tabular}%
     }
 \end{table}
 
-A análise temporal no HI Medium revela um padrão robusto: o modelo completo apresentou ganhos positivos de AUPRC em 11 das 12 janelas testadas, com lifts variando entre +0.7\% e +34.2\%. Apenas a janela 3 apresentou ganho marginal (+0.7\%), enquanto as demais mostraram contribuições significativas. Destaca-se a variabilidade maior em comparação ao HI Small, sugerindo que a escala aumentada do dataset captura dinâmicas temporais mais complexas. Os ganhos de precisão (+36.7% em média) são particularmente relevantes operacionalmente, indicando redução substancial de falsos positivos.
+A análise temporal no HI Medium revela um padrão robusto: o modelo completo apresentou ganhos positivos de AUPRC nas 12 janelas testadas, com lifts variando entre +0.7\% e +34.2\%. A janela 3 apresentou ganho marginal (+0.7\%), enquanto as demais mostraram contribuições mais expressivas. Destaca-se a variabilidade maior em comparação ao HI Small, sugerindo que a escala aumentada do dataset captura dinâmicas temporais mais complexas.
+
+Para as métricas de \textit{Precision@100}, observa-se um padrão heterogêneo similar ao HI Small: em algumas janelas, o modelo \textit{Baseline} mantém desempenho ligeiramente superior, o que sugere que para alertas de altíssimo risco, os atributos comportamentais isolados já fornecem sinais preditivos robustos em escalas maiores. No entanto, o ganho geral em AUPRC (+19.0\% na média por janela) demonstra que a vantagem das \textit{features} topológicas emerge quando se expande o horizonte investigativo para alertas de médio risco.
 
 \section{Validação Estatística do Estudo de Ablação}
 
@@ -939,9 +946,25 @@ Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 ponto
     \label{fig:entity-recall}
 \end{figure}
 
-\subsection{Escalabilidade em Nível de Transações (HI Medium)}
+\subsection{Análise em Nível de Entidades (HI Medium)}
 
-Para o dataset HI Medium, a avaliação em nível de transação confirmou que o modelo Full processou 7.376.519 transações de teste com uma taxa de fraude de 1,35\% (99.282 casos fraudulentos). A consistência nos ganhos de AUPRC (+18.88%) entre HI Small e HI Medium, apesar da diferença de escala de 6x, demonstra que o benefício das features topológicas não sofre degradação com aumento do volume de dados. Esse resultado tem implicações importantes para a viabilidade de implantação em ambientes de produção com volumes ainda maiores.
+Além das métricas agregadas, avaliou-se o impacto operacional dos modelos no HI Medium através da contagem de entidades fraudulentas únicas efetivamente capturadas durante o período de teste. Do total de 29.781 entidades ilícitas presentes no conjunto de validação:
+
+\begin{itemize}
+    \item \textbf{Modelo Baseline:} Detectou 26.877 entidades (90,25\% de cobertura).
+    \item \textbf{Modelo Full:} Detectou 26.980 entidades (90,59\% de cobertura).
+\end{itemize}
+
+Embora a diferença absoluta seja de apenas 103 entidades adicionais (+0,34 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base. Em um contexto de \textit{compliance} em larga escala, onde cada entidade fraudulenta não detectada pode resultar em perdas financeiras significativas e penalidades regulatórias, esse incremento possui valor prático mensurável. A captura incremental de 103 entidades fraudulentas no HI Medium, apesar da menor melhoria percentual comparada ao HI Small, reflete a complexidade aumentada da rede transacional em escalas maiores, onde entidades fraudulentas podem empregar táticas mais sofisticadas para evitar detecção.
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.85\linewidth]{imagens/HI_Medium_entity_level_recall.png}
+    \caption{Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}
+    \label{fig:entity-recall-medium}
+\end{figure}
+
+A consistência nos ganhos de AUPRC (+18.88%) entre HI Small e HI Medium, apesar da diferença de escala de 6x, demonstra que o benefício das features topológicas não sofre degradação com aumento do volume de dados. Esse resultado tem implicações importantes para a viabilidade de implantação em ambientes de produção com volumes ainda maiores.
 
 \section{Importância Global das Features via SHAP}
 
@@ -1045,17 +1068,9 @@ Para viabilizar a implantação do sistema em ambientes de produção com recurs
 
 \subsection{Análise RFE no HI Small}
 
-\subsubsection{Etapa 1: Filtro de Colinearidade}
+\subsubsection{Etapa 1: Proteção por Estabilidade Temporal}
 
-Aplicando o critério de correlação de Spearman com limiar $|\rho| > 0.8$, identificou-se 16 atributos redundantes que foram removidos. Exemplos incluem:
-
-\begin{itemize}
-    \item \texttt{temporal\_fan\_in\_count} (correlação $\rho = 0.971$ com \texttt{in\_degree})
-    \item \texttt{vol\_sent} (correlação $\rho = 0.989$ com \texttt{successor\_avg\_volume})
-    \item \texttt{successor\_max\_volume} (correlação $\rho = 0.993$ com \texttt{successor\_avg\_volume})
-\end{itemize}
-
-Essa etapa reduziu o conjunto de 49 para 33 \textit{features}, resultando em uma AUPRC de referência de 0.2251.
+No HI Small, a rotina de poda foi iniciada com 49 \textit{features}. Antes da eliminação recursiva, aplicou-se uma camada de proteção de estabilidade temporal: as \textit{features} no percentil superior de importância SHAP (60\%) foram preservadas para evitar remoções agressivas em atributos estruturalmente críticos ao longo das janelas. Essa etapa protegeu 33 atributos e restringiu a poda aos sinais de menor contribuição preditiva.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1066,7 +1081,7 @@ Essa etapa reduziu o conjunto de 49 para 33 \textit{features}, resultando em uma
 
 \subsubsection{Etapa 2: Eliminação Recursiva Guiada por SHAP}
 
-A partir do conjunto filtrado, aplicou-se a técnica de eliminação recursiva, removendo iterativamente as \textit{features} de menor importância SHAP e monitorando a degradação de desempenho. A Tabela~\ref{tab:rfe-results} apresenta os resultados das primeiras 5 iterações.
+A partir desse conjunto protegido, aplicou-se a eliminação recursiva, removendo iterativamente as \textit{features} de menor importância SHAP e monitorando a variação de desempenho. A Tabela~\ref{tab:rfe-results} apresenta as primeiras iterações do processo.
 
 \begin{table}{\linewidth}
     \centering
@@ -1076,26 +1091,22 @@ A partir do conjunto filtrado, aplicou-se a técnica de eliminação recursiva, 
         \hline
         \textbf{Iteração} & \textbf{N Features} & \textbf{AUPRC} & \textbf{$\Delta$ AUPRC} & \textbf{Feature Removida} \\
         \hline
-        0 & 33 & 0.2251 & -- & (Baseline) \\
-        1 & 32 & 0.2252 & +0.0001 & \texttt{fan\_out\_count} \\
-        2 & 31 & 0.2300 & +0.0049 & \texttt{cycle\_count} \\
-        3 & 30 & 0.2282 & +0.0031 & \texttt{fan\_in\_count} \\
-        4 & 29 & 0.2269 & +0.0019 & \texttt{local\_clustering\_coefficient} \\
-        5 & 28 & 0.2204 & -0.0047 & \texttt{egonet\_density} \\
+        0 & 49 & 0.2932 & -- & (Baseline) \\
+        1 & 48 & 0.2935 & +0.0003 & \texttt{fan\_out\_count} \\
+        2 & 47 & 0.2920 & -0.0012 & \texttt{fan\_in\_count} \\
+        3 & 46 & 0.2900 & -0.0032 & \texttt{cycle\_count} \\
+        4 & 45 & 0.2925 & -0.0007 & \texttt{triangle\_count} \\
+        5 & 44 & 0.2879 & -0.0053 & \texttt{egonet\_edge\_count} \\
+        6 & 43 & 0.2972 & +0.0040 & \texttt{leiden\_micro\_modularity} \textbf{(Ótimo)} \\
         \hline
     \end{tabular}
 \end{table}
 
-O processo identificou a iteração 2 (31 \textit{features}) como o ponto ótimo, onde o modelo alcançou AUPRC = 0.2300, representando um ganho de +2.19\% em relação ao baseline de 33 \textit{features} (AUPRC = 0.2251). A partir da iteração 5, observa-se degradação de desempenho, indicando que as \textit{features} restantes eram essenciais para a capacidade preditiva do modelo.
+O processo identificou a iteração 6 (43 \textit{features}) como o ponto ótimo, onde o modelo alcançou AUPRC = 0.2972, com ganho absoluto de +0.0040 em relação ao baseline com 49 \textit{features} (AUPRC = 0.2932). Em termos relativos, esse avanço corresponde a +1,36\%, mantendo estabilidade nas demais métricas globais.
 
-O conjunto final de 31 \textit{features} mantém uma composição balanceada:
+O conjunto final removeu 6 atributos de baixa contribuição (\texttt{fan\_out\_count}, \texttt{fan\_in\_count}, \texttt{cycle\_count}, \texttt{triangle\_count}, \texttt{egonet\_edge\_count}, \texttt{leiden\_micro\_modularity}), preservando 43 \textit{features} com relevância mais robusta ao longo das janelas.
 
-\begin{itemize}
-    \item \textbf{16 atributos comportamentais:} Incluindo contagens por tipo de pagamento, volumes transacionados e diversidade de moedas.
-    \item \textbf{15 atributos topológicos:} Incluindo métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança.
-\end{itemize}
-
-Essa redução de 36,7\% no número de \textit{features} (de 49 para 31) resulta em economias substanciais no tempo de processamento, uma vez que algoritmos como o \textit{PageRank}, \textit{Betweenness} e detecção de comunidades apresentam alta complexidade computacional em grafos de larga escala.
+Essa redução de 12,2\% no número de \textit{features} (de 49 para 43), aliada ao ganho de AUPRC, indica que a poda foi conservadora e orientada por estabilidade, priorizando segurança de desempenho em um cenário de forte desbalanceamento de classes.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1113,44 +1124,16 @@ Essa redução de 36,7\% no número de \textit{features} (de 49 para 31) resulta
 
 \subsection{Análise RFE no HI Medium}
 
-Para o dataset HI Medium, o processo RFE iniciou-se com um conjunto de 30 features após o filtro de colinearidade (após remoção de 19 features redundantes). A Tabela~\ref{tab:rfe-results-medium} apresenta os resultados das iterações do RFE.
+\textbf{TODO --- resultados pendentes nesta rodada.}
 
-\begin{table}{\linewidth}
-    \centering
-    \caption{Resultados do processo de eliminação recursiva (SHAP-RFE - HI Medium)}
-    \label{tab:rfe-results-medium}
-    \begin{tabular}{cccc}
-        \hline
-        \textbf{Iteração} & \textbf{N Features} & \textbf{AUPRC} & \textbf{Status} \\
-        \hline
-        0 & 30 & 0.2063 & Baseline (após filtro colinearidade) \\
-        1 & 29 & 0.2062 & -0.0001 \\
-        2 & 28 & 0.2069 & +0.0007 \\
-        3 & 27 & 0.2073 & +0.0010 \\
-        4 & 26 & 0.2061 & -0.0002 \\
-        5 & 25 & 0.2084 & +0.0021 \textbf{(Ótimo)} \\
-        6 & 24 & 0.1991 & -0.0093 \\
-        \hline
-    \end{tabular}
-\end{table}
+Os resultados atualizados de SHAP-RFE para o dataset HI Medium ainda não estavam disponíveis no momento da consolidação deste capítulo. Por esse motivo, todo o conteúdo quantitativo anterior desta subseção foi invalidado deliberadamente para evitar interpretação de números desatualizados.
 
-O RFE no HI Medium identificou 25 features como o ponto ótimo, representando uma redução de 16.7\% em relação ao conjunto inicial de 30 (após colinearidade). O desempenho máximo de AUPRC = 0.2084 representa apenas uma pequena margem (0.2084 vs 0.2063 no baseline de 30 features), indicando que as features mais relevantes foram selecionadas. A degradação significativa após 25 features (AUPRC cai para 0.1991 com 24 features) sugere que o modelo requer pelo menos esse conjunto mínimo de atributos para discriminação eficaz.
-
-A comparação entre os dois datasets revela um padrão interessante: embora HI Medium tenha iniciado com mais features após colinearidade (30 vs 33 no HI Small), o conjunto ótimo requer fewer features (25 vs 31). Isso sugere que a estrutura mais complexa da rede HI Medium (maior escala e conectividade) permite que informação discriminativa seja capturada com um conjunto menor e mais refinado de atributos.
-
-\begin{figure}{\linewidth}
-    \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_rfe_degradation_trajectory.png}
-    \caption{Trajetória de degradação durante o processo SHAP-RFE (HI Medium)}
-    \label{fig:rfe-trajectory-medium}
-\end{figure}
-
-\begin{figure}{\linewidth}
-    \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_rfe_metric_trajectories.png}
-    \caption{Evolução das métricas durante o processo iterativo de eliminação de features (HI Medium)}
-    \label{fig:rfe-metrics-medium}
-\end{figure}
+Assim que a nova execução estiver concluída, esta subseção será preenchida com:
+\begin{itemize}
+    \item tabela de iterações do RFE (AUPRC, $\Delta$AUPRC e \textit{features} removidas);
+    \item análise do ponto ótimo de poda e composição do conjunto final;
+    \item gráficos de trajetória de degradação e evolução de métricas.
+\end{itemize}
 
 \section{Discussão dos Resultados}
 
@@ -1176,9 +1159,9 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \label{fig:ablation-lift-medium}
 \end{figure}
 
-Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -2.58%, HI Medium: -2.00%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, potencialmente deixando de capturar fraudes de baixa sinalização topológica. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, onde a priorização de alertas de alta confiança reduz a sobrecarga investigativa, mesmo que isso implique em uma pequena perda marginal de cobertura total.
+Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -3.08\%, HI Medium: -2.00\%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, potencialmente deixando de capturar fraudes de baixa sinalização topológica. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, onde a priorização de alertas de alta confiança reduz a sobrecarga investigativa, mesmo que isso implique em uma pequena perda marginal de cobertura total.
 
-A otimização do conjunto de \textit{features} via SHAP-RFE demonstrou que é possível reduzir significativamente o número de atributos topológicos sem comprometer o desempenho preditivo: 36,7\% no HI Small (de 49 para 31) e 16,7\% no HI Medium (de 30 para 25). Esse resultado possui implicações práticas significativas: a extração de métricas como \textit{Betweenness Centrality} e detecção de comunidades em grafos de milhões de nós é computacionalmente custosa. Ao identificar um subconjunto eficiente de atributos topológicos essenciais (15-16 features topológicos em ambos os datasets), o sistema torna-se viável para operação em infraestruturas com recursos limitados, expandindo sua aplicabilidade a instituições financeiras de médio porte que não dispõem de clusters computacionais de alta capacidade.
+A otimização do conjunto de \textit{features} via SHAP-RFE mostrou, para o HI Small, uma poda conservadora de 12,2\% (de 49 para 43 \textit{features}) com ganho de AUPRC (+1,36\%). Para o HI Medium, os resultados de poda desta rodada permanecem pendentes (TODO), e portanto não foram consolidados quantitativamente nesta versão do texto. Mesmo nesse cenário, os achados reforçam a importância de estratégias de seleção de atributos para reduzir custo computacional sem degradar a capacidade de discriminação.
 
 \chapter{Conclusão}
 
@@ -1189,11 +1172,11 @@ Este trabalho investigou a contribuição de atributos topológicos extraídos d
 Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem evidências quantitativas para as seguintes contribuições:
 
 \begin{enumerate}
-    \item \textbf{Validação empírica do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0.2965, representando um ganho estatisticamente significativo de +18.00\% ($p = 0.0188$) em relação ao modelo de base (AUPRC = 0.2513). Ganhos similares foram observados em precisão (+42.80\%, $p = 0.0070$), F1-Score (+39.81\%, $p = 0.0055$) e ROC-AUC (+3.32\%, $p = 0.0042$).
+    \item \textbf{Validação empírica do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0.2965, representando um ganho estatisticamente significativo de +18.00\% ($p = 0.0188$) em relação ao modelo de base (AUPRC = 0.2513). Ganhos similares foram observados em precisão (+42.80\%, $p = 0.0070$), F1-Score (+39.81\%, $p = 0.0055$) e ROC-AUC (+3.00\%, $p = 0.0042$).
     
     \item \textbf{Identificação de \textit{features} topológicas críticas:} A análise SHAP revelou que métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança ocupam posições de destaque no ranking de importância preditiva, demonstrando que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
     
-    \item \textbf{Otimização para implantação operacional:} Através de um processo em dois estágios (filtro de colinearidade + SHAP-RFE), identificou-se um subconjunto eficiente de 31 \textit{features} (redução de 36.7\%) que mantém desempenho superior ao modelo de base original, viabilizando a implantação em ambientes com recursos computacionais limitados.
+    \item \textbf{Otimização para implantação operacional:} No HI Small, a poda SHAP-RFE identificou um subconjunto eficiente de 43 \textit{features} (redução de 12,2\%), com ganho de AUPRC em relação ao baseline da própria etapa de poda. No HI Medium, a atualização dessa etapa permanece como tarefa pendente (TODO) nesta versão.
     
     \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} em 6 janelas temporais demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros, um requisito essencial para sistemas de detecção de fraudes em produção.
 \end{enumerate}
@@ -1207,7 +1190,7 @@ Do ponto de vista operacional, os resultados possuem implicações diretas para 
     
     \item \textbf{Captura incremental de fraudes:} O modelo completo identificou 29 entidades fraudulentas adicionais (0.80\% de melhoria relativa), demonstrando que as \textit{features} topológicas capturam padrões estruturais que escapam à análise comportamental isolada.
     
-    \item \textbf{Viabilidade computacional:} A redução do conjunto de \textit{features} de 49 para 31 atributos, sem perda de desempenho, torna o sistema viável para operação em infraestruturas de médio porte, expandindo sua aplicabilidade além de grandes instituições bancárias.
+    \item \textbf{Viabilidade computacional:} A redução do conjunto de \textit{features} de 49 para 43 atributos no HI Small, com manutenção (e leve ganho) de desempenho, melhora a relação custo-benefício do pipeline e amplia sua viabilidade operacional.
 \end{itemize}
 
 \section{Limitações e Trabalhos Futuros}
@@ -1217,7 +1200,7 @@ Embora os resultados sejam promissores, o estudo apresenta limitações que deve
 \begin{enumerate}
     \item \textbf{Uso de dados sintéticos:} A validação foi realizada exclusivamente sobre o \textit{dataset} AMLworld, que, apesar de sua fidelidade estrutural, não captura toda a complexidade e diversidade de padrões observados em transações bancárias reais. A aplicação do sistema a dados reais de instituições financeiras é um próximo passo essencial.
     
-    \item \textbf{Escala computacional:} Embora a otimização via SHAP-RFE tenha reduzido o custo de extração de \textit{features}, o processamento de grafos com milhões de nós ainda exige recursos significativos. Investigações futuras devem explorar técnicas de amostragem de grafos e aproximações algorítmicas para viabilizar a operação em tempo real.
+    \item \textbf{Escala computacional:} Embora a otimização via SHAP-RFE no HI Small tenha reduzido parte do custo de extração de \textit{features}, o processamento de grafos com milhões de nós ainda exige recursos significativos. Além disso, a atualização da poda para o HI Medium permanece pendente (TODO), reforçando a necessidade de estratégias adicionais de eficiência para operação em escala.
     
     \item \textbf{Evolução temporal dos padrões:} Fraudadores adaptam suas estratégias ao longo do tempo. Trabalhos futuros devem investigar mecanismos de retreinamento contínuo e detecção de \textit{concept drift} para manter a eficácia do sistema em cenários de evolução adversarial.
     

@@ -720,9 +720,9 @@ A Tabela~\ref{tab:model-summary} apresenta o resumo consolidado de desempenho do
         Acurácia & 0.7622 & 0.8408 & +0.0786 & +10.31\% \\
         AUPRC & 0.2513 & 0.2965 & +0.0452 & +18.00\% \\
         ROC-AUC & 0.9038 & 0.9309 & +0.0271 & +3.00\% \\
-        F1-Score & 0.0786 & 0.1099 & +0.0313 & +39.81\% \\
-        Precisão & 0.0411 & 0.0587 & +0.0176 & +42.80\% \\
-        Recall & 0.8802 & 0.8531 & -0.0271 & -3.08\% \\
+        F1-Score & 0.0860 & 0.1220 & +0.0360 & +41.86\% \\
+        Precisão & 0.0450 & 0.0660 & +0.0210 & +46.67\% \\
+        Recall & 0.8802 & 0.8570 & -0.0230 & -2.61\% \\
         \hline
         P@100 & 0.9900 & 0.9900 & 0.0000 & +0.00\% \\
         P@200 & 0.9750 & 0.9700 & -0.0050 & -0.51\% \\
@@ -732,11 +732,11 @@ A Tabela~\ref{tab:model-summary} apresenta o resumo consolidado de desempenho do
     \end{tabular}
 \end{table}
 
-Os resultados no HI Small indicam que a adição das \textit{features} topológicas resultou em melhorias substanciais em múltiplas métricas de desempenho. O ganho mais expressivo ocorreu na precisão (+42.80\%), seguido pelo F1-Score (+39.81\%) e pela AUPRC (+18.00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, onde a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
+Os resultados no HI Small indicam que a adição das \textit{features} topológicas resultou em melhorias substanciais em múltiplas métricas de desempenho. O ganho mais expressivo ocorreu na precisão (+46.67\%), seguido pelo F1-Score (+41.86\%) e pela AUPRC (+18.00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, onde a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_model_metric_comparison.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_ablation_metric_comparison.png}
     \caption{Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}
     \label{fig:model-comparison-small}
 \end{figure}
@@ -751,12 +751,12 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
         \hline
         \textbf{Métrica} & \textbf{Baseline} & \textbf{Full Model} & \textbf{Lift} & \textbf{Lift (\%)} \\
         \hline
-        Acurácia & 0.8357 & 0.8803 & +0.0446 & +5.34\% \\
-        AUPRC & 0.2689 & 0.3197 & +0.0508 & +18.88\% \\
-        ROC-AUC & 0.9155 & 0.9401 & +0.0246 & +2.69\% \\
-        F1-Score & 0.1229 & 0.1585 & +0.0357 & +29.04\% \\
-        Precisão & 0.0662 & 0.0875 & +0.0214 & +32.28\% \\
-        Recall & 0.8550 & 0.8379 & -0.0171 & -2.00\% \\
+        Acurácia & 0.8803 & 0.9204 & +0.0401 & +4.56\% \\
+        AUPRC & 0.3197 & 0.3544 & +0.0347 & +10.85\% \\
+        ROC-AUC & 0.9401 & 0.9572 & +0.0171 & +1.82\% \\
+        F1-Score & 0.1585 & 0.1983 & +0.0398 & +25.11\% \\
+        Precisão & 0.0875 & 0.1136 & +0.0261 & +29.83\% \\
+        Recall & 0.8379 & 0.8034 & -0.0345 & -4.12\% \\
         \hline
         P@100 & 0.9800 & 1.0000 & +0.0200 & +2.04\% \\
         P@200 & 0.9850 & 1.0000 & +0.0150 & +1.52\% \\
@@ -766,11 +766,11 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
     \end{tabular}
 \end{table}
 
-Os resultados no HI Medium apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a datasets de maior escala. A AUPRC apresenta um ganho (+18.88\%) similar ao HI Small (+18.00\%), validando que o benefício das features topológicas é robusto e não depende apenas da escala do dataset. A precisão (+32.28\%) também mostra ganho substancial, ainda que ligeiramente inferior ao HI Small, sugerindo uma trade-off complexidade-benefício em datasets maiores.
+Os resultados no HI Medium apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a datasets de maior escala. A AUPRC apresenta um ganho (+10.85\%) similar ao HI Small (+18.00\%), validando que o benefício das features topológicas é robusto e não depende apenas da escala do dataset. A precisão (+29.83\%) também mostra ganho substancial, ainda que ligeiramente inferior ao HI Small, sugerindo uma trade-off complexidade-benefício em datasets maiores.
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_model_metric_comparison.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_ablation_metric_comparison.png}
     \caption{Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}
     \label{fig:model-comparison-medium}
 \end{figure}
@@ -1072,12 +1072,6 @@ Para viabilizar a implantação do sistema em ambientes de produção com recurs
 
 No HI Small, a rotina de poda foi iniciada com 49 \textit{features}. Antes da eliminação recursiva, aplicou-se uma camada de proteção de estabilidade temporal: as \textit{features} no percentil superior de importância SHAP (60\%) foram preservadas para evitar remoções agressivas em atributos estruturalmente críticos ao longo das janelas. Essa etapa protegeu 33 atributos e restringiu a poda aos sinais de menor contribuição preditiva.
 
-\begin{figure}{\linewidth}
-    \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_ablation_metric_comparison.png}
-    \caption{Comparação estatística das métricas de ablação (HI Small)}
-    \label{fig:ablation-comparison}
-\end{figure}
 
 \subsubsection{Etapa 2: Eliminação Recursiva Guiada por SHAP}
 

@@ -6,8 +6,7 @@
 \contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}}{41}{figure.caption.101}%
 \contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{43}{figure.caption.107}%
 \contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{45}{figure.caption.111}%
-\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Comparação estatística das métricas de ablação (HI Small)}}{46}{figure.caption.118}%
-\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Trajetória de degradação durante o processo SHAP-RFE (HI Small)}}{47}{figure.caption.122}%
-\contentsline {figure}{\numberline {Figura\ 11\hfill \ - }{\ignorespaces Evolução das métricas durante o processo iterativo de eliminação de features (HI Small)}}{48}{figure.caption.123}%
-\contentsline {figure}{\numberline {Figura\ 12\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{49}{figure.caption.128}%
-\contentsline {figure}{\numberline {Figura\ 13\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{50}{figure.caption.129}%
+\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Trajetória de degradação durante o processo SHAP-RFE (HI Small)}}{47}{figure.caption.121}%
+\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Evolução das métricas durante o processo iterativo de eliminação de features (HI Small)}}{47}{figure.caption.122}%
+\contentsline {figure}{\numberline {Figura\ 11\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{49}{figure.caption.127}%
+\contentsline {figure}{\numberline {Figura\ 12\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{50}{figure.caption.128}%

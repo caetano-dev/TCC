@@ -1052,6 +1052,47 @@ A análise comparativa revela que a hierarquia de importância das features é c
     \label{fig:shap-beeswarm-medium}
 \end{figure}
 
+\section{Métricas Topológicas dos Algoritmos}
+\label{sec:analise_critica_topologia}
+
+Para evitar uma descrição exaustiva das mais de vinte métricas avaliadas, os algoritmos foram agrupados de acordo com seus perfis de desempenho e comportamentos estruturais no grafo de transações. A Tabela~\ref{tab:resumo_topologico} consolida os principais indicadores dos agrupamentos mais relevantes, servindo como âncora numérica para a interpretação crítica subsequente.
+
+\begin{table}{\linewidth}
+    \centering
+    \caption{Resumo comparativo dos agrupamentos métricos estruturais}
+    \label{tab:resumo_topologico}
+    \resizebox{\linewidth}{!}{%
+    \begin{tabular}{p{2.8cm}p{4.3cm}p{2.0cm}p{2.2cm}p{1.8cm}p{4.6cm}}
+        \hline
+        \textbf{Perfil coesivo} & \textbf{Métrica representativa} & \textbf{ROC-AUC} & \textbf{Avg. Precision} & \textbf{P@10} & \textbf{Descrição} \\
+        \hline
+        Rankers globais & \texttt{ACH\_COUNT\_SENT}, \texttt{HITS\_HUB}, \texttt{OUT\_DEGREE} & 0,7422--0,7609 & 0,0636--0,0888 & 100,00\% & Sinal forte de dispersão ativa de saída \\
+        Filtros de triagem & \texttt{TX\_COUNT}, \texttt{PR\_COUNT} & 0,6014--0,6782 & 0,0748--0,0938 & 100,00\% & Excelente primeira barreira operacional \\
+        Assimetria de papel & \texttt{HITS\_AUTH} & 0,6209 & 0,0174 & 0,00\%--10,00\% & Contas de destino se ocultam no fluxo normal \\
+        Baixo sinal & \texttt{BITCOIN\_COUNT\_RECV}, \texttt{TIME\_VARIANCE} & 0,5018--0,6181 & 0,0146--0,0171 & 0,00\%--6,25\% & Candidatas à poda por baixo poder discriminativo \\
+        Leiden & Comunidades macroestruturais & $Q$ = 0,6588--0,7898 & -- & -- & Boa partição matemática, mas com diluição fraudulenta \\
+        \hline
+    \end{tabular}%
+    }
+\end{table}
+
+Os resultados experimentais revelam uma dicotomia clara entre capacidade de ranqueamento global e precisão em horizontes estritos de decisão. O grupo dos \textit{Rankers Globais}, liderado por \texttt{ACH\_COUNT\_SENT} (ROC-AUC de 0,7422), \texttt{HITS\_HUB} (0,7315 no HI Small e 0,7542 no HI Medium) e \texttt{OUT\_DEGREE} (0,7225 no HI Small e 0,7609 no HI Medium), demonstrou a maior robustez para discriminar entidades lícitas de ilícitas ao longo de toda a curva de operação. Sob a ótica topológica, esse comportamento indica que os esquemas de lavagem de dinheiro são fortemente caracterizados pela dispersão ativa e pela volumetria de saída de transações realizadas por nós intermediários.
+
+Em contrapartida, métricas locais centradas na contagem bruta, como \texttt{TX\_COUNT} (ROC-AUC de 0,6412) e \texttt{PR\_COUNT} (0,6014), embora exibam menor poder de separação global, alcançam Precision@10 de 100,00\%. Do ponto de vista prático de engenharia de risco, esses algoritmos funcionam como filtros de topo de funil, ideais para triagem primária. Eles não resolvem o problema de classificação da base como um todo, mas são extremamente eficazes para concentrar a investigação nas anomalias mais evidentes da rede.
+
+Um dos achados mais ricos da análise crítica reside na assimetria estrutural exposta pelo algoritmo HITS. Enquanto o perfil de \textit{hub} (\texttt{HITS\_HUB}) obteve desempenho expressivo, o perfil de autoridade (\texttt{HITS\_AUTH}) colapsou para uma Average Precision média de 0,0174 e mediana de Precision@10 igual a 0,00\%. Fenomenologicamente, esse contraste sugere que as redes criminosas estruturam-se para tornar visíveis as contas de distribuição e intermediação, ao mesmo tempo em que camuflam as contas de destino final. Em termos legais e operacionais, o sinal da fraude aparece na periferia operacional do fluxo, não no ponto terminal onde o capital é finalmente absorvido.
+
+Métricas de contexto financeiro hiperespecíficas, a exemplo de \texttt{BITCOIN\_COUNT\_RECV} (ROC-AUC de 0,5018) e \texttt{TIME\_VARIANCE} (0,5883 no HI Small e 0,6181 no HI Medium), apresentaram desempenho próximo ao limiar de aleatoriedade. Essa proximidade com o acaso, combinada a Average Precision muito baixa, indica baixo valor informacional para a tarefa de ranking. Em um pipeline de produção, esses atributos tendem a aumentar custo computacional sem entregar sinal preditivo proporcional, o que justifica sua poda em iterações futuras de otimização.
+
+\subsection{O Paradoxo Estrutural do Algoritmo de Leiden}
+\label{subsec:paradoxo_leiden}
+
+A aplicação do algoritmo de Leiden para detecção de comunidades revelou um paradoxo metodológico relevante para o campo de \textit{Anti-Money Laundering}. Por um lado, as métricas de qualidade são excelentes: o escore médio de modularidade ($Q$) permaneceu alto em todas as janelas observadas, oscilando entre 0,6588 e 0,7898, o que atesta partições matematicamente consistentes e estruturalmente densas.
+
+Por outro lado, Leiden falha como filtro autônomo devido ao efeito de diluição em macrocomunidades. No HI Small, 156.844 de 165.832 nós atribuídos (94,60\%) concentraram-se em comunidades com mais de 500 integrantes, enquanto no HI Medium esse número chegou a 635.056 de 665.127 (95,48\%). Nesses grandes agregados, a taxa de fraude interna converge para a linha de base da rede, chegando a 0,9749\% no HI Small e 0,8673\% no HI Medium. Além disso, as comunidades de maior risco capturam apenas frações marginais da fraude total, o que mostra que uma boa partição matemática não implica utilidade operacional direta.
+
+Conclui-se, portanto, que o Leiden é valioso como descrição da macroestrutura da rede, mas inviável como filtro isolado de detecção. Seu papel é complementar, servindo para contextualizar a arquitetura relacional do grafo, e não para substituir as métricas locais de centralidade e dispersão que efetivamente carregam o sinal antifraude.
+
 \section{Discussão dos Resultados}
 
 Os resultados experimentais confirmam a hipótese central deste trabalho: a incorporação de atributos topológicos extraídos de grafos temporais fornece ganhos estatisticamente significativos na detecção de esquemas de lavagem de dinheiro quando comparada a modelos baseados exclusivamente em \textit{features} comportamentais.
@@ -1078,8 +1119,6 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
 
 Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -3.08\%, HI Medium: -2.00\%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, potencialmente deixando de capturar fraudes de baixa sinalização topológica. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, onde a priorização de alertas de alta confiança reduz a sobrecarga investigativa, mesmo que isso implique em uma pequena perda marginal de cobertura total.
 
-A otimização do conjunto de \textit{features} via SHAP-RFE mostrou, para o HI Small, uma poda conservadora de 12,2\% (de 49 para 43 \textit{features}) com ganho de AUPRC (+1,36\%). Para o HI Medium, os resultados de poda desta rodada permanecem pendentes (TODO), e portanto não foram consolidados quantitativamente nesta versão do texto. Mesmo nesse cenário, os achados reforçam a importância de estratégias de seleção de atributos para reduzir custo computacional sem degradar a capacidade de discriminação.
-
 \chapter{Conclusão}
 
 Este trabalho investigou a contribuição de atributos topológicos extraídos de grafos temporais para a detecção de esquemas de lavagem de dinheiro utilizando algoritmos de \textit{Gradient Boosting}. Através de um estudo de ablação controlado e estatisticamente validado, demonstrou-se que a incorporação de \textit{features} estruturais de rede resulta em ganhos significativos de desempenho em relação a modelos baseados exclusivamente em atributos comportamentais.
@@ -1092,8 +1131,6 @@ Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem ev
     \item \textbf{Validação empírica do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0.2965, representando um ganho estatisticamente significativo de +18.00\% ($p = 0.0188$) em relação ao modelo de base (AUPRC = 0.2513). Ganhos similares foram observados em precisão (+42.80\%, $p = 0.0070$), F1-Score (+39.81\%, $p = 0.0055$) e ROC-AUC (+3.00\%, $p = 0.0042$).
     
     \item \textbf{Identificação de \textit{features} topológicas críticas:} A análise SHAP revelou que métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança ocupam posições de destaque no ranking de importância preditiva, demonstrando que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
-    
-    \item \textbf{Otimização para implantação operacional:} No HI Small, a poda SHAP-RFE identificou um subconjunto eficiente de 43 \textit{features} (redução de 12,2\%), com ganho de AUPRC em relação ao baseline da própria etapa de poda. No HI Medium, a atualização dessa etapa permanece como tarefa pendente (TODO) nesta versão.
     
     \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} em 6 janelas temporais demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros, um requisito essencial para sistemas de detecção de fraudes em produção.
 \end{enumerate}

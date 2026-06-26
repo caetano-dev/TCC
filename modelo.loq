@@ -1,12 +1,10 @@
-\contentsline {figure}{\numberline {Figura\ 1\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}}{33}{figure.caption.69}%
-\contentsline {figure}{\numberline {Figura\ 2\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}}{34}{figure.caption.73}%
-\contentsline {figure}{\numberline {Figura\ 3\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}}{35}{figure.caption.78}%
-\contentsline {figure}{\numberline {Figura\ 4\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}}{36}{figure.caption.79}%
-\contentsline {figure}{\numberline {Figura\ 5\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}}{40}{figure.caption.98}%
-\contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}}{41}{figure.caption.101}%
-\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{43}{figure.caption.107}%
-\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{45}{figure.caption.111}%
-\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Trajetória de degradação durante o processo SHAP-RFE (HI Small)}}{47}{figure.caption.121}%
-\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Evolução das métricas durante o processo iterativo de eliminação de features (HI Small)}}{47}{figure.caption.122}%
-\contentsline {figure}{\numberline {Figura\ 11\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{49}{figure.caption.127}%
-\contentsline {figure}{\numberline {Figura\ 12\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{50}{figure.caption.128}%
+\contentsline {figure}{\numberline {Figura\ 1\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}}{32}{figure.caption.67}%
+\contentsline {figure}{\numberline {Figura\ 2\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}}{33}{figure.caption.71}%
+\contentsline {figure}{\numberline {Figura\ 3\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}}{34}{figure.caption.76}%
+\contentsline {figure}{\numberline {Figura\ 4\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}}{35}{figure.caption.77}%
+\contentsline {figure}{\numberline {Figura\ 5\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}}{39}{figure.caption.96}%
+\contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}}{40}{figure.caption.99}%
+\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{43}{figure.caption.105}%
+\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{44}{figure.caption.109}%
+\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{46}{figure.caption.112}%
+\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{47}{figure.caption.113}%

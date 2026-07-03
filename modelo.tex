@@ -394,7 +394,6 @@ Como objetivos específicos, definem-se:
     \item Avaliar a capacidade preditiva de algoritmos de grafos atuando de forma isolada na identificação de entidades fraudulentas.
     \item Implementar uma arquitetura \textit{Two-Stage Cascade} baseada em XGBoost, utilizando pesagem algorítmica fracionária para mitigar o alto volume de falsos positivos inerente a cenários de detecção de anomalias.
     \item Conduzir um estudo de ablação sob validação \textit{forward-chaining}, comparando estatisticamente o impacto no desempenho gerado pela adição das \textit{features} topológicas em relação a um modelo de base puramente comportamental.
-    \item Otimizar a eficiência computacional do modelo para \textit{deploy} operacional através de um método de poda de atributos combinando filtros de colinearidade e eliminação recursiva guiada por SHAP (\textit{SHAP-RFE}).
     \item Mensurar o impacto operacional e quantificar a captura real de infratores através de diferentes métricas de avaliação de desempenho.
 \end{itemize}
 
@@ -741,17 +740,16 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
         \hline
         \textbf{Métrica} & \textbf{Baseline} & \textbf{Full Model} & \textbf{Lift} & \textbf{Lift (\%)} \\
         \hline
-        Acurácia & 0.8803 & 0.9204 & +0.0401 & +4.56\% \\
-        AUPRC & 0.3197 & 0.3544 & +0.0347 & +10.85\% \\
-        ROC-AUC & 0.9401 & 0.9572 & +0.0171 & +1.82\% \\
-        F1-Score & 0.1585 & 0.1983 & +0.0398 & +25.11\% \\
-        Precisão & 0.0875 & 0.1136 & +0.0261 & +29.83\% \\
-        Recall & 0.8379 & 0.8034 & -0.0345 & -4.12\% \\
-        \hline
-        P@100 & 0.9800 & 1.0000 & +0.0200 & +2.04\% \\
-        P@200 & 0.9850 & 1.0000 & +0.0150 & +1.52\% \\
-        P@300 & 0.9800 & 1.0000 & +0.0200 & +2.04\% \\
-        P@500 & 0.9840 & 1.0000 & +0.0160 & +1.63\% \\
+        Acurácia  & 0,8357 & 0,8803 & +0,0446 & +5,34\%  \\
+        AUPRC     & 0,2689 & 0,3197 & +0,0508 & +18,88\% \\
+        ROC-AUC   & 0,9155 & 0,9401 & +0,0246 & +2,69\%  \\
+        F1-Score  & 0,1229 & 0,1585 & +0,0357 & +29,04\% \\
+        Precisão  & 0,0662 & 0,0875 & +0,0214 & +32,28\% \\
+        Recall    & 0,8550 & 0,8379 & -0,0171 & -2,00\%  \\ \hline
+        P@100     & 0,9800 & 1,0000 & +0,0200 & +2,04\%  \\
+        P@200     & 0,9850 & 1,0000 & +0,0150 & +1,52\%  \\
+        P@300     & 0,9800 & 1,0000 & +0,0200 & +2,04\%  \\
+        P@500     & 0,9840 & 1,0000 & +0,0160 & +1,63\%  \\ \hline
         \hline
     \end{tabular}
 \end{table}
@@ -1143,8 +1141,6 @@ Do ponto de vista operacional, os resultados possuem implicações diretas para 
     \item \textbf{Redução de falsos positivos:} O ganho de +42.80\% em precisão implica em uma redução substancial de alertas falsos, diminuindo a sobrecarga investigativa e permitindo que analistas foquem em casos de alto risco real.
     
     \item \textbf{Captura incremental de fraudes:} O modelo completo identificou 29 entidades fraudulentas adicionais (0.80\% de melhoria relativa), demonstrando que as \textit{features} topológicas capturam padrões estruturais que escapam à análise comportamental isolada.
-    
-    \item \textbf{Viabilidade computacional:} A redução do conjunto de \textit{features} de 49 para 43 atributos no HI Small, com manutenção (e leve ganho) de desempenho, melhora a relação custo-benefício do pipeline e amplia sua viabilidade operacional.
 \end{itemize}
 
 \section{Limitações e Trabalhos Futuros}

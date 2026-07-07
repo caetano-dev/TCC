@@ -4,7 +4,7 @@
 \contentsline {figure}{\numberline {Figura\ 4\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}}{35}{figure.caption.77}%
 \contentsline {figure}{\numberline {Figura\ 5\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}}{39}{figure.caption.96}%
 \contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}}{40}{figure.caption.99}%
-\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{43}{figure.caption.105}%
-\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{44}{figure.caption.109}%
-\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{48}{figure.caption.117}%
-\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{49}{figure.caption.118}%
+\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{42}{figure.caption.105}%
+\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{43}{figure.caption.109}%
+\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{47}{figure.caption.117}%
+\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{48}{figure.caption.118}%

@@ -390,9 +390,9 @@ Money laundering poses a global threat to financial system integrity, moving bet
 \hspace*{\fill}\textit{Autor}\\
 \end{epigrafeonline}
 
-A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de forma ilícita, ocultando sua origem. Segundo \citeonline{unodc2011estimating}, esse crime movimenta entre 2\% e 5\% do PIB mundial por ano. No Brasil, estima-se que entre US\$ 25,8 bilhões e US\$ 64,4 bilhões sejam lavados anualmente \cite{vinciworks}, o que exige das instituições financeiras sistemas de monitoramento em larga escala. Tradicionalmente, a detecção de anomalias em AML (\textit{Anti-Money Laundering}) baseia-se em heurísticas e regras estáticas, centradas em limites de valor e frequência transacional. Essa abordagem tende a gerar altas taxas de falsos positivos, sobrecarregar equipes de \textit{compliance} e falhar na identificação de tipologias criminosas mais recentes, nas quais os fraudadores fragmentam os valores em múltiplas contas e camadas de ofuscação \cite{jensen2023fighting}.
+A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de forma ilícita, ocultando sua origem. Segundo \citeonline{unodc2011estimating}, esse crime movimenta entre 2\% e 5\% do PIB mundial por ano. No Brasil, estima-se que entre US\$ 25,8 bilhões e US\$ 64,4 bilhões sejam lavados anualmente \cite{vinciworks, kar2014brazil, brasil2021nra}, o que exige das instituições financeiras sistemas de monitoramento em larga escala. Tradicionalmente, a detecção de anomalias em AML (\textit{Anti-Money Laundering}) baseia-se em heurísticas e regras estáticas, centradas em limites de valor e frequência transacional. Essa abordagem tende a gerar altas taxas de falsos positivos, sobrecarregar equipes de \textit{compliance} e falhar na identificação de tipologias criminosas mais recentes, nas quais os fraudadores fragmentam os valores em múltiplas contas e camadas de ofuscação \cite{jensen2023fighting}.
 
-Como forma de mascarar suas atividades, agentes ilícitos realizam suas operações explorando propriedades topológicas específicas, como \textit{smurfing}, ciclos de transferência e nós de dispersão, para cortar o rastro do dinheiro \cite{cheng2025graph}. Enquanto a análise tabular tradicional avalia o comportamento de uma conta de forma isolada, a aplicação de Ciência de Dados de Grafos permite extrair métricas de centralidade, detecção de comunidades, informações topológicas e anomalias de vizinhança que capturam dados sobre o comportamento dos participantes da rede \cite{baigabyl2025using}.
+Como forma de mascarar suas atividades, agentes ilícitos realizam suas operações explorando propriedades topológicas específicas, como \textit{smurfing}, ciclos de transferência e nós de dispersão, para cortar o rastro do dinheiro \cite{cheng2025graph, dumitrescu2022anomaly, fatf2018concealment}. Enquanto a análise tabular tradicional avalia o comportamento de uma conta de forma isolada, a aplicação de Ciência de Dados de Grafos permite extrair métricas de centralidade, detecção de comunidades, informações topológicas e anomalias de vizinhança que capturam dados sobre o comportamento dos participantes da rede \cite{baigabyl2025using}.
 
 Algoritmos de \textit{Gradient Boosting}, como o XGBoost\cite{chen2016xgboost}, são amplamente utilizados para análise de dados estruturados devido à eficiência computacional e robustez no tratamento do desbalanceamento extremo de classes, típico da detecção de fraudes \cite{alarab2020comparative}. No entanto, o XGBoost puro não processa estruturas relacionais nativamente: existe a necessidade de isolar e quantificar o ganho real de performance que as \textit{features} baseadas em grafos injetam nesses modelos tabulares \cite{karim2024scalable}. Além disso, é necessário estabelecer se a complexidade extra de treinar um modelo de \textit{Machine Learning} se justifica frente ao uso direto de algoritmos de grafos isolados atuando como detectores de fraude.
 
@@ -481,7 +481,7 @@ As métricas de centralidade quantificam a importância ou influência de um vé
 Contas utilizadas como vértices de passagem ou que possuem uma concentração alta de fundos ilícitos exibem graus altos.
 
 
-\item \textbf{Algoritmo HITS (\textit{Hyperlink-Induced Topic Search}):} Atribui a cada vértice uma pontuação de \textit{Hub} ($h$) e uma pontuação de \textit{Authority} ($a$). Estas pontuações são atualizadas iterativamente através da relação mutuamente recursiva:
+\item \textbf{Algoritmo HITS (\textit{Hyperlink-Induced Topic Search}):} Atribui a cada vértice uma pontuação de \textit{Hub} ($h$) e uma pontuação de \textit{Authority} ($a$) \cite{elkilany2024detecting}. Estas pontuações são atualizadas iterativamente através da relação mutuamente recursiva:
 \begin{equation}
     h(u) = \sum_{v \in N_{out}(u)} a(v), \quad a(v) = \sum_{u \in N_{in}(v)} h(u)
 \end{equation}
@@ -500,7 +500,7 @@ Onde $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$, e
 \end{equation}
 Sendo $N$ o número total de vértices, $B_u$ o conjunto de vértices que apontam para $u$, e $L(v)$ o número de links de saída do vértice $v$. A formulação com $\alpha=0{,}85$ (\textit{deep}) permite ao algoritmo encontrar padrões mais longos  na rede, enquanto $\alpha=0{,}75$ (\textit{shallow}) foca na influência local, otimizando a detecção de anéis de lavagem curtos e rápidos.
 
-\item \textbf{Decomposição \textit{K-Core}:} Avalia a profundidade de aninhamento de uma conta na rede. Dado um grafo $G = (V, E)$, um subgrafo induzido $H = (V_k, E_k)$ é definido como um \textit{k-core} se for o subgrafo maximal onde o grau de todo vértice $v \in V_k$, restrito a $H$, é maior ou igual a $k$:
+\item \textbf{Decomposição \textit{K-Core}:} Avalia a profundidade de aninhamento de uma conta na rede \cite{shin2016corescope, shin2018patterns, conte2024kcores}. Dado um grafo $G = (V, E)$, um subgrafo induzido $H = (V_k, E_k)$ é definido como um \textit{k-core} se for o subgrafo maximal onde o grau de todo vértice $v \in V_k$, restrito a $H$, é maior ou igual a $k$:
 \begin{equation}
     \forall v \in V_k, \quad d_H(v) \ge k
 \end{equation}
@@ -512,7 +512,7 @@ Vértices com altos valores de $c(v)$ pertencem ao núcleo denso e estruturalmen
 \end{itemize}
 
 \subsubsection{Detecção de Comunidades}
-A detecção de comunidades visa particionar o grafo em subconjuntos de vértices densamente conectados internamente e esparsamente conectados com o restante da rede.
+A detecção de comunidades visa particionar o grafo em subconjuntos de vértices densamente conectados internamente e esparsamente conectados com o restante da rede \cite{liu2019evaluation}.
 \begin{itemize}
 \item \textbf{Algoritmo Leiden:} Utilizado pela sua eficiência e garantia de conectividade interna. O algoritmo busca particionar a rede de modo a maximizar a modularidade ($Q$), que compara a densidade de arestas dentro das comunidades com a densidade esperada em um grafo aleatório:
 \begin{equation}
@@ -522,7 +522,7 @@ Onde $A_{ij}$ representa o peso da aresta entre $i$ e $j$, $k_i$ é o grau do v�
 \end{itemize}
 
 \subsubsection{Padrões de Vizinhança e \textit{Motifs}}
-A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs}) captura a mecânica exata das tipologias de fraude.
+A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs}) captura a mecânica exata das tipologias de fraude \cite{akoglu2010oddball, mitchell2019effectiveness}.
 \begin{itemize}
 
 \item \textbf{Atributos de \textit{Egonet} (Rede de Ego):} Avaliam a vizinhança imediata (1-hop) do vértice. A extração da densidade da egorrede, quantidade de nós, arestas e peso total consolidado medem a coesão local ao redor da entidade. O coeficiente de agrupamento (\textit{local clustering coefficient}) e a contagem de triângulos refinam essa análise validando a interconectividade dos vizinhos.
@@ -623,7 +623,7 @@ O cálculo exato de certas métricas de centralidade em grafos de grande escala 
     
     \item \textbf{Algoritmo HITS:} O processamento das pontuações de \textit{Hub} e \textit{Authority} foi parametrizado com um limite máximo de 500 iterações (\textit{max\_iter} = 500), com o objetivo de garantir a convergência mesmo em janelas temporais de com alta densidade de vértices e arestas.
     
-    \item \textbf{Decomposição \textit{K-Core}:} Devido à exigência topológica do algoritmo, o grafo direcionado ponderado foi primeiramente convertido para uma projeção simples não-direcionada e sem auto-laços (\textit{self-loops}). A partir dessa projeção, extraiu-se o valor de \textit{coreness} máximo atingido por cada entidade na referida janela temporal.
+    \item \textbf{Decomposição \textit{K-Core}:} Devido à exigência topológica do algoritmo, o grafo direcionado ponderado foi primeiramente convertido para uma projeção simples não-direcionada e sem auto-laços (\textit{self-loops}) \cite{shin2018patterns}. A partir dessa projeção, extraiu-se o valor de \textit{coreness} máximo atingido por cada entidade na referida janela temporal.
 \end{itemize}
 
 \subsection{Detecção de Comunidades (Leiden)}
@@ -658,7 +658,7 @@ Ao término da extração das \textit{features}, as tabelas tabulares isoladas d
 
 \section{Arquitetura Preditiva e Calibração de Limiar com XGBoost}
 
-O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: o extremo desbalanceamento de classes (onde as fraudes representam uma fração minúscula do volume total) e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)\cite{chen2016xgboost} com calibração de limiar baseada em busca de maximização de precisão sob restrição de cobertura (\textit{Recall-constrained threshold calibration})\cite{shukla2025smote}.
+O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: o extremo desbalanceamento de classes (onde as fraudes representam uma fração minúscula do volume total) e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)\cite{chen2016xgboost} com calibração de limiar baseada em busca de maximização de precisão sob restrição de cobertura (\textit{Recall-constrained threshold calibration})\cite{shukla2025smote}. O algoritmo busca o limiar que maximiza a precisão garantindo um Recall mínimo de 85\% para a janela de validação
 
 \subsection{Divisão Cronológica dos Dados (\textit{Forward-Chaining})}
 
@@ -966,7 +966,7 @@ A consistência nos ganhos de AUPRC (+18.88\%) entre HI Small e HI Medium, apesa
 
 \section{Importância Global das Features via SHAP}
 
-Para interpretar o comportamento do modelo e identificar quais atributos exercem maior influência nas predições, aplicou-se a técnica SHAP (\textit{SHapley Additive exPlanations}) \cite{lundberg2017unified} ao modelo completo.
+Para interpretar o comportamento do modelo e identificar quais atributos exercem maior influência nas predições, aplicou-se a técnica SHAP (\textit{SHapley Additive exPlanations}) \cite{lundberg2017unified} ao modelo completo. Devido à alta complexidade computacional para calcular permutações de 49 features, a análise SHAP de cada janela foi calculada sobre uma amostragem aleatória controlada de 1.000 instâncias de teste.
 
 \subsection{Análise SHAP no HI Small}
 
@@ -1171,7 +1171,7 @@ Embora os resultados sejam promissores, o estudo apresenta limitações que deve
 
 Este trabalho demonstrou que a modelagem de redes financeiras como grafos temporais e a extração de atributos topológicos fornecem ganhos mensuráveis e estatisticamente validados para a detecção de lavagem de dinheiro. A integração de Ciência de Dados de Grafos com algoritmos de \textit{Gradient Boosting} representa uma abordagem promissora para sistemas de \textit{Anti-Money Laundering}, capaz de capturar tanto o comportamento individual das entidades quanto as propriedades estruturais das redes de transações.
 
-Os resultados reforçam a importância de abordagens multimodais que combinam sinais comportamentais e topológicos, especialmente em cenários onde fraudadores utilizam estratégias sofisticadas de ofuscação, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração. À medida que os esquemas de lavagem de dinheiro tornam-se cada vez mais complexos e distribuídos, a incorporação de técnicas baseadas em grafos deixa de ser opcional e torna-se um requisito fundamental para a eficácia dos sistemas de detecção de fraudes financeiras.
+Os resultados reforçam a importância de abordagens multimodais que combinam sinais comportamentais e topológicos, especialmente em cenários onde fraudadores utilizam estratégias sofisticadas de ofuscação, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph, tiwari2020review, chainalysis2025crypto}. À medida que os esquemas de lavagem de dinheiro tornam-se cada vez mais complexos e distribuídos, a incorporação de técnicas baseadas em grafos deixa de ser opcional e torna-se um requisito fundamental para a eficácia dos sistemas de detecção de fraudes financeiras.
 
 
 \bibliography{bibliografia,exemplos,abnt-options}

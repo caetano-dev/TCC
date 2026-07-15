@@ -390,7 +390,7 @@ Money laundering poses a global threat to financial system integrity, moving bet
 \hspace*{\fill}\textit{Autor}\\
 \end{epigrafeonline}
 
-A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de forma ilícita, ocultando sua origem. Segundo \citeonline{unodc2011estimating}, esse crime movimenta entre 2\% e 5\% do PIB mundial por ano. No Brasil, estima-se que entre US\$ 25,8 bilhões e US\$ 64,4 bilhões sejam lavados anualmente \cite{vinciworks, kar2014brazil, brasil2021nra}, o que exige das instituições financeiras sistemas de monitoramento em larga escala. Tradicionalmente, a detecção de anomalias em AML (\textit{Anti-Money Laundering}) baseia-se em heurísticas e regras estáticas, centradas em limites de valor e frequência transacional. Essa abordagem tende a gerar altas taxas de falsos positivos, sobrecarregar equipes de \textit{compliance} e falhar na identificação de tipologias criminosas mais recentes, nas quais os fraudadores fragmentam os valores em múltiplas contas e camadas de ofuscação \cite{jensen2023fighting}.
+A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de forma ilícita, ocultando sua origem \cite{coaf2021cartilha}. Segundo \citeonline{unodc2011estimating}, esse crime movimenta entre 2\% e 5\% do PIB mundial por ano. No Brasil, estima-se que entre US\$ 25,8 bilhões e US\$ 64,4 bilhões sejam lavados anualmente \cite{vinciworks, kar2014brazil, brasil2021nra}, o que exige das instituições financeiras sistemas de monitoramento em larga escala. Tradicionalmente, a detecção de anomalias em AML (\textit{Anti-Money Laundering}) baseia-se em heurísticas e regras estáticas, centradas em limites de valor e frequência transacional. Essa abordagem tende a gerar altas taxas de falsos positivos, sobrecarregar equipes de \textit{compliance} e falhar na identificação de tipologias criminosas mais recentes, nas quais os fraudadores fragmentam os valores em múltiplas contas e camadas de ofuscação \cite{jensen2023fighting}.
 
 Como forma de mascarar suas atividades, agentes ilícitos realizam suas operações explorando propriedades topológicas específicas, como \textit{smurfing}, ciclos de transferência e nós de dispersão, para cortar o rastro do dinheiro \cite{cheng2025graph, dumitrescu2022anomaly, fatf2018concealment}. Enquanto a análise tabular tradicional avalia o comportamento de uma conta de forma isolada, a aplicação de Ciência de Dados de Grafos permite extrair métricas de centralidade, detecção de comunidades, informações topológicas e anomalias de vizinhança que capturam dados sobre o comportamento dos participantes da rede \cite{baigabyl2025using}.
 
@@ -417,7 +417,7 @@ classificação aplicados à detecção de fraudes no contexto de lavagem de din
 A avaliação de modelos preditivos no contexto de \textit{Anti-Money Laundering} (AML) exige métricas robustas ao desbalanceamento extremo de classes, uma vez que a proporção de transações ilícitas é tipicamente inferior a 1\% do volume total \cite{shukla2025smote}. 
 
 \subsection{Matriz de Confusão}
-Em problemas de classificação binária, cada entidade é rotulada como fraude (classe positiva) ou não fraude (classe negativa). A partir das previsões do modelo, obtêm-se quatro resultados possíveis que compõem a matriz de confusão:
+Em problemas de classificação binária, cada entidade é rotulada como fraude (classe positiva) ou não fraude (classe negativa) \cite{bishop2006pattern}. A partir das previsões do modelo, obtêm-se quatro resultados possíveis que compõem a matriz de confusão \cite{fawcett2006introduction}:
 \begin{itemize}
     \item \textit{True Positive} (TP): a entidade era fraudulenta e foi corretamente classificada;
     \item \textit{True Negative} (TN): a entidade não era fraudulenta e foi corretamente classificada;
@@ -427,12 +427,12 @@ Em problemas de classificação binária, cada entidade é rotulada como fraude 
 
 \subsection{Métricas de Desempenho e o Problema do Desbalanceamento}
 
-O \textit{Recall} (Sensibilidade) mede a capacidade de recuperar exemplos positivos, indicando a proporção de fraudadores reais que foram efetivamente detectados:
+O \textit{Recall} (Sensibilidade) mede a capacidade de recuperar exemplos positivos, indicando a proporção de fraudadores reais que foram detectados:
 \begin{equation}
     \mathrm{Recall} = \frac{TP}{TP+FN}
 \end{equation}
 
-A \textit{Precision} mede a exatidão dos alertas gerados, ou seja, a proporção de predições de fraude que estavam corretas:
+A \textit{Precision} (Precisão) mede a exatidão dos alertas gerados, ou seja, a proporção de predições de fraude que estavam corretas:
 \begin{equation}
     \mathrm{Precision} = \frac{TP}{TP+FP}
 \end{equation}
@@ -450,7 +450,7 @@ Para efeitos de implantação em ambiente real, as equipes de \textit{compliance
 
 \section{Teoria dos Grafos}
 
-A Teoria dos Grafos fornece ferramentas matemáticas capazes de modelar interações complexas do mundo real no formato de vértices e arestas. No contexto de transações financeiras, as interações não ocorrem como eventos estáticos e isolados, mas sim como múltiplos fluxos paralelos que variam no tempo. Por isso, a rede é modelada como um grafo direcionado, ponderado por múltiplos atributos e subdividido em janelas temporais \cite{oliveira2025complex}.
+A Teoria dos Grafos fornece ferramentas matemáticas capazes de modelar interações complexas do mundo real no formato de vértices e arestas \cite{barabasi2016network}. No contexto de transações financeiras, as interações não ocorrem como eventos estáticos e isolados, mas sim como múltiplos fluxos paralelos que variam no tempo. Por isso, a rede é modelada como um grafo direcionado, ponderado por múltiplos atributos e subdividido em janelas temporais \cite{oliveira2025complex}.
 
 Formalmente, define-se este grafo como $G = (V, E)$, onde $V$ representa o conjunto de vértices (entidades ou contas bancárias) e $E$ representa o conjunto de arestas direcionadas (fluxos financeiros agregados). 
 
@@ -485,20 +485,20 @@ Contas utilizadas como vértices de passagem ou que possuem uma concentração a
 \begin{equation}
     h(u) = \sum_{v \in N_{out}(u)} a(v), \quad a(v) = \sum_{u \in N_{in}(v)} h(u)
 \end{equation}
-onde $N_{out}(u)$ e $N_{in}(v)$ representam os conjuntos de vizinhos de saída de $u$ e de entrada de $v$, respectivamente.
+onde $N_{out}(u)$ e $N_{in}(v)$ representam os conjuntos de vizinhos de saída de $u$ e de entrada de $v$, respectivamente \cite{kleinberg1999authoritative}.
 
 
 \item \textbf{Centralidade de Intermediação (\textit{Betweenness Centrality}):} Mede a frequência com que um vértice aparece nos caminhos mais curtos entre outros pares de nós. A centralidade do vértice $v$ é dada por:
 \begin{equation}
     C_B(v) = \sum_{s \neq v \neq t \in V} \frac{\sigma_{st}(v)}{\sigma_{st}}
 \end{equation}
-Onde $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$, e $\sigma_{st}(v)$ é o número desses caminhos que passam obrigatoriamente por $v$. Na lavagem de dinheiro, contas de ofuscação atuam frequentemente como pontes entre diferentes aglomerados da rede.
+Onde $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$, e $\sigma_{st}(v)$ é o número desses caminhos que passam obrigatoriamente por $v$. Na lavagem de dinheiro, contas de ofuscação atuam frequentemente como pontes entre diferentes aglomerados da rede \cite{freeman1977set}.
 
 \item \textbf{\textit{PageRank} de Múltiplas Profundidades:} Processado com diferentes fatores de amortecimento ($\alpha$). A pontuação de um vértice $u$ é calculada iterativamente por:
 \begin{equation}
     PR(u) = \frac{1-\alpha}{N} + \alpha \sum_{v \in B_u} \frac{PR(v)}{L(v)}
 \end{equation}
-Sendo $N$ o número total de vértices, $B_u$ o conjunto de vértices que apontam para $u$, e $L(v)$ o número de links de saída do vértice $v$. A formulação com $\alpha=0{,}85$ (\textit{deep}) permite ao algoritmo encontrar padrões mais longos  na rede, enquanto $\alpha=0{,}75$ (\textit{shallow}) foca na influência local, otimizando a detecção de anéis de lavagem curtos e rápidos.
+Sendo $N$ o número total de vértices, $B_u$ o conjunto de vértices que apontam para $u$, e $L(v)$ o número de links de saída do vértice $v$. A formulação com $\alpha=0{,}85$ (\textit{deep}) permite ao algoritmo encontrar padrões mais longos  na rede, enquanto $\alpha=0{,}75$ (\textit{shallow}) foca na influência local, otimizando a detecção de anéis de lavagem curtos e rápidos \cite{page1999pagerank}.
 
 \item \textbf{Decomposição \textit{K-Core}:} Avalia a profundidade de aninhamento de uma conta na rede \cite{shin2016corescope, shin2018patterns, conte2024kcores}. Dado um grafo $G = (V, E)$, um subgrafo induzido $H = (V_k, E_k)$ é definido como um \textit{k-core} se for o subgrafo maximal onde o grau de todo vértice $v \in V_k$, restrito a $H$, é maior ou igual a $k$:
 \begin{equation}
@@ -514,7 +514,7 @@ Vértices com altos valores de $c(v)$ pertencem ao núcleo denso e estruturalmen
 \subsubsection{Detecção de Comunidades}
 A detecção de comunidades visa particionar o grafo em subconjuntos de vértices densamente conectados internamente e esparsamente conectados com o restante da rede \cite{liu2019evaluation}.
 \begin{itemize}
-\item \textbf{Algoritmo Leiden:} Utilizado pela sua eficiência e garantia de conectividade interna. O algoritmo busca particionar a rede de modo a maximizar a modularidade ($Q$), que compara a densidade de arestas dentro das comunidades com a densidade esperada em um grafo aleatório:
+\item \textbf{Algoritmo Leiden:} Utilizado pela sua eficiência e garantia de conectividade interna. O algoritmo busca particionar a rede de modo a maximizar a métrica de modularidade ($Q$), proposta originalmente por \citeonline{newman2004finding}, que compara a densidade de arestas dentro das comunidades com a densidade esperada em um grafo aleatório:
 \begin{equation}
     Q = \frac{1}{2m} \sum_{i,j} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(c_i, c_j)
 \end{equation}
@@ -527,7 +527,7 @@ A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs})
 
 \item \textbf{Atributos de \textit{Egonet} (Rede de Ego):} Avaliam a vizinhança imediata (1-hop) do vértice. A extração da densidade da egorrede, quantidade de nós, arestas e peso total consolidado medem a coesão local ao redor da entidade. O coeficiente de agrupamento (\textit{local clustering coefficient}) e a contagem de triângulos refinam essa análise validando a interconectividade dos vizinhos.
 
-\item \textbf{Padrões Direcionais e \textit{Motifs} Complexos:} A contagem de estruturas simples de dispersão (\textit{fan-out}) e concentração (\textit{fan-in}) é expandida para \textit{motifs} compostos, como o \textit{scatter-gather} e o \textit{gather-scatter}. Estas topologias são as representações matemáticas exatas das fases de pulverização (\textit{layering}) e integração (\textit{integration}) de recursos. A contagem de ciclos (\textit{cycle count}) mapeia as trajetórias circulares utilizadas para criar a ilusão de atividade econômica legítima.
+\item \textbf{Padrões Direcionais e \textit{Motifs} Complexos:} A contagem de estruturas simples de dispersão (\textit{fan-out}) e concentração (\textit{fan-in}) é expandida para \textit{motifs} compostos, como o \textit{scatter-gather} e o \textit{gather-scatter}. Estas topologias são as representações matemáticas exatas das fases de pulverização (\textit{layering}) e integração (\textit{integration}) de recursos \cite{weber2019anti}. A contagem de ciclos (\textit{cycle count}) mapeia as trajetórias circulares utilizadas para criar a ilusão de atividade econômica legítima.
 
 \item \textbf{Agregação de Vizinhança e Dinâmica Temporal:} Sinais de fraude propagam-se topologicamente. O comportamento dos sucessores imediatos (volume médio e máximo transferido por eles) sinaliza o destino do capital pós-transferência. Adicionalmente, \textit{motifs} temporais (\textit{temporal fan-out} e \textit{temporal fan-in}) medem a estruturação de fluxos de forma estritamente cronológica e agressiva, capturando operações que ocorrem em frações de tempo reduzidas, complementando a abstração estática da janela temporal.
 
@@ -1164,7 +1164,7 @@ Embora os resultados sejam promissores, o estudo apresenta limitações que deve
     
     \item \textbf{Evolução temporal dos padrões:} Fraudadores adaptam suas estratégias ao longo do tempo. Trabalhos futuros devem investigar mecanismos de retreinamento contínuo e detecção de \textit{concept drift} para manter a eficácia do sistema em cenários de evolução adversarial.
     
-    \item \textbf{Explicabilidade para auditoria regulatória:} Embora a técnica SHAP forneça interpretabilidade a nível de \textit{feature}, a justificação de alertas individuais para fins de auditoria regulatória exige métodos de explicação a nível de instância. A integração de técnicas como LIME (\textit{Local Interpretable Model-agnostic Explanations}) e caminhos de ativação em grafos pode fortalecer a rastreabilidade das decisões do modelo.
+    \item \textbf{Explicabilidade para auditoria regulatória:} Embora a técnica SHAP forneça interpretabilidade a nível de \textit{feature}, a justificação de alertas individuais para fins de auditoria regulatória exige métodos de explicação a nível de instância. A integração de técnicas como LIME (\textit{Local Interpretable Model-agnostic Explanations}) e caminhos de ativação em grafos pode fortalecer a rastreabilidade das decisões do modelo \cite{ribeiro2016should}.
 \end{enumerate}
 
 \section{Considerações Finais}

@@ -1,50 +1,50 @@
 \BOOKMARK [0][-]{section*.2}{Introdução }{}% 1
-\BOOKMARK [0][-]{chapter.3}{Fundamentação Teórica }{}% 2
-\BOOKMARK [1][-]{section*.5}{Métricas de Avaliação}{chapter.3}% 3
-\BOOKMARK [2][-]{section*.7}{Matriz de Confusão}{section*.5}% 4
-\BOOKMARK [2][-]{section*.9}{Métricas de Desempenho e o Problema do Desbalanceamento}{section*.5}% 5
-\BOOKMARK [1][-]{section*.14}{Teoria dos Grafos}{chapter.3}% 6
-\BOOKMARK [2][-]{section*.16}{Grafos Temporais}{section*.14}% 7
-\BOOKMARK [2][-]{section*.18}{Atributos Topológicos}{section*.14}% 8
-\BOOKMARK [3][-]{section*.20}{Métricas de Centralidade e Coesão}{section*.18}% 9
-\BOOKMARK [3][-]{section*.28}{Detecção de Comunidades}{section*.18}% 10
-\BOOKMARK [3][-]{section*.31}{Padrões de Vizinhança e Motifs}{section*.18}% 11
-\BOOKMARK [0][-]{chapter.32}{Metodologia e Desenvolvimento }{}% 12
-\BOOKMARK [1][-]{section*.34}{Base de Dados}{chapter.32}% 13
-\BOOKMARK [2][-]{section*.37}{Pré-processamento e Padronização dos Dados}{section*.34}% 14
-\BOOKMARK [1][-]{section*.41}{Modelagem da Janela Deslizante e Agregação de Arestas}{chapter.32}% 15
-\BOOKMARK [1][-]{section*.43}{Engenharia de Features Topológicas}{chapter.32}% 16
-\BOOKMARK [2][-]{section*.45}{Métricas de Centralidade e Coesão}{section*.43}% 17
-\BOOKMARK [2][-]{section*.47}{Detecção de Comunidades \(Leiden\)}{section*.43}% 18
-\BOOKMARK [2][-]{section*.49}{Padrões de Vizinhança, Agregação e Motifs}{section*.43}% 19
-\BOOKMARK [1][-]{section*.51}{Arquitetura Preditiva e Calibração de Limiar com XGBoost}{chapter.32}% 20
-\BOOKMARK [2][-]{section*.53}{Divisão Cronológica dos Dados \(Forward-Chaining\)}{section*.51}% 21
-\BOOKMARK [1][-]{section*.55}{Modelagem Preditiva e Tratamento de Desbalanceamento com XGBoost}{chapter.32}% 22
-\BOOKMARK [2][-]{section*.57}{Ponderação Dinâmica da Função de Perda}{section*.55}% 23
-\BOOKMARK [2][-]{section*.60}{Estudo de Ablação}{section*.55}% 24
-\BOOKMARK [0][-]{chapter.61}{Resultados e Discussão }{}% 25
-\BOOKMARK [1][-]{section*.63}{Desempenho dos Modelos Baseline e Full}{chapter.61}% 26
-\BOOKMARK [2][-]{section*.65}{Resultados no Dataset HI Small}{section*.63}% 27
-\BOOKMARK [2][-]{section*.69}{Resultados no Dataset HI Medium}{section*.63}% 28
-\BOOKMARK [2][-]{section*.73}{Análise Comparativa Entre Datasets}{section*.63}% 29
-\BOOKMARK [2][-]{section*.75}{Métrica Precision@k e Eficácia Operacional}{section*.63}% 30
-\BOOKMARK [2][-]{section*.79}{Análise de Desempenho Temporal no HI Small}{section*.63}% 31
-\BOOKMARK [2][-]{section*.82}{Análise de Desempenho Temporal no HI Medium}{section*.63}% 32
-\BOOKMARK [1][-]{section*.85}{Validação Estatística do Estudo de Ablação}{chapter.61}% 33
-\BOOKMARK [2][-]{section*.87}{Testes Estatísticos no HI Small}{section*.85}% 34
-\BOOKMARK [2][-]{section*.90}{Testes Estatísticos no HI Medium}{section*.85}% 35
-\BOOKMARK [1][-]{section*.93}{Captura de Entidades Fraudulentas em Nível Operacional}{chapter.61}% 36
-\BOOKMARK [2][-]{section*.95}{Análise em Nível de Entidades \(HI Small\)}{section*.93}% 37
-\BOOKMARK [2][-]{section*.98}{Análise em Nível de Entidades \(HI Medium\)}{section*.93}% 38
-\BOOKMARK [1][-]{section*.101}{Importância Global das Features via SHAP}{chapter.61}% 39
-\BOOKMARK [2][-]{section*.103}{Análise SHAP no HI Small}{section*.101}% 40
-\BOOKMARK [2][-]{section*.107}{Análise SHAP no HI Medium}{section*.101}% 41
-\BOOKMARK [1][-]{section*.111}{Métricas Topológicas dos Algoritmos}{chapter.61}% 42
-\BOOKMARK [2][-]{section*.114}{O Paradoxo Estrutural do Algoritmo de Leiden}{section*.111}% 43
-\BOOKMARK [1][-]{section*.116}{Discussão dos Resultados}{chapter.61}% 44
-\BOOKMARK [0][-]{chapter.119}{Conclusão }{}% 45
-\BOOKMARK [1][-]{section*.121}{Principais Contribuições}{chapter.119}% 46
-\BOOKMARK [1][-]{section*.126}{Implicações Práticas}{chapter.119}% 47
-\BOOKMARK [1][-]{section*.128}{Limitações e Trabalhos Futuros}{chapter.119}% 48
-\BOOKMARK [1][-]{section*.134}{Considerações Finais}{chapter.119}% 49
-\BOOKMARK [0][-]{section*.135}{Refer\352ncias Bibliogr\341ficas }{}% 50
+\BOOKMARK [0][-]{chapter.4}{Fundamentação Teórica }{}% 2
+\BOOKMARK [1][-]{section*.6}{Métricas de Avaliação}{chapter.4}% 3
+\BOOKMARK [2][-]{section*.8}{Matriz de Confusão}{section*.6}% 4
+\BOOKMARK [2][-]{section*.10}{Métricas de Desempenho e o Problema do Desbalanceamento}{section*.6}% 5
+\BOOKMARK [1][-]{section*.15}{Teoria dos Grafos}{chapter.4}% 6
+\BOOKMARK [2][-]{section*.17}{Grafos Temporais}{section*.15}% 7
+\BOOKMARK [2][-]{section*.19}{Atributos Topológicos}{section*.15}% 8
+\BOOKMARK [3][-]{section*.21}{Métricas de Centralidade e Coesão}{section*.19}% 9
+\BOOKMARK [3][-]{section*.29}{Detecção de Comunidades}{section*.19}% 10
+\BOOKMARK [3][-]{section*.32}{Padrões de Vizinhança e Motifs}{section*.19}% 11
+\BOOKMARK [0][-]{chapter.33}{Metodologia e Desenvolvimento }{}% 12
+\BOOKMARK [1][-]{section*.35}{Base de Dados}{chapter.33}% 13
+\BOOKMARK [2][-]{section*.38}{Pré-processamento e Padronização dos Dados}{section*.35}% 14
+\BOOKMARK [1][-]{section*.42}{Modelagem da Janela Deslizante e Agregação de Arestas}{chapter.33}% 15
+\BOOKMARK [1][-]{section*.44}{Engenharia de Features Topológicas}{chapter.33}% 16
+\BOOKMARK [2][-]{section*.46}{Métricas de Centralidade e Coesão}{section*.44}% 17
+\BOOKMARK [2][-]{section*.48}{Detecção de Comunidades \(Leiden\)}{section*.44}% 18
+\BOOKMARK [2][-]{section*.50}{Padrões de Vizinhança, Agregação e Motifs}{section*.44}% 19
+\BOOKMARK [1][-]{section*.52}{Arquitetura Preditiva e Calibração de Limiar com XGBoost}{chapter.33}% 20
+\BOOKMARK [2][-]{section*.54}{Divisão Cronológica dos Dados \(Forward-Chaining\)}{section*.52}% 21
+\BOOKMARK [1][-]{section*.56}{Modelagem Preditiva e Tratamento de Desbalanceamento com XGBoost}{chapter.33}% 22
+\BOOKMARK [2][-]{section*.58}{Ponderação Dinâmica da Função de Perda}{section*.56}% 23
+\BOOKMARK [2][-]{section*.61}{Estudo de Ablação}{section*.56}% 24
+\BOOKMARK [0][-]{chapter.62}{Resultados e Discussão }{}% 25
+\BOOKMARK [1][-]{section*.64}{Desempenho dos Modelos Baseline e Full}{chapter.62}% 26
+\BOOKMARK [2][-]{section*.66}{Resultados no Dataset HI Small}{section*.64}% 27
+\BOOKMARK [2][-]{section*.70}{Resultados no Dataset HI Medium}{section*.64}% 28
+\BOOKMARK [2][-]{section*.74}{Análise Comparativa Entre Datasets}{section*.64}% 29
+\BOOKMARK [2][-]{section*.76}{Métrica Precision@k e Eficácia Operacional}{section*.64}% 30
+\BOOKMARK [2][-]{section*.80}{Análise de Desempenho Temporal no HI Small}{section*.64}% 31
+\BOOKMARK [2][-]{section*.83}{Análise de Desempenho Temporal no HI Medium}{section*.64}% 32
+\BOOKMARK [1][-]{section*.86}{Validação Estatística do Estudo de Ablação}{chapter.62}% 33
+\BOOKMARK [2][-]{section*.88}{Testes Estatísticos no HI Small}{section*.86}% 34
+\BOOKMARK [2][-]{section*.91}{Testes Estatísticos no HI Medium}{section*.86}% 35
+\BOOKMARK [1][-]{section*.94}{Captura de Entidades Fraudulentas em Nível Operacional}{chapter.62}% 36
+\BOOKMARK [2][-]{section*.96}{Análise em Nível de Entidades \(HI Small\)}{section*.94}% 37
+\BOOKMARK [2][-]{section*.99}{Análise em Nível de Entidades \(HI Medium\)}{section*.94}% 38
+\BOOKMARK [1][-]{section*.102}{Importância Global das Features via SHAP}{chapter.62}% 39
+\BOOKMARK [2][-]{section*.104}{Análise SHAP no HI Small}{section*.102}% 40
+\BOOKMARK [2][-]{section*.108}{Análise SHAP no HI Medium}{section*.102}% 41
+\BOOKMARK [1][-]{section*.112}{Métricas Topológicas dos Algoritmos}{chapter.62}% 42
+\BOOKMARK [2][-]{section*.115}{O Paradoxo Estrutural do Algoritmo de Leiden}{section*.112}% 43
+\BOOKMARK [1][-]{section*.117}{Discussão dos Resultados}{chapter.62}% 44
+\BOOKMARK [0][-]{chapter.120}{Conclusão }{}% 45
+\BOOKMARK [1][-]{section*.122}{Principais Contribuições}{chapter.120}% 46
+\BOOKMARK [1][-]{section*.127}{Implicações Práticas}{chapter.120}% 47
+\BOOKMARK [1][-]{section*.129}{Limitações e Trabalhos Futuros}{chapter.120}% 48
+\BOOKMARK [1][-]{section*.135}{Considerações Finais}{chapter.120}% 49
+\BOOKMARK [0][-]{section*.136}{Refer\352ncias Bibliogr\341ficas }{}% 50

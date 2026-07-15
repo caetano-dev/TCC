@@ -663,6 +663,15 @@ Os padrões comportamentais de vizinhança foram extraídos para mapear o grau d
     \item \textbf{Mapeamento de Padrões Topológicos:} Uma rotina de busca de subgrafos isomorfos foi implementada para quantificar padrões conhecidos de lavagem de dinheiro presentes no \textit{dataset}. O limiar para detecção de estruturas de dispersão e concentração (\textit{fan-out} e \textit{fan-in}) foi estipulado em $k \ge 6$ vizinhos. Para focar a busca no escopo correto, o grau máximo analisado foi restrito a 16 conexões, uma vez que este foi o limite máximo documentado para os padrões sintéticos de fraude injetados no \textit{dataset} AMLworld \cite{altman2023realistic}, atuando também como uma forma de economizar recursos computacionais. Com base nessa filtragem, calcularam-se as ocorrências de \textit{fan-out} e \textit{fan-in}. Adicionalmente, buscou-se a ocorrência de ciclos simples fechados limitados a até 6 saltos de distância (\textit{cycle\_bound} = 6). Como o problema algorítmico de enumeração de ciclos em grafos direcionados possui alta complexidade computacional (podendo crescer exponencialmente em redes densas), aplicou-se uma trava de segurança limitando a extração a um máximo de 2.000 ciclos por nó (\textit{max\_cycles} = 2000), garantindo a viabilidade do processamento em larga escala.
 \end{itemize}
 
+\begin{figure}{\linewidth}
+    \centering
+    \caption{Fan-in, Fan-out e Ciclo Direcionado em Grafos Financeiros}
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth]{imagens/faninfanoutcycle.png}
+    \fonte{\citeonline{eimf_aml}.}
+    \label{fig:faninfanoutcycle}
+\end{figure}
+
 Ao término da extração das \textit{features}, as tabelas tabulares isoladas de cada \textit{chunk} foram concatenadas pelo DuckDB, construindo o \textit{dataset} final (\textit{sliding\_window\_features.parquet}) que servirá de matriz de entrada ($X$) para o modelo preditivo e um arquivo com métricas (\textit{sliding\_window\_metrics.parquet}) para cada umas das \textit{features} extraídas.
 
 \section{Arquitetura Preditiva e Calibração de Limiar com XGBoost}

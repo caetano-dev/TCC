@@ -880,7 +880,7 @@ Para as métricas de \textit{Precision@100}, observa-se um padrão heterogêneo 
 
 \section{Validação Estatística do Estudo de Ablação}
 
-Para determinar se os ganhos observados são estatisticamente significativos e não resultam de variações aleatórias inerentes ao processo de amostragem temporal, aplicou-se testes t pareados sobre as diferenças de desempenho entre os dois modelos ao longo das janelas de teste.
+Para determinar se os ganhos observados são estatisticamente significativos e não resultam de variações aleatórias, foram aplicados testes t pareados sobre as diferenças de desempenho entre os dois modelos ao longo das janelas de teste.
 
 \subsection{Testes Estatísticos no HI Small}
 
@@ -911,13 +911,13 @@ A Tabela~\ref{tab:statistical-tests} apresenta os resultados para o \textit{data
     \end{tabular}
 \end{table}
 
-Os testes confirmam que os ganhos observados em acurácia, precisão, F1-Score, ROC-AUC e AUPRC são estatisticamente significativos ao nível de confiança de 95\% ($p < 0{,}05$). Em particular, as métricas de precisão, F1-Score e ROC-AUC apresentaram significância ao nível de 99\% ($p < 0{,}01$), reforçando a robustez da contribuição das \textit{features} topológicas.
+Os testes confirmam que os ganhos observados em acurácia, precisão, F1-Score, ROC-AUC e AUPRC são estatisticamente significativos ao nível de confiança de 95\% ($p < 0{,}05$). Em particular, as métricas de precisão, F1-Score e ROC-AUC apresentaram significância ao nível de 99\% ($p < 0{,}01$), o que valida a contribuição das \textit{features} topológicas.
 
-A ausência de significância estatística no \textit{Recall} ($p = 0{,}534$) e nas métricas P@100 e P@200 sugere que, embora haja variação numérica, essas diferenças podem ser atribuídas à variabilidade natural das janelas temporais. Entretanto, as métricas P@300 ($p = 0{,}0128$) e P@500 ($p = 0{,}0137$) apresentaram ganhos estatisticamente significativos, reforçando o argumento de que as \textit{features} topológicas contribuem especialmente para a discriminação de entidades em níveis intermediários de risco, onde a separação entre fraudes e operações lícitas torna-se mais desafiadora.
+A ausência de significância estatística no \textit{Recall} ($p = 0{,}534$) e nas métricas P@100 e P@200 sugere que, embora haja variação numérica, essas diferenças podem ser atribuídas à variabilidade natural das janelas temporais. Entretanto, as métricas P@300 ($p = 0{,}0128$) e P@500 ($p = 0{,}0137$) apresentaram ganhos estatisticamente significativos, reforçando o argumento de que as \textit{features} topológicas contribuem especialmente para a discriminação de entidades em níveis intermediários de risco, onde a separação entre fraudes e operações lícitas torna-se mais difícil.
 
 \subsection{Testes Estatísticos no HI Medium}
 
-A Tabela~\ref{tab:statistical-tests-medium} apresenta os testes de significância para o \textit{dataset} HI Medium, abrangendo as 12 janelas de teste.
+A Tabela~\ref{tab:statistical-tests-medium} apresenta os testes de significância para o \textit{dataset} HI Medium, ao longo das 12 janelas de teste.
 
 \begin{table}
     \centering
@@ -943,13 +943,15 @@ A Tabela~\ref{tab:statistical-tests-medium} apresenta os testes de significânci
     \end{tabular}
 \end{table}
 
-Os testes no HI Medium confirmam significância estatística ainda mais robusta para acurácia, precisão, F1-Score, ROC-AUC e AUPRC, todos com $p < 0{,}01$. Destaca-se a significância extremamente elevada para ROC-AUC ($p < 0{,}0001$), indicando que a discriminação geral entre fraudes e operações legítimas beneficia-se consistentemente das \textit{features} topológicas em toda a janela temporal. De forma similar ao HI Small, não há significância estatística em Recall, P@100, P@200 e P@300, sugerindo que os modelos capturam igualmente bem as fraudes de altíssimo risco, diferenciando-se principalmente em médios níveis de risco.
+Os testes no HI Medium mostram uma significância estatística ainda maior para acurácia, precisão, F1-Score, ROC-AUC e AUPRC, todos com $p < 0{,}01$. A significância elevada para ROC-AUC ($p < 0{,}0001$), indica que a discriminação geral entre fraudes e operações legítimas beneficia-se consistentemente das \textit{features} topológicas em toda a janela temporal. De forma similar ao HI Small, não há significância estatística em Recall, P@100, P@200 e P@300, sugerindo que os modelos capturam igualmente bem as fraudes de altíssimo risco, diferenciando-se principalmente em médios níveis de risco.
 
 \section{Captura de Entidades Fraudulentas em Nível Operacional}
 
-\subsection{Análise em Nível de Entidades (HI Small)}
+\subsection{Análise em Nível de Entidades}
 
-Além das métricas agregadas, avaliou-se o impacto operacional dos modelos no HI Small através da contagem de entidades fraudulentas únicas efetivamente capturadas durante o período de teste. Do total de 3.842 entidades ilícitas presentes no conjunto de validação:
+Além das métricas agregadas, avaliou-se a eficácia dos modelos no HI Small e  HI Medium em encontrar entidades fraudulentas únicas durante o período de teste. Isso simula a quantidade de criminosos que podem ser identificados pelo modelo, mesmo que os mesmos utilizem mais de uma conta bancária para suas atividades. 
+
+No HI Small, do total de 3.842 entidades ilícitas presentes no conjunto de validação:
 
 \begin{itemize}
     \item \textbf{Modelo Baseline:} Detectou 3.603 entidades (93,78\% de cobertura).
@@ -965,16 +967,14 @@ Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 ponto
     \label{fig:entity-recall}
 \end{figure}
 
-\subsection{Análise em Nível de Entidades (HI Medium)}
-
-Além das métricas agregadas, avaliou-se o impacto operacional dos modelos no HI Medium através da contagem de entidades fraudulentas únicas efetivamente capturadas durante o período de teste. Do total de 29.781 entidades ilícitas presentes no conjunto de validação:
+No HI Medium, do total de 29.781 entidades ilícitas presentes no conjunto de validação:
 
 \begin{itemize}
     \item \textbf{Modelo Baseline:} Detectou 26.877 entidades (90,25\% de cobertura).
     \item \textbf{Modelo Full:} Detectou 26.980 entidades (90,59\% de cobertura).
 \end{itemize}
 
-Embora a diferença absoluta seja de apenas 103 entidades adicionais (+0,34 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base. Em um contexto de \textit{compliance} em larga escala, onde cada entidade fraudulenta não detectada pode resultar em perdas financeiras significativas e penalidades regulatórias, esse incremento possui valor prático mensurável. A captura incremental de 103 entidades fraudulentas no HI Medium, apesar da menor melhoria percentual comparada ao HI Small, reflete a complexidade aumentada da rede transacional em escalas maiores, onde entidades fraudulentas podem empregar táticas mais sofisticadas para evitar detecção.
+A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais), o que representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base. Embora a captura incremental de 103 entidades fraudulentas no HI Medium seja maior que a de 29 no HI Small, o dataset apresenta uma melhoria percentual menor comparada ao HI Small.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1032,7 +1032,7 @@ Entre os atributos topológicos, destaca-se a importância de:
     \item \textbf{Agregação de Vizinhança:} O grau médio dos vizinhos (\texttt{average\_neighbor\_degree}) e o volume médio enviado aos sucessores (\texttt{successor\_avg\_volume}) fornecem sinais sobre o comportamento pós-transferência, revelando se o dinheiro é imediatamente dispersado ou concentrado após a transação inicial.
 \end{itemize}
 
-A distribuição equilibrada entre \textit{features} comportamentais e topológicas no ranking SHAP valida a hipótese de que ambos os tipos de informação são complementares e necessários para uma detecção eficaz de lavagem de dinheiro.
+A distribuição equilibrada entre \textit{features} comportamentais e topológicas no gráfico SHAP sugere que  ambos os tipos de informação são complementares e necessários para uma detecção eficaz de lavagem de dinheiro.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1072,7 +1072,7 @@ A Tabela~\ref{tab:shap-top15-medium} apresenta as 15 \textit{features} de maior 
     \end{tabular}
 \end{table}
 
-A análise comparativa revela que a hierarquia de importância das \textit{features} é consistente entre HI Small e HI Medium, com as mesmas três \textit{features} ocupando os primeiros lugares (\texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth}). Destaca-se que \texttt{in\_degree} mantém a 4ª posição em ambos os \textit{datasets}, reforçando que a centralidade de entrada é um sinal robusto de fraude independentemente da escala. A posição de destaque de atributos topológicos a partir da 3ª feature sugere que a topologia da rede financeira fornece sinais complementares essenciais para discriminar fraudes.
+A hierarquia de importância das \textit{features} é consistente entre HI Small e HI Medium, com as mesmas três \textit{features} ocupando os primeiros lugares (\texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth}). Destaca-se que \texttt{in\_degree} mantém a 4ª posição em ambos os \textit{datasets}, reforçando que a centralidade de entrada é um sinal robusto de fraude independentemente da escala. A posição de destaque de atributos topológicos a partir da 3ª feature sugere que a topologia da rede financeira fornece sinais fortes para discriminar fraudes.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1084,6 +1084,7 @@ A análise comparativa revela que a hierarquia de importância das \textit{featu
 \section{Métricas Topológicas dos Algoritmos}
 \label{sec:analise_critica_topologia}
 
+Foram também geradas métricas de avaliação para cada algoritmo de forma isolada, permitindo uma análise de quais são os mais robustos para discriminar entidades ilícitas em diferentes cenários.
 Para evitar uma descrição exaustiva das mais de vinte métricas avaliadas, os algoritmos foram agrupados de acordo com seus perfis de desempenho e comportamentos estruturais no grafo de transações. A Tabela~\ref{tab:resumo_topologico} consolida os principais indicadores dos agrupamentos mais relevantes, servindo como âncora numérica para a interpretação crítica subsequente.
 
 \begin{table}
@@ -1109,9 +1110,9 @@ Os resultados experimentais revelam uma dicotomia clara entre capacidade de ranq
 
 Em contrapartida, métricas locais centradas na contagem bruta, como \texttt{TX\_COUNT} (ROC-AUC de 0,6412) e \texttt{PR\_COUNT} (0,6014), embora exibam menor poder de separação global, alcançam Precision@10 de 100,00\%. Do ponto de vista prático de engenharia de risco, esses algoritmos funcionam como filtros de topo de funil, ideais para triagem primária. Eles não resolvem o problema de classificação da base como um todo, mas são extremamente eficazes para concentrar a investigação nas anomalias mais evidentes da rede.
 
-Um dos achados mais ricos da análise crítica reside na assimetria estrutural exposta pelo algoritmo HITS. Enquanto o perfil de \textit{hub} (\texttt{HITS\_HUB}) obteve desempenho expressivo, o perfil de autoridade (\texttt{HITS\_AUTH}) colapsou para uma Average Precision média de 0,0174 e mediana de Precision@10 igual a 0,00\%. Fenomenologicamente, esse contraste sugere que as redes criminosas estruturam-se para tornar visíveis as contas de distribuição e intermediação, ao mesmo tempo em que camuflam as contas de destino final. Em termos legais e operacionais, o sinal da fraude aparece na periferia operacional do fluxo, não no ponto terminal onde o capital é finalmente absorvido.
+Um dos achados mais ricos da análise crítica reside na assimetria estrutural exposta pelo algoritmo HITS. Enquanto o perfil de \textit{hub} (\texttt{HITS\_HUB}) obteve desempenho expressivo, o perfil de autoridade (\texttt{HITS\_AUTH}) colapsou para uma Average Precision média de 0,0174 e mediana de Precision@10 igual a 0,00\%. Esse contraste sugere que as redes criminosas estruturam-se para tornar visíveis as contas de distribuição e intermediação, ao mesmo tempo em que camuflam as contas de destino final. Em termos legais e operacionais, o sinal da fraude aparece na periferia operacional do fluxo, não no ponto terminal onde o capital é finalmente absorvido.
 
-Métricas de contexto financeiro hiperespecíficas, a exemplo de \texttt{BITCOIN\_COUNT\_RECV} (ROC-AUC de 0,5018) e \texttt{TIME\_VARIANCE} (0,5883 no HI Small e 0,6181 no HI Medium), apresentaram desempenho próximo ao limiar de aleatoriedade. Essa proximidade com o acaso, combinada a Average Precision muito baixa, indica baixo valor informacional para a tarefa de ranking. Em um pipeline de produção, esses atributos tendem a aumentar custo computacional sem entregar sinal preditivo proporcional, o que justifica sua poda em iterações futuras de otimização.
+Métricas de contexto financeiro muito específicas, como \texttt{BITCOIN\_COUNT\_RECV} (ROC-AUC de 0,5018) e \texttt{TIME\_VARIANCE} (0,5883 no HI Small e 0,6181 no HI Medium), apresentaram desempenho similar ao aleatório. Essa proximidade com o acaso, combinada a Average Precision muito baixa, indica baixo valor informacional para a tarefa de ranking. Em um pipeline de produção, esses atributos tendem a aumentar custo computacional sem entregar sinal preditivo proporcional.
 
 \subsection{O Paradoxo Estrutural do Algoritmo de Leiden}
 \label{subsec:paradoxo_leiden}
@@ -1124,13 +1125,13 @@ Conclui-se, portanto, que o Leiden é valioso como descrição da macroestrutura
 
 \section{Discussão dos Resultados}
 
-Os resultados experimentais confirmam a hipótese central deste trabalho: a incorporação de atributos topológicos extraídos de grafos temporais fornece ganhos estatisticamente significativos na detecção de esquemas de lavagem de dinheiro quando comparada a modelos baseados exclusivamente em \textit{features} comportamentais.
+Os resultados experimentais confirmam que a incorporação de atributos topológicos extraídos de grafos temporais fornece ganhos estatisticamente significativos na detecção de esquemas de lavagem de dinheiro quando comparada a modelos baseados exclusivamente em \textit{features} comportamentais.
 
 O ganho médio de +18\% em AUPRC, validado estatisticamente com $p = 0{,}0188$, demonstra que as propriedades estruturais da rede financeira carregam informação preditiva complementar que não é capturada por análises isoladas de comportamento transacional. Esse resultado alinha-se com a literatura recente, que destaca a importância de abordagens baseadas em grafos para identificar tipologias avançadas de fraude, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph,baigabyl2025using}.
 
 A análise de importância via SHAP revelou que, embora as \textit{features} comportamentais tradicionais (especialmente as relacionadas a ACH e cheques) permaneçam altamente relevantes, as métricas topológicas ocupam posições de destaque no ranking de influência. Em particular, o algoritmo HITS e as métricas de grau demonstraram alta capacidade discriminativa, sugerindo que entidades fraudulentas tendem a ocupar posições estruturalmente distintas na rede: seja como pontos de concentração de fluxo (\textit{authority}) ou como nós dispersores (\textit{hub}).
 
-A validação temporal do estudo de ablação, realizada através de \textit{forward-chaining} em 6 janelas consecutivas, confere robustez aos resultados. A consistência dos ganhos ao longo de 5 das 6 janelas indica que os padrões topológicos aprendidos pelo modelo generalizam bem para períodos futuros, um requisito crítico para a implantação em ambientes de produção.
+A validação temporal do estudo de ablação, realizada através de \textit{forward-chaining} em 6 janelas consecutivas, confere robustez aos resultados. A consistência dos ganhos ao longo de 5 das 6 janelas indica que os padrões topológicos aprendidos pelo modelo generalizam bem para períodos futuros, um requisito importante para a implantação em ambientes de produção.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1157,11 +1158,11 @@ Este trabalho investigou a contribuição de atributos topológicos extraídos d
 Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem evidências quantitativas para as seguintes contribuições:
 
 \begin{enumerate}
-    \item \textbf{Validação empírica do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0,2965, representando um ganho estatisticamente significativo de +18,00\% ($p = 0{,}0188$) em relação ao modelo de base (AUPRC = 0,2513). Ganhos similares foram observados em precisão (+46,67\%, $p = 0{,}0070$), F1-Score (+41,86\%, $p = 0{,}0055$) e ROC-AUC (+3,00\%, $p = 0{,}0042$).
+    \item \textbf{Validação do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0,2965, representando um ganho estatisticamente significativo de +18,00\% ($p = 0{,}0188$) em relação ao modelo de base (AUPRC = 0,2513). Ganhos similares foram observados em precisão (+46,67\%, $p = 0{,}0070$), F1-Score (+41,86\%, $p = 0{,}0055$) e ROC-AUC (+3,00\%, $p = 0{,}0042$).
     
     \item \textbf{Identificação de \textit{features} topológicas críticas:} A análise SHAP revelou que métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança ocupam posições de destaque no ranking de importância preditiva, demonstrando que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
     
-    \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} em 6 janelas temporais demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros, um requisito essencial para sistemas de detecção de fraudes em produção.
+    \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} em 6 janelas temporais demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros.
 \end{enumerate}
 
 \section{Implicações Práticas}

@@ -713,8 +713,7 @@ O desempenho do sistema foi mensurado através da métrica Área Sob a Curva de 
 
 Para quantificar o impacto da adição das \textit{features} topológicas, implementou-se um estudo de ablação controlado, comparando estatisticamente o desempenho de dois modelos: um modelo de base (\textit{Baseline}) treinado exclusivamente com atributos comportamentais e um modelo completo (\textit{Full Model}) que inclui tanto os atributos comportamentais quanto os topológicos extraídos dos grafos.
 
-O experimento foi conduzido sob validação \textit{forward-chaining} estrita, onde cada modelo foi treinado em janelas históricas e testado em janelas temporais subsequentes. A avaliação estatística empregou testes t pareados para mensurar a significância das diferenças de desempenho observadas entre os dois modelos ao longo das janelas de teste.
-
+O experimento foi conduzido sob validação \textit{forward-chaining} estrita, onde cada modelo foi treinado em janelas históricas e testado em janelas temporais subsequentes. Os dados foram avaliados pelo teste $t$ pareado entre as janelas temporais, com o objetivo de comparar o desempenho das \textit{features} com amostras pareadas \cite{dietterich1998approximate, japkowicz2011evaluating}. Para rejeitar a hipótese nula ($H_0$), foi utilizado o nível de significância padrão $\alpha = 0{,}05$ ($95\%$ de confiança). Resultados com $p$-valor inferior a $\alpha = 0{,}01$ ($99\%$ de confiança) foram sinalizados com asterisco duplo.
 \chapter{Resultados e Discussão}
 
 \begin{epigrafeonline}

@@ -1,12 +1,12 @@
-\contentsline {figure}{\numberline {Figura\ 1\hfill \ - }{\ignorespaces As três fases clássicas da lavagem de dinheiro}}{16}{figure.caption.3}%
-\contentsline {figure}{\numberline {Figura\ 2\hfill \ - }{\ignorespaces Fan-in, Fan-out e Ciclo Direcionado em Grafos Financeiros}}{29}{figure.caption.51}%
-\contentsline {figure}{\numberline {Figura\ 3\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}}{33}{figure.caption.69}%
-\contentsline {figure}{\numberline {Figura\ 4\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}}{34}{figure.caption.73}%
-\contentsline {figure}{\numberline {Figura\ 5\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}}{35}{figure.caption.78}%
-\contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}}{35}{figure.caption.79}%
-\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}}{40}{figure.caption.98}%
-\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}}{41}{figure.caption.99}%
-\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{43}{figure.caption.105}%
-\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{44}{figure.caption.109}%
-\contentsline {figure}{\numberline {Figura\ 11\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{48}{figure.caption.117}%
-\contentsline {figure}{\numberline {Figura\ 12\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{49}{figure.caption.118}%
+\contentsline {figure}{\numberline {Figura\ 1\hfill \ - }{\ignorespaces As três fases clássicas da lavagem de dinheiro}}{15}{figure.caption.3}%
+\contentsline {figure}{\numberline {Figura\ 2\hfill \ - }{\ignorespaces Fan-in, Fan-out e Ciclo Direcionado em Grafos Financeiros}}{28}{figure.caption.51}%
+\contentsline {figure}{\numberline {Figura\ 3\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}}{32}{figure.caption.69}%
+\contentsline {figure}{\numberline {Figura\ 4\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}}{33}{figure.caption.73}%
+\contentsline {figure}{\numberline {Figura\ 5\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}}{34}{figure.caption.78}%
+\contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}}{34}{figure.caption.79}%
+\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}}{39}{figure.caption.98}%
+\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}}{40}{figure.caption.99}%
+\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{42}{figure.caption.105}%
+\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{43}{figure.caption.109}%
+\contentsline {figure}{\numberline {Figura\ 11\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{47}{figure.caption.117}%
+\contentsline {figure}{\numberline {Figura\ 12\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{48}{figure.caption.118}%

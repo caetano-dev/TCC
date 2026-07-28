@@ -355,7 +355,7 @@ Finally, SHAP analysis confirmed the decisive role of graph features, placing me
 % Outras listas
 % ----------------------------------------------------------
 %
-\listadealgoritmos % opcional %\begin{algorithm}...\end{algorithm}
+%\listadealgoritmos % opcional %\begin{algorithm}...\end{algorithm}
 %
 %===========================================================
 \pretextualchapter{Lista de abreviaturas e siglas} %(opcional)
@@ -679,13 +679,13 @@ Ao término da extração das \textit{features}, as tabelas tabulares isoladas d
 
 \section{Arquitetura Preditiva e Calibração de Limiar com XGBoost}
 
-O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: desbalanceamento extremo de classes, onde as fraudes representam uma fração minúscula do volume total, muitas vezes inferior a 0,1\%, e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)\cite{chen2016xgboost} com calibração de limiar baseada em busca de maximização de precisão sob restrição de cobertura (\textit{Recall-constrained threshold calibration})\cite{shukla2025smote}. O algoritmo busca o limiar que maximiza a precisão garantindo um Recall mínimo de 85\% para a janela de validação
+O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: desbalanceamento extremo de classes, onde as fraudes representam uma fração minúscula do volume total, muitas vezes inferior a 0,1\%, e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)\cite{chen2016xgboost} com calibração de limiar baseada em busca de maximização de precisão sob restrição de cobertura (\textit{Recall-constrained threshold calibration})\cite{shukla2025smote}. O algoritmo busca o limiar que maximiza a precisão garantindo um Recall mínimo de 85\% para a janela de validação.
 
 \subsection{Divisão Cronológica dos Dados (\textit{Forward-Chaining})}
 
 Para garantir a validade estatística do experimento e evitar o vazamento de informações futuras para o passado (\textit{look-ahead bias}), empregou-se a validação cruzada temporal (\textit{forward-chaining cross-validation}), na qual os \textit{snapshots} temporais do grafo foram estritamente ordenados de forma cronológica \cite{sizan2025machine}. 
 
-O modelo foi treinado recursivamente em uma janela histórica de dados e testado exclusivamente nas janelas temporais subsequentes (futuras em relação ao treino). Essa abordagem simula o ambiente de produção de uma instituição financeira, onde o algoritmo de \textit{compliance} não possui qualquer conhecimento sobre os as transações que ocorrerão no dia seguinte.
+O modelo foi treinado recursivamente em uma janela histórica de dados e testado exclusivamente nas janelas temporais subsequentes (futuras em relação ao treino). Essa abordagem simula o ambiente de produção de uma instituição financeira, onde o algoritmo de \textit{compliance} não possui qualquer conhecimento sobre as transações que ocorrerão no dia seguinte.
 
 \section{Modelos Preditivos e Avaliação de Desempenho} 
 
@@ -1171,7 +1171,7 @@ Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem ev
 Do ponto de vista operacional, os resultados possuem implicações diretas para equipes de \textit{compliance} de instituições financeiras:
 
 \begin{itemize}
-    \item \textbf{Redução de falsos positivos:} O ganho de +42,80\% em precisão implica em uma redução substancial de alertas falsos, diminuindo a sobrecarga investigativa e permitindo que analistas foquem em casos de alto risco real.
+  \item \textbf{Redução de falsos positivos:} Os ganhos em precisão de +46,67\% no HI Small e +32,28\% no HI Medium implicam em uma redução substancial de alertas falsos, diminuindo a sobrecarga investigativa e permitindo que analistas foquem em casos de alto risco real.
     
     \item \textbf{Captura incremental de fraudes:} O modelo completo identificou 29 entidades fraudulentas adicionais (0,80\% de melhoria relativa), demonstrando que as \textit{features} topológicas capturam padrões estruturais que escapam à análise comportamental isolada.
 \end{itemize}

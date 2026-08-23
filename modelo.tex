@@ -31,7 +31,7 @@
 \usepackage{makeidx}                % Cria o índice
 
 \usepackage[hyphens]{url}
-\usepackage[pagebackref]{hyperref}  % Controla a formação dos hyperlinks
+\usepackage{hyperref}  % Controla a formação dos hyperlinks
 \makeatletter
 \pdfstringdefDisableCommands{\let\uline\relax}
 \makeatother
@@ -88,56 +88,14 @@
 
 \usepackage[dots=yes,num=yes]{repUERJpseudocode}
 
-\usepackage{xwatermark}
-
-
-% ----------------------------------------------------------------
-% ----------------------------------------------------------------
-% FIM DO PREÂMBULO DO DOCUMENTO (preamble latex documento)
-% ----------------------------------------------------------------
-% ----------------------------------------------------------------
-
-% ----------------------------------------------------------------
-% OPCIONAL
-% verbatim para os campos do bibtex 
-% configura a apresentação dos exemplos
-% ----------------------------------------------------------------
-
-\usepackage{framed,color,verbatim}
-\definecolor{shadecolor}{rgb}{.9, .9, .9}
-\newenvironment{vrbcode}%
-   {\snugshade\verbatim}%
-   {\endverbatim\endsnugshade}
-
-\newcommand{\cmd}[1]{\noindent\texttt{\textbackslash #1}}
-\newcommand{\opc}[1]{\texttt{\{#1\}}}
-
-\newcommand{\printcite}[1]{
-    \noindent%
-    \begin{minipage}[t]{\textwidth}
-        \rule{\textwidth}{.4pt}\\[5pt]
-        \singlespacing\citetext{#1}\\[-3pt]
-        \rule{\textwidth}{.4pt}
-    \end{minipage}~\\
-}
-
-\newcommand{\printcitations}[1]{
-    \noindent
-    \cmd{cite}\opc{#1}: \cite{#1}\\
-    \cmd{citeauthor}\opc{#1}: \citeauthor{#1}\\
-    \cmd{citeyear}\opc{#1}: \citeyear{#1}\\
-    \cmd{citeonline}\opc{#1}: \citeonline{#1}\\
-    \cmd{citeauthoronline}\opc{#1}: \citeauthoronline{#1}
-}
-
 % ----------------------------------------------------------------
 
 %----------------------------------------------------------------
 % Imagens pretextuais (precisam estar no diretório de imagens)
 %----------------------------------------------------------------
 
-\logo{imagens/logo_uerj_cinza.png}
-\marcadagua{imagens/marcadagua_uerj_cinza.png}{1}{160}{255}
+\logo{imagens/logo_uerj_cinza}
+\marcadagua{imagens/marcadagua_uerj_cinza}{1}{160}{255}
 
 %----------------------------------------------------------------
 % Informações da instituição
@@ -416,7 +374,7 @@ Como objetivos específicos, definem-se:
     \centering
     \caption{As três fases clássicas da lavagem de dinheiro}
     \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth]{imagens/fases_ml.png} % Mude para o nome do seu arquivo
+    \includegraphics[width=0.85\textwidth]{imagens/fases_ml}
     \fonte{\citeonline{eimf_aml}.}
     \label{fig:fases_ml}
 \end{figure}
@@ -670,7 +628,7 @@ Os padrões comportamentais de vizinhança foram extraídos para mapear a estrut
     \centering
     \caption{Fan-in, Fan-out e Ciclo Direcionado em Grafos Financeiros}
     \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth]{imagens/faninfanoutcycle.png}
+    \includegraphics[width=0.85\textwidth]{imagens/faninfanoutcycle}
     \fonte{Elaborado pelo autor.}
     \label{fig:faninfanoutcycle}
 \end{figure}
@@ -756,7 +714,7 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_ablation_metric_comparison.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_ablation_metric_comparison}
     \caption{Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}
     \label{fig:model-comparison-small}
 \end{figure}
@@ -789,7 +747,7 @@ Os resultados no HI Medium apresentam um padrão consistente com o observado no 
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_ablation_metric_comparison.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_ablation_metric_comparison}
     \caption{Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}
     \label{fig:model-comparison-medium}
 \end{figure}
@@ -804,14 +762,14 @@ A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema a
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_precision_at_k_comparison.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_precision_at_k_comparison}
     \caption{Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}
     \label{fig:precision-at-k-small}
 \end{figure}
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_precision_at_k_comparison.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_precision_at_k_comparison}
     \caption{Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}
     \label{fig:precision-at-k-medium}
 \end{figure}
@@ -962,7 +920,7 @@ Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 ponto
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.85\linewidth]{imagens/HI_Small_entity_level_recall.png}
+    \includegraphics[width=0.85\linewidth]{imagens/HI_Small_entity_level_recall}
     \caption{Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}
     \label{fig:entity-recall}
 \end{figure}
@@ -978,7 +936,7 @@ A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais),
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.85\linewidth]{imagens/HI_Medium_entity_level_recall.png}
+    \includegraphics[width=0.85\linewidth]{imagens/HI_Medium_entity_level_recall}
     \caption{Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}
     \label{fig:entity-recall-medium}
 \end{figure}
@@ -1036,7 +994,7 @@ A distribuição equilibrada entre \textit{features} comportamentais e topológi
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_global_shap_beeswarm.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_global_shap_beeswarm}
     \caption{Distribuição de valores SHAP para as principais features do modelo (HI Small)}
     \label{fig:shap-beeswarm}
 \end{figure}
@@ -1076,7 +1034,7 @@ A hierarquia de importância das \textit{features} é consistente entre HI Small
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_global_shap_beeswarm.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_global_shap_beeswarm}
     \caption{Distribuição de valores SHAP para as principais features do modelo (HI Medium)}
     \label{fig:shap-beeswarm-medium}
 \end{figure}
@@ -1135,14 +1093,14 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_ablation_lift.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_ablation_lift}
     \caption{Lift percentual por janela temporal e métrica de avaliação (HI Small)}
     \label{fig:ablation-lift}
 \end{figure}
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_ablation_lift.png}
+    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_ablation_lift}
     \caption{Lift percentual por janela temporal e métrica de avaliação (HI Medium)}
     \label{fig:ablation-lift-medium}
 \end{figure}
@@ -1196,6 +1154,6 @@ Este trabalho demonstrou que a modelagem de redes financeiras como grafos tempor
 Os resultados reforçam a importância de abordagens multimodais que combinam sinais comportamentais e topológicos, especialmente em cenários onde fraudadores utilizam estratégias sofisticadas de ofuscação, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph, tiwari2020review, chainalysis2025crypto}. \`{A} medida que os esquemas de lavagem de dinheiro tornam-se cada vez mais complexos e distribuídos, a incorporação de técnicas baseadas em grafos deixa de ser opcional e torna-se um requisito fundamental para a eficácia dos sistemas de detecção de fraudes financeiras.
 
 
-\bibliography{bibliografia,exemplos,abnt-options}
+\bibliography{bibliografia,abnt-options}
 
 \end{document}

@@ -514,7 +514,7 @@ Este capítulo detalha a metodologia proposta para investigar e quantificar o im
 
 \section{Base de Dados}
 
-Para o treinamento e a validação da arquitetura proposta, este estudo utiliza o \textit{dataset} sintético AMLworld \cite{altman2023realistic}. A escolha por uma base de dados sintética se dá pelas restrições de privacidade que tornam difícil o acesso a dados bancários reais. Além disso, há o problema de que parte das fraudes que ocorrem no mundo real passam desapercebidas pelas autoridades, o que torna as bases de dados baseadas em transações reais deficitárias. O AMLworld foi projetado especificamente para simular padrões de lavagem de dinheiro em larga escala e oferecer rótulos confiáveis para transações lícitas e ilícitas, o que viabiliza o treinamento supervisionado.
+Para o treinamento e a validação da arquitetura proposta, este estudo utiliza o \textit{dataset} sintético AMLworld \cite{altman2023realistic}. O conjunto de dados foi desenvolvido especificamente para pesquisas em detecção de lavagem de dinheiro e disponibilizado publicamente pelos autores sob a licença Community Data License Agreement – Sharing 1.0 (CDLA-Sharing-1.0), uma licença aberta destinada ao compartilhamento e à reutilização de dados. A escolha por uma base de dados sintética decorre, entre outros fatores, das restrições de privacidade e confidencialidade associadas ao acesso a dados financeiros reais. Além disso, há o problema de que parte das fraudes que ocorrem no mundo real passam desapercebidas pelas autoridades, o que torna as bases de dados baseadas em transações reais deficitárias. O AMLworld foi projetado especificamente para simular padrões de lavagem de dinheiro em larga escala e oferecer rótulos confiáveis para transações lícitas e ilícitas, o que viabiliza o treinamento supervisionado.
 
 A base de dados oferece, ao todo, seis variações que combinam escala (\textit{Small},
 \textit{Medium} e \textit{Large}) e nível de atividade ilícita (HI: \textit{High Illicit};
@@ -527,7 +527,7 @@ LI: \textit{Low Illicit}), conforme apresentado na Tabela~\ref{tab:amlworld-data
     \resizebox{\linewidth}{!}{%
     \begin{tabular}{lcccccc}
         \hline
-        \textbf{Métrica} & \textbf{Small HI} & \textbf{Small LI} & \textbf{Medium HI} & \textbf{Medium LI} & \textbf{Large HI} & \textbf{Large LI} \\
+        \textbf{Métrica} & \textbf{HI Small} & \textbf{LI Small} & \textbf{HI Medium} & \textbf{LI Medium} & \textbf{HI Large} & \textbf{LI Large} \\
         \hline
         Intervalo de datas (2022) & Sep 1--10 & Sep 1--10 & Sep 1--16 & Sep 1--16 & Aug 1--Nov 5 & Aug 1--Nov 5 \\
         Dias cobertos & 10 & 10 & 16 & 16 & 97 & 97 \\

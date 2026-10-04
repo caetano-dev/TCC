@@ -790,7 +790,7 @@ Os resultados no HI Medium apresentam um padrão consistente com o observado no 
 
 \subsection{Análise Comparativa Entre Datasets}
 
-A comparação entre HI Small e HI Medium revela características importantes sobre a escalabilidade da abordagem topológica. Ambos os \textit{datasets} apresentam ganhos de AUPRC praticamente idênticos (18,00\% vs 18,88\%), sugerindo que o sinal preditivo capturado pelas \textit{features} topológicas é escala-invariante. Entretanto, o ganho em F1-Score e Precisão é mais pronunciado no HI Small, o que pode estar associado a diferenças nas distribuições de fraude ou na estrutura topológica da rede entre os dois \textit{datasets}.
+A comparação entre o HI Small e o HI Medium revela características importantes sobre a escalabilidade da abordagem topológica. Ambos os \textit{datasets} apresentam ganhos de AUPRC praticamente idênticos (+18,00\% e +18,88\%), o que evidencia que o poder preditivo das variáveis estruturais se mantém estável mesmo com o aumento expressivo no volume de transações, isto é, o sinal capturado pelas propriedades de rede independe da escala da base de dados. Entretanto, o ganho em F1-Score e Precisão é mais pronunciado no HI Small, o que pode estar associado a diferenças nas distribuições de fraude ou na densidade de conexões da rede entre os dois cenários.
 
 \subsection{Métrica Precision@k e Eficácia Operacional}
 
@@ -1111,7 +1111,7 @@ Métricas de contexto financeiro muito específicas, como \texttt{BITCOIN\_COUNT
 \subsection{O Paradoxo Estrutural do Algoritmo de Leiden}
 \label{subsec:paradoxo_leiden}
 
-A aplicação do algoritmo de Leiden para detecção de comunidades revelou um paradoxo metodológico relevante para o campo de \textit{Anti-Money Laundering}. Por um lado, as métricas de qualidade são excelentes: o escore médio de modularidade ($Q$) permaneceu alto em todas as janelas observadas, oscilando entre 0,6588 e 0,7898, o que atesta partições matematicamente consistentes e estruturalmente densas.
+A aplicação do algoritmo de Leiden para detecção de comunidades revelou um paradoxo metodológico relevante para a prevenção à lavagem de dinheiro. Por um lado, as métricas de qualidade são excelentes: o escore médio de modularidade ($Q$) permaneceu alto em todas as janelas observadas, oscilando entre 0,6588 e 0,7898, o que atesta partições matematicamente consistentes e estruturalmente densas.
 
 Por outro lado, Leiden falha como filtro autônomo devido ao efeito de diluição em macrocomunidades. No HI Small, 156.844 de 165.832 nós atribuídos (94,60\%) concentraram-se em comunidades com mais de 500 integrantes, enquanto no HI Medium esse número chegou a 635.056 de 665.127 (95,48\%). Nesses grandes agregados, a taxa de fraude interna converge para a linha de base da rede, chegando a 0,9749\% no HI Small e 0,8673\% no HI Medium. Além disso, as comunidades de maior risco capturam apenas frações marginais da fraude total, o que mostra que uma boa partição matemática não implica utilidade operacional direta.
 

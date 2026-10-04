@@ -370,6 +370,21 @@ Como objetivos específicos, definem-se:
     \item Mensurar o impacto operacional e quantificar a captura real de infratores através de diferentes métricas de avaliação de desempenho.
 \end{itemize}
 
+\chapter{Fundamentação Teórica}
+
+Neste capítulo, são apresentados os fundamentos teóricos que sustentam este trabalho. Inicialmente, abordam-se os conceitos centrais sobre o processo de lavagem de dinheiro e suas tipologias operacionais de ocultação, com ênfase na técnica de \textit{smurfing}. Em seguida, são discutidas as métricas de avaliação de modelos preditivos aplicadas ao cenário de desbalanceamento severo de classes e a formulação da Teoria dos Grafos voltada a redes temporais.
+
+\section{Lavagem de Dinheiro e Tipologias Transacionais}
+\label{sec:aml_tipologias}
+
+A lavagem de dinheiro compreende o conjunto de operações comerciais ou financeiras que visam a incorporar na economia formal bens, direitos ou valores originados de infrações penais, conferindo-lhes aparência de licitude \cite{coaf2021cartilha}. De acordo com as diretrizes internacionais do Grupo de Ação Financeira contra a Lavagem de Dinheiro e o Financiamento do Terrorismo (GAFI/FATF) e do Conselho de Controle de Atividades Financeiras \cite{coaf2021cartilha, fatf2018concealment}, o processo de lavagem divide-se classicamente em três fases interdependentes, ilustradas na Figura~\ref{fig:fases_ml}:
+
+\begin{enumerate}
+    \item \textbf{Colocação (\textit{Placement}):} fase inicial de ingresso dos fundos ilícitos no sistema financeiro ou na economia tradicional, frequentemente realizada por meio de depósitos em espécie fracionados, aquisição de ativos negociáveis ou liquidação de títulos;
+    \item \textbf{Ocultação ou Estratificação (\textit{Layering}):} condução de múltiplos arranjos transacionais, movimentações entre contas intermediárias e transferências entre instituições e jurisdições diversas, cujo propósito é distanciar os fundos de sua origem delituosa e impossibilitar o rastreamento contábil dos recursos;
+    \item \textbf{Integração (\textit{Integration}):} reintrodução definitiva dos valores na economia formal sob a forma de investimentos produtivos, empreendimentos imobiliários ou aquisição de bens de capital, consolidando a falsa aparência de legitimidade dos recursos.
+\end{enumerate}
+
 \begin{figure}{\linewidth}
     \centering
     \caption{As três fases clássicas da lavagem de dinheiro}
@@ -379,10 +394,9 @@ Como objetivos específicos, definem-se:
     \label{fig:fases_ml}
 \end{figure}
 
-\chapter{Fundamentação Teórica}
+Dentre as técnicas operacionais mais disseminadas nas fases de colocação e ocultação, destaca-se a estruturação de transações, internacionalmente denominada \textit{smurfing} \cite{fatf2018concealment, cheng2025graph}. O \textit{smurfing} consiste no fracionamento deliberado de um grande montante financeiro em depósitos ou transferências de valores reduzidos, mantidos intencionalmente abaixo dos limites regulatórios que disparam os mecanismos de comunicação obrigatória aos órgãos de supervisão financeira (como o COAF no Brasil). 
 
-Neste capítulo, são apresentadas as principais métricas de avaliação de modelos de
-classificação aplicados à detecção de fraudes no contexto de lavagem de dinheiro.
+Para executar esse fracionamento em larga escala, as organizações criminosas utilizam uma rede de executores (frequentemente denominados ``laranjas'' ou \textit{money mules}) e múltiplas contas correntes abertas em diversas instituições financeiras. Sob a perspectiva de Ciência de Dados de Grafos, essa dinâmica gera padrões estruturais específicos de dispersão (\textit{fan-out}) seguidos de concentração (\textit{fan-in}) de fluxos, os quais evidenciam a necessidade de modelar as relações no nível de entidades para neutralizar a fragmentação em contas isoladas.
 
 \section{Métricas de Avaliação}
 
@@ -399,26 +413,47 @@ Em problemas de classificação binária, cada entidade é rotulada como fraude 
 
 \subsection{Métricas de Desempenho e o Problema do Desbalanceamento}
 
-O \textit{Recall} (Sensibilidade) mede a capacidade de recuperar exemplos positivos, indicando a proporção de fraudadores reais que foram detectados:
+O \textit{Recall} (Sensibilidade ou Taxa de Verdadeiros Positivos) mede a capacidade do modelo de identificar corretamente as entidades pertencentes à classe positiva, indicando a proporção de fraudadores reais detectados em relação ao total de fraudes existentes:
 \begin{equation}
-    \mathrm{Recall} = \frac{TP}{TP+FN}
+    \mathrm{Recall} = \mathrm{TPR} = \frac{TP}{TP+FN}
 \end{equation}
 
-A \textit{Precision} (Precisão) mede a exatidão dos alertas gerados, ou seja, a proporção de predições de fraude que estavam corretas:
+A \textit{Precision} (Precisão) avalia a exatidão das notificações emitidas pelo sistema, correspondendo à proporção de alertas de fraude que eram verídicos:
 \begin{equation}
     \mathrm{Precision} = \frac{TP}{TP+FP}
 \end{equation}
 
-O \textit{F1-score} combina ambas através de uma média harmônica, oferecendo uma visão equilibrada do modelo \cite{alarab2020comparative}:
+O \textit{F1-score} consolida ambas as métricas através de sua média harmônica, oferecendo uma medida única de equilíbrio entre a taxa de captura de fraudes e a taxa de acerto dos alertas gerados \cite{alarab2020comparative}:
 \begin{equation}
     F1 = 2 \cdot \frac{\mathrm{Precision} \cdot \mathrm{Recall}}{\mathrm{Precision} + \mathrm{Recall}}
 \end{equation}
 
-Embora a \textit{Accuracy} (Acurácia) meça a proporção total de classificações corretas, a sua utilização isolada em cenários de fraude pode levar à interpretações errôneas: um modelo que preveja a classe majoritária (não-fraude) alcançará uma acurácia próxima de 100\%, falhando completamente no seu objetivo \cite{vassallo2021application}.
+Embora a \textit{Accuracy} (Acurácia) meça a proporção global de predições corretas em relação ao total de instâncias ($ \frac{TP+TN}{TP+TN+FP+FN} $), sua aplicação direta em cenários de desbalanceamento severo é inadequada. Em bases onde fraudes representam menos de 1\% das observações, um classificador ingênuo que rotule todos os exemplos como não fraudulentos atingirá mais de 99\% de acurácia, falhando integralmente no objetivo prático de identificação de ilícitos \cite{vassallo2021application}.
 
-Por esta razão, a literatura privilegia métricas que avaliam o poder de separação entre classes em diferentes limiares. A \textit{ROC-AUC} (\textit{Receiver Operating Characteristic Area Under the Curve}) relaciona a taxa de verdadeiros positivos (TPR) com a taxa de falsos positivos (FPR). No entanto, em cenários de desbalanceamento severo, a \textit{AUPRC} (Precisão-Recall Area Under the Curve) é considerada mais informativa, pois foca o desempenho estritamente no impacto sobre a classe positiva \cite{liu2022bond}.
+Por essa razão, a literatura de \textit{Anti-Money Laundering} privilegia métricas que avaliam o poder de separação entre classes em diferentes limiares operacionais:
 
-Para efeitos de implantação em ambiente real, as equipes de \textit{compliance} possuem capacidade finita de investigação diária. Assim, a \textit{Precision@k} avalia a fração de verdadeiros positivos entre os $k$ primeiros exemplos com maior probabilidade de fraude ranqueados pelo modelo, refletindo a eficácia operacional do sistema \cite{karim2024scalable}.
+\subsubsection{Área sob a Curva ROC (ROC-AUC)}
+A métrica \textit{ROC-AUC} (\textit{Receiver Operating Characteristic - Area Under the Curve}) quantifica a capacidade do modelo de discriminar as classes em todos os possíveis limiares de decisão $\tau \in [0, 1]$ \cite{fawcett2006introduction}. A curva ROC relaciona a Taxa de Verdadeiros Positivos ($\mathrm{TPR}(\tau)$) com a Taxa de Falsos Positivos ($\mathrm{FPR}(\tau) = \frac{FP(\tau)}{FP(\tau)+TN(\tau)}$):
+\begin{equation}
+    \mathrm{ROC\text{-}AUC} = \int_{0}^{1} \mathrm{TPR}(\tau) \, d(\mathrm{FPR}(\tau))
+\end{equation}
+O valor de ROC-AUC varia no intervalo $[0{,}5; 1{,}0]$, onde 0{,}5 representa o desempenho de um classificador aleatório e 1{,}0 indica a separação perfeita entre as classes.
+
+\subsubsection{Área sob a Curva Precisão-Recall (AUPRC)}
+Embora amplamente empregada, a ROC-AUC apresenta uma limitação conceitual importante sob desbalanceamento severo: o cálculo da taxa de falsos positivos ($\mathrm{FPR}$) inclui a quantidade total de verdadeiros negativos ($TN$) em seu denominador. Dado que $TN \gg FP$ na detecção de fraudes financeiras, mesmo um volume expressivo de falsos positivos ($FP$) resulta em um $\mathrm{FPR}$ numericamente reduzido, conferindo uma impressão excessivamente otimista do poder discriminativo do classificador.
+
+Para contornar essa distorção, a literatura recomenda a \textit{AUPRC} (\textit{Area Under the Precision-Recall Curve}) como métrica de referência para problemas com classes altamente desbalanceadas \cite{liu2022bond}. A curva Precisão-Recall desconsidera os verdadeiros negativos ($TN$), concentrando-se estritamente na relação entre a exatidão dos alertas e a cobertura das fraudes. Matematicamente, a AUPRC corresponde à integral da função de precisão em relação ao \textit{recall} $r \in [0, 1]$, sendo estimada numericamente pela Precisão Média (\textit{Average Precision}):
+\begin{equation}
+    \mathrm{AUPRC} = \int_{0}^{1} \mathrm{Precision}(r) \, dr \approx \sum_{k=1}^{N} \big( \mathrm{Recall}(k) - \mathrm{Recall}(k-1) \big) \cdot \mathrm{Precision}(k)
+\end{equation}
+onde $\mathrm{Precision}(k)$ e $\mathrm{Recall}(k)$ representam a precisão e o \textit{recall} obtidos no $k$-ésimo limiar de probabilidade ordenado. Em contrapartida à ROC-AUC, a linha de base aleatória da AUPRC corresponde à proporção real de exemplos positivos na base de dados (da ordem de 1\%), de modo que qualquer incremento nessa métrica reflete um ganho concreto na detecção da classe minoritária.
+
+\subsubsection{Precisão nos Primeiros $k$ Alertas (Precision@k)}
+Em ambientes operacionais de \textit{compliance}, os analistas humanos possuem capacidade finita de investigação diária. A métrica operacional $\mathrm{Precision@}k$ avalia a fração de fraudes reais identificadas entre os $k$ primeiros alertas com maior probabilidade estimada pelo modelo preditivo \cite{karim2024scalable}:
+\begin{equation}
+    \mathrm{Precision@}k = \frac{\sum_{i=1}^{k} y_{(i)}}{k}
+\end{equation}
+onde $y_{(i)} \in \{0, 1\}$ indica a classe real da $i$-ésima entidade ranqueada pelo modelo em ordem decrescente de probabilidade. Essa medida quantifica a eficiência imediata dos alertas prioritários entregues à equipe de auditoria.
 
 \section{Teoria dos Grafos}
 
@@ -435,9 +470,10 @@ Diferentemente de abordagens tradicionais que utilizam um único peso ou transa�
 A representação de múltiplos pesos nas arestas permite a extração de métricas de centralidade relacionadas à diferentes comportamentos. Neste trabalho, algoritmos como o \textit{PageRank} são calculados em múltiplas formulações independentes, utilizando tanto a matriz de adjacência ponderada pelo volume ($w_{vol}$) quanto a ponderada pela frequência transacional ($w_{count}$). Dessa forma, o modelo identifica não apenas a concentração de grandes volumes de dinheiro, mas também comportamentos de dispersão e estruturação repetitiva (como o \textit{smurfing}), que muitas vezes usa valores menores, mas um número alto de operações \cite{vilella2025weirdnodes}.
 
 \subsection{Grafos Temporais}
-A análise estática de um grafo financeiro, a qual agrega todas as transações em uma única topologia atemporal, introduz vazamento de dados (\textit{data leakage}), pois permite que eventos futuros influenciem a extração de \textit{features} de eventos passados. Para preservar a ordem das transações, o sistema deve ser modelado como um grafo temporal estruturado em janelas cronológicas \cite{sizan2025machine}.
+\label{subsec:grafos_temporais}
+Em modelagem preditiva, o vazamento de dados (\textit{data leakage}) ocorre quando informações externas ao conjunto de treino, em especial eventos futuros que não estariam disponíveis no momento real da inferência (\textit{look-ahead bias}), são incorporadas inadvertidamente ao modelo ou à engenharia de atributos, gerando métricas de desempenho infladas e irrealistas. No contexto de transações financeiras, a análise baseada em um grafo puramente estático (que consolida todo o histórico em uma única topologia atemporal) introduz \textit{data leakage}, pois permite que fluxos de capital futuros contaminem as propriedades estruturais calculadas para eventos passados \cite{sizan2025machine}.
 
-Matematicamente, a rede temporal é dividida em uma sequência de grafos instantâneos (ou \textit{snapshots}) $G=\{G_1, G_2, \ldots, G_T\}$. Cada grafo $G_i = (V_i, E_i)$ é construído a partir de uma janela deslizante (\textit{sliding window}) de tamanho fixo $\Delta t$, que avança com um passo temporal definido (\textit{stride}). A extração de propriedades topológicas para avaliar um vértice na janela $i$ restringe-se exclusivamente às arestas $E_i$ observadas dentro desse intervalo específico. Essa delimitação garante que o cálculo das métricas não seja contaminado por transações futuras, utilizando as mesmas restrições informacionais de um ambiente de produção real \cite{sizan2025machine}.
+Para assegurar a causalidade cronológica e reproduzir as restrições informacionais de um ambiente de produção real, a rede transacional deve ser formulada como um grafo temporal dinâmico. Matematicamente, a rede temporal é decomposta em uma sequência de grafos instantâneos (denominados \textit{snapshots}) $G = \{G_1, G_2, \ldots, G_T\}$. Um \textit{snapshot} $G_i = (V_i, E_i)$ representa o estado da rede restrito a um intervalo temporal delimitado por uma janela deslizante (\textit{sliding window}) de duração $\Delta t$, a qual avança ao longo do tempo com um passo predefinido (\textit{stride}). Dessa forma, a extração de métricas topológicas para avaliar um vértice no instante $i$ restringe-se exclusivamente às arestas $E_i$ registradas dentro daquela janela temporal específica, impedindo qualquer contaminação por dados futuros.
 
 \subsection{Atributos Topológicos}
 A topologia local e global da rede fornece sinais preditivos estruturais que não podem ser descobertos quando os vértices são analisados de forma isolada. Os atributos extraídos dividem-se em três categorias principais:
@@ -561,13 +597,13 @@ A extração das janelas cronológicas (\textit{snapshots}) e a agregação do g
 
 A definição do tamanho da janela deslizante ($\Delta t$) e do passo temporal (\textit{stride}) baseou-se em uma etapa de otimização empírica. Foram testadas diferentes configurações com o objetivo de maximizar o desempenho preditivo (métricas de avaliação extraídas do modelo) garantindo, simultaneamente, a viabilidade computacional do processamento das métricas topológicas em um ambiente com recursos limitados de memória (8 GB de RAM). 
 
-Dentro de cada janela de 3 dias, as transações individuais (multiarestas) foram agregadas. É importante ressaltar que os vértices do grafo ($V$) foram modelados para representar \textbf{entidades financeiras} (indivíduos ou empresas) e não contas bancárias isoladas. Essa etapa de mapeamento, realizada com auxílio da tabela de entidades do \textit{dataset} se dá pelo motivo de que criminosos utilizam múltiplas contas para praticar \textit{smurfing}) e simular comportamentos normais. Com a agregação do grafo por entidade, é possível observar o fluxo real de capital, tornando o uso de contas diferentes transparente.
+Dentro de cada janela de 3 dias, as transações individuais (multiarestas) foram agregadas. É importante ressaltar que os vértices do grafo ($V$) foram modelados para representar \textbf{entidades financeiras} (indivíduos ou empresas) e não contas bancárias isoladas. Essa etapa de mapeamento, realizada com auxílio da tabela de entidades do \textit{dataset}, justifica-se pelo fato de que agentes ilícitos frequentemente utilizam múltiplas contas bancárias para praticar a estruturação de transações (\textit{smurfing}, conforme detalhado na Seção~\ref{sec:aml_tipologias}) e simular fluxos operacionais legítimos. Ao consolidar o grafo no nível de entidades, evidencia-se o fluxo real de capital, neutralizando as tentativas de ofuscação e fragmentação de recursos entre diferentes contas bancárias controladas por uma mesma entidade.
 
 Dessa forma, as transações ocorridas entre uma entidade de origem $u$ e uma entidade de destino $v$ foram consolidadas, resultando em um grafo direcionado simples onde cada aresta $e = (u, v)$ resume o fluxo financeiro do período.
 
 Essa etapa de simplificação estrutural é necessária devido ao fato de algoritmos como o \textit{PageRank}, \textit{Betweenness Centrality} e os algoritmos de detecção de comunidades exigirem uma matriz de adjacência simples ponderada, não operando nativamente sobre multigrafos \cite{baigabyl2025using}. Consolidando multiarestas em uma única aresta direcional, é possível preservar a magnitude e a frequência do fluxo financeiro por meio dos atributos de peso, o que torna viável o processamento matemático da rede \cite{vilella2025weirdnodes}.
 
-Durante este processo de agrupamento via banco de dados (SQL e DuckDB), os seguintes atributos consolidados de aresta foram extraídos:
+Durante este processo de agrupamento via SQL, os seguintes atributos consolidados de aresta foram extraídos:
 
 \begin{itemize}
     \item \textbf{Volume Agregado em USD ($w_{vol}$):} Utilizando a tabela histórica de taxas de câmbio, combinando a moeda de pagamento e a data exata da transação original.

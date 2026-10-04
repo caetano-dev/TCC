@@ -623,7 +623,7 @@ Além das heurísticas de vértice pré-calculadas na rotina de banco de dados, 
 O cálculo exato de algumas métricas de centralidade em grafos esparsos e de grande escala possui uma complexidade de tempo proibitiva. Portanto, foram adotadas otimizações e parametrizações específicas para o ambiente de \textit{Big Data}:
 
 \begin{itemize}
-  \item \textbf{Centralidade de Intermediação (\textit{Betweenness}):} O cálculo exato do \textit{betweenness} requer o cálculo de todos os caminhos mais curtos do grafo, o que é inviável em redes de milhões de nós. Para contornar esta limitação de \textit{hardware}, adotou-se o método de aproximação por amostragem de vértices \cite{riondato2016fast}. A métrica foi calculada extraindo-se caminhos a partir de uma amostra de $k=80$ nós sentinelas (\textit{seed} = 42), garantindo um equilíbrio entre tempo de processamento e fidelidade estrutural.
+  \item \textbf{Centralidade de Intermediação (\textit{Betweenness}):} O cálculo exato do \textit{betweenness} exige a determinação de todos os caminhos mais curtos entre pares de nós no grafo ($O(|V||E|)$), tornando-se proibitivo em redes de grande escala. Para contornar essa restrição computacional, adotou-se a aproximação estocástica por amostragem de vértices \cite{riondato2016fast}, extraindo os caminhos mínimos a partir de uma amostra de $k=80$ nós sentinelas. A fixação da semente do gerador de números pseudoaleatórios (\textit{seed} = 42) foi adotada para assegurar a reprodutibilidade científica e a consistência determinística da amostragem entre diferentes janelas temporais, equilibrando o tempo de execução e a fidelidade estrutural da métrica.
     
     \item \textbf{\textit{PageRank}:} A fim de capturar diferentes dinâmicas de fluxo, o \textit{PageRank} foi instanciado em quatro variações. Em relação à profundidade, utilizou-se o fator de amortecimento (\textit{damping factor}) tradicional $\alpha=0{,}85$ (capturando difusão de longo alcance) e um fator modificado $\alpha=0{,}75$ (focado em vizinhanças curtas). Ambas as profundidades foram calculadas duas vezes: uma utilizando a matriz ponderada pelo volume financeiro ($w_{vol}$) e outra pela contagem de transações ($w_{count}$). O limite de convergência foi fixado em 100 iterações.
     
@@ -692,7 +692,7 @@ Para garantir que o comportamento real das transações seja preservado, optou-s
 \end{itemize}
 
 \subsection{Ponderação Dinâmica da Função de Perda}
-Para lidar com a assimetria do \textit{dataset}, substituiu-se o uso tradicional de \textit{undersampling} (que descarta dados) pela ponderação da função de perda logística do próprio XGBoost (\texttt{scale\_pos\_weight}). 
+Para lidar com o severo desbalanceamento das classes no \textit{dataset}, evitou-se o uso tradicional de subamostragem (\textit{undersampling}), técnica que descarta aleatoriamente registros legítimos para equilibrar a proporção entre as classes, mas acarreta perda de informações valiosas. Em seu lugar, adotou-se a ponderação da função de perda logística do próprio XGBoost (\texttt{scale\_pos\_weight}). 
 
 Durante cada iteração da validação temporal, a razão exata de desbalanceamento do conjunto de treino é calculada dinamicamente:
 \begin{equation}
@@ -707,7 +707,9 @@ O desempenho do sistema foi mensurado através da métrica Área Sob a Curva de 
 
 Para quantificar o impacto da adição das \textit{features} topológicas, implementou-se um estudo de ablação controlado, comparando estatisticamente o desempenho de dois modelos: um modelo de base (\textit{Baseline}) treinado exclusivamente com atributos comportamentais e um modelo completo (\textit{Full Model}) que inclui tanto os atributos comportamentais quanto os topológicos extraídos dos grafos.
 
-O experimento foi conduzido sob validação \textit{forward-chaining} estrita, onde cada modelo foi treinado em janelas históricas e testado em janelas temporais subsequentes. Os dados foram avaliados pelo teste $t$ pareado entre as janelas temporais, com o objetivo de comparar o desempenho das \textit{features} com amostras pareadas \cite{dietterich1998approximate, japkowicz2011evaluating}. Para rejeitar a hipótese nula ($H_0$), foi utilizado o nível de significância padrão $\alpha = 0{,}05$ ($95\%$ de confiança). Resultados com $p$-valor inferior a $\alpha = 0{,}01$ ($99\%$ de confiança) foram sinalizados com asterisco duplo.
+O experimento foi conduzido sob validação temporal estrita (\textit{forward-chaining}), na qual cada modelo foi treinado em janelas históricas e avaliado em janelas subsequentes. Para verificar se as diferenças de desempenho entre os conjuntos de \textit{features} foram estatisticamente significativas, aplicou-se o teste $t$ pareado entre as janelas temporais \cite{dietterich1998approximate, japkowicz2011evaluating}.
+
+Nesse teste, a hipótese nula ($H_0$) assume que não há diferença real de desempenho entre as abordagens comparadas (ou seja, a média das diferenças de desempenho entre os modelos ao longo das janelas é igual a zero), enquanto a hipótese alternativa ($H_1$) indica que a inclusão das variáveis topológicas gera alteração significativa no resultado. Adotou-se o nível de significância padrão $\alpha = 0{,}05$ ($95\%$ de confiança) para a rejeição de $H_0$. Adicionalmente, resultados com $p$-valor inferior a $\alpha = 0{,}01$ ($99\%$ de confiança) foram sinalizados com asterisco duplo.
 \chapter{Resultados e Discussão}
 
 \begin{epigrafeonline}
@@ -1178,7 +1180,7 @@ Embora os resultados sejam promissores, o estudo apresenta limitações que deve
     
     \item \textbf{Escala computacional:} O processamento de grafos com milhões de nós exige recursos significativos.
     
-    \item \textbf{Evolução temporal dos padrões:} Fraudadores adaptam suas estratégias ao longo do tempo. Trabalhos futuros devem investigar mecanismos de retreinamento contínuo e detecção de \textit{concept drift} para manter a eficácia do sistema em cenários de evolução adversarial.
+    \item \textbf{Evolução temporal dos padrões:} Organizações criminosas adaptam dinamicamente suas táticas para contornar os mecanismos de fiscalização. Trabalhos futuros devem investigar estratégias de retreinamento contínuo e detecção de desvio de conceito (\textit{concept drift}), isto é, a alteração das propriedades estatísticas e dos padrões de fraude ao longo do tempo, que tende a degradar a acurácia de modelos estáticos, para assegurar a eficácia do sistema em cenários de evolução adversarial.
     
     \item \textbf{Explicabilidade para auditoria regulatória:} Embora a técnica SHAP forneça interpretabilidade a nível de \textit{feature}, a justificação de alertas individuais para fins de auditoria regulatória exige métodos de explicação a nível de instância. A integração de técnicas como LIME (\textit{Local Interpretable Model-agnostic Explanations}) e caminhos de ativação em grafos pode fortalecer a rastreabilidade das decisões do modelo \cite{ribeiro2016should}.
 \end{enumerate}

@@ -248,20 +248,12 @@ A todos que, direta ou indiretamente, contribuíram para a realização deste pr
 %
 \pretextualchapter{}
   \vfill
-  \begin{center}
-    \fbox{\begin{minipage}{10cm}
-        Epígrafe -- elemento opcional (\cfcite[p.40]{bib:RoteiroUERJ2ed}).\\
-        É uma citação sem aspas – em fonte 12, estilo normal, com espaço 1,5 – seguida da indicação de autoria, grafada em fonte 12 e em itálico.\\
-        O texto deve estar localizado no terço inferior da folha, com o alinhamento livre, necessário à epígrafe.\\
-        É um pequeno texto em prosa ou verso, com uma citação, pensamento ou provérbio.\\
-        Tem por função introduzir o leitor ao tema, servir de reflexão ou inspiração, e estabelecer uma conexão com o conteúdo da monografia.
-    \end{minipage}}
-  \end{center}
-  \vfill
+  \vspace*{10cm}
   \begin{flushright}
-  Texto da epígrafe\\
-  Pensamento, reflexão\\    
-  \textit{autor}
+  Networks are present everywhere.\\
+  All we need is an eye for them.\\    
+  \vspace{0.2cm}
+  \textit{Albert-László Barabási}
   \end{flushright}
 %
 % ----------------------------------------------------------
@@ -359,8 +351,8 @@ Finally, SHAP analysis confirmed the decisive role of graph features, placing me
 \chapter*{Introdução}
 
 \begin{epigrafeonline}
-\hfill Texto da epígrafe \textit{in locu} (opcional).\\
-\hspace*{\fill}\textit{Autor}\\
+\hfill ``Follow the money.''\hspace{0.2cm}\null\\
+\hspace*{\fill}\textit{Henry E. Peterson}\\
 \end{epigrafeonline}
 
 A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de forma ilícita, ocultando sua origem \cite{coaf2021cartilha}. Segundo \citeonline{unodc2011estimating}, esse crime movimenta entre 2\% e 5\% do PIB mundial por ano. No Brasil, estima-se que entre US\$ 25,8 bilhões e US\$ 64,4 bilhões sejam lavados anualmente \cite{vinciworks, kar2014brazil, brasil2021nra}, o que exige das instituições financeiras sistemas de monitoramento em larga escala. Tradicionalmente, a detecção de anomalias em AML (\textit{Anti-Money Laundering}) baseia-se em heurísticas e regras estáticas, centradas em limites de valor e frequência transacional. Essa abordagem tende a gerar altas taxas de falsos positivos, sobrecarregar equipes de \textit{compliance} e falhar na identificação de tipologias criminosas mais recentes, nas quais os fraudadores fragmentam os valores em múltiplas contas e camadas de ofuscação \cite{jensen2023fighting}.
@@ -552,8 +544,8 @@ A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs})
 \chapter{Metodologia e Desenvolvimento}
 
 \begin{epigrafeonline}
-\hfill Texto da epígrafe \textit{in locu} (opcional).\\
-\hspace*{\fill}\textit{Autor}\\
+\hfill ``All models are wrong, but some are useful.''\hspace{0.2cm}\null\\
+\hspace*{\fill}\textit{George E. P. Box}\\
 \end{epigrafeonline}
 
 Este capítulo detalha a metodologia proposta para investigar e quantificar o impacto da adição de variáveis topológicas na detecção de esquemas de lavagem de dinheiro. O desenvolvimento do trabalho é estruturado de forma a replicar os desafios de um ambiente de \textit{compliance} do mundo real, considerando a avaliação cronológica e eficiência computacional.
@@ -726,8 +718,8 @@ Nesse teste, a hipótese nula ($H_0$) assume que não há diferença real de des
 \chapter{Resultados e Discussão}
 
 \begin{epigrafeonline}
-\hfill Texto da epígrafe \textit{in locu} (opcional).\\
-\hspace*{\fill}\textit{Autor}\\
+\hfill ``In God we trust. All others must bring data.''\hspace{0.2cm}\null\\
+\hspace*{\fill}\textit{W. Edwards Deming}\\
 \end{epigrafeonline}
 
 Este capítulo apresenta os resultados experimentais obtidos através da aplicação da metodologia descrita no Capítulo 2. A avaliação foi conduzida utilizando dois \textit{datasets} sintéticos do AMLworld: o HI Small, contendo 1.245.666 registros transacionais agregados em 8 janelas temporais com taxa de fraude de 1,15\%, e o HI Medium, contendo 7.376.519 registros transacionais com taxa de fraude de 1,35\%. Os experimentos em ambos os \textit{datasets} utilizaram processamento através de janelas temporais deslizantes (\textit{forward-chaining}) para preservar a causalidade estrita.

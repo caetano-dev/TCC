@@ -659,7 +659,7 @@ Os padrões comportamentais de vizinhança foram extraídos para mapear a estrut
     
     \item \textbf{Agregação de Sucessores:} Como forma de avaliar o risco de pulverização, extraiu-se a volumetria enviada aos sucessores de cada nó. Foram calculados o grau médio da vizinhança e os volumes médio e máximo enviados aos nós destinos no \textit{snapshot}.
     
-    \item \textbf{Mapeamento de Padrões Topológicos:} Uma função de busca de subgrafos isomorfos foi implementada para quantificar padrões conhecidos de lavagem de dinheiro presentes no \textit{dataset}. O limiar para detecção de estruturas de dispersão e concentração (\textit{fan-out} e \textit{fan-in}) foi estipulado em $k \ge 6$ vizinhos. Para focar a busca no escopo correto, o grau máximo analisado foi restrito a 16 conexões, uma vez que este foi o limite máximo documentado para os padrões sintéticos de fraude injetados no \textit{dataset} AMLworld \cite{altman2023realistic}, atuando também como uma forma de economizar recursos computacionais. Com base nessa filtragem, calcularam-se as ocorrências de \textit{fan-out} e \textit{fan-in}. Adicionalmente, buscou-se a ocorrência de ciclos simples fechados limitados a até 6 saltos de distância (\textit{cycle\_bound} = 6). Como o problema algorítmico de enumeração de ciclos em grafos direcionados possui alta complexidade computacional, podendo crescer exponencialmente em redes densas, aplicou-se uma trava de segurança limitando a extração a um máximo de 2.000 ciclos por nó (\textit{max\_cycles} = 2000), garantindo a viabilidade do processamento em larga escala.
+    \item \textbf{Mapeamento de Padrões Topológicos:} Uma função de busca de subgrafos isomorfos foi implementada para quantificar padrões conhecidos de lavagem de dinheiro presentes no \textit{dataset}, ilustrados esquematicamente na Figura~\ref{fig:faninfanoutcycle}. O limiar para detecção de estruturas de dispersão e concentração (\textit{fan-out} e \textit{fan-in}) foi estipulado em $k \ge 6$ vizinhos. Para focar a busca no escopo correto, o grau máximo analisado foi restrito a 16 conexões, uma vez que este foi o limite máximo documentado para os padrões sintéticos de fraude injetados no \textit{dataset} AMLworld \cite{altman2023realistic}, atuando também como uma forma de economizar recursos computacionais. Com base nessa filtragem, calcularam-se as ocorrências de \textit{fan-out} e \textit{fan-in}. Adicionalmente, buscou-se a ocorrência de ciclos simples fechados limitados a até 6 saltos de distância (\textit{cycle\_bound} = 6). Como o problema algorítmico de enumeração de ciclos em grafos direcionados possui alta complexidade computacional, podendo crescer exponencialmente em redes densas, aplicou-se uma trava de segurança limitando a extração a um máximo de 2.000 ciclos por nó (\textit{max\_cycles} = 2000), garantindo a viabilidade do processamento em larga escala.
 \end{itemize}
 
 \begin{figure}{\linewidth}
@@ -752,7 +752,7 @@ A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempe
     \end{tabular}
 \end{table}
 
-Os resultados no HI Small indicam que a adição das \textit{features} topológicas resultou em melhorias substanciais em múltiplas métricas de desempenho. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, onde a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
+Os resultados no HI Small indicam que a adição das \textit{features} topológicas resultou em melhorias substanciais em múltiplas métricas de desempenho, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, onde a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
 
 \begin{figure}{\linewidth}
     \centering
@@ -785,7 +785,7 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
     \end{tabular}
 \end{table}
 
-Os resultados no HI Medium apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a \textit{datasets} de maior escala. A AUPRC apresenta um ganho (+10,85\%) similar ao HI Small (+18,00\%), validando que o benefício das \textit{features} topológicas é robusto e não depende apenas da escala do \textit{dataset}. A precisão (+29,83\%) também mostra ganho substancial, ainda que ligeiramente inferior ao HI Small, sugerindo um \textit{trade-off} entre complexidade e benefício em \textit{datasets} maiores.
+Os resultados no HI Medium, detalhados na Tabela~\ref{tab:model-summary-medium} e ilustrados na Figura~\ref{fig:model-comparison-medium}, apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a \textit{datasets} de maior escala. A AUPRC apresenta um ganho (+10,85\%) similar ao HI Small (+18,00\%), validando que o benefício das \textit{features} topológicas é robusto e não depende apenas da escala do \textit{dataset}. A precisão (+29,83\%) também mostra ganho substancial, ainda que ligeiramente inferior ao HI Small, sugerindo um \textit{trade-off} entre complexidade e benefício em \textit{datasets} maiores.
 
 \begin{figure}{\linewidth}
     \centering
@@ -800,7 +800,7 @@ A comparação entre o HI Small e o HI Medium revela características importante
 
 \subsection{Métrica Precision@k e Eficácia Operacional}
 
-A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema ao ranquear as entidades de maior risco, manteve-se alta para ambos os modelos em ambos os \textit{datasets}. Com P@100 próximo de 0,99 no HI Small e variando entre 0,98 e 1,00 no HI Medium, o sistema demonstra alta confiabilidade na priorização de alertas.
+A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema ao ranquear as entidades de maior risco, manteve-se alta para ambos os modelos em ambos os \textit{datasets}, conforme demonstrado nas Figuras~\ref{fig:precision-at-k-small} e~\ref{fig:precision-at-k-medium}. Com P@100 próximo de 0,99 no HI Small e variando entre 0,98 e 1,00 no HI Medium, o sistema demonstra alta confiabilidade na priorização de alertas.
 
 \begin{figure}{\linewidth}
     \centering
@@ -958,7 +958,7 @@ No HI Small, do total de 3.842 entidades ilícitas presentes no conjunto de vali
     \item \textbf{Modelo Full:} Detectou 3.632 entidades (94,53\% de cobertura).
 \end{itemize}
 
-Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,80\% na taxa de captura em relação ao modelo base. Em um contexto de \textit{compliance} em larga escala, onde cada entidade fraudulenta não detectada pode resultar em perdas financeiras significativas e penalidades regulatórias, esse incremento possui valor prático mensurável.
+Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,80\% na taxa de captura em relação ao modelo base, conforme ilustrado na Figura~\ref{fig:entity-recall}. Em um contexto de \textit{compliance} em larga escala, onde cada entidade fraudulenta não detectada pode resultar em perdas financeiras significativas e penalidades regulatórias, esse incremento possui valor prático mensurável.
 
 \begin{figure}{\linewidth}
     \centering
@@ -974,7 +974,7 @@ No HI Medium, do total de 29.781 entidades ilícitas presentes no conjunto de va
     \item \textbf{Modelo Full:} Detectou 26.980 entidades (90,59\% de cobertura).
 \end{itemize}
 
-A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais), o que representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base. Embora a captura incremental de 103 entidades fraudulentas no HI Medium seja maior que a de 29 no HI Small, o dataset apresenta uma melhoria percentual menor comparada ao HI Small.
+A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais), o que representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base, conforme detalhado na Figura~\ref{fig:entity-recall-medium}. Embora a captura incremental de 103 entidades fraudulentas no HI Medium seja maior que a de 29 no HI Small, o dataset apresenta uma melhoria percentual menor comparada ao HI Small.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1076,7 +1076,7 @@ A Tabela~\ref{tab:shap-top15-medium} apresenta as 15 \textit{features} de maior 
     \end{tabular}
 \end{table}
 
-A hierarquia de importância das \textit{features} é consistente entre HI Small e HI Medium, com as mesmas três \textit{features} ocupando os primeiros lugares (\texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth}). Destaca-se que \texttt{in\_degree} mantém a 4ª posição em ambos os \textit{datasets}, reforçando que a centralidade de entrada é um sinal robusto de fraude independentemente da escala. A posição de destaque de atributos topológicos a partir da 3ª feature sugere que a topologia da rede financeira fornece sinais fortes para discriminar fraudes.
+A hierarquia de importância das \textit{features} é consistente entre HI Small e HI Medium, com as mesmas três \textit{features} ocupando os primeiros lugares (\texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth}). Destaca-se que \texttt{in\_degree} mantém a 4ª posição em ambos os \textit{datasets}, reforçando que a centralidade de entrada é um sinal robusto de fraude independentemente da escala. A posição de destaque de atributos topológicos a partir da 3ª feature sugere que a topologia da rede financeira fornece sinais fortes para discriminar fraudes, conforme sintetizado visualmente na distribuição de valores SHAP da Figura~\ref{fig:shap-beeswarm-medium}.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1137,7 +1137,7 @@ O ganho médio de +18\% em AUPRC, validado estatisticamente com $p = 0{,}0188$, 
 
 A análise de importância via SHAP revelou que, embora as \textit{features} comportamentais tradicionais (especialmente as relacionadas a ACH e cheques) permaneçam altamente relevantes, as métricas topológicas ocupam posições de destaque no ranking de influência. Em particular, o algoritmo HITS e as métricas de grau demonstraram alta capacidade discriminativa, sugerindo que entidades fraudulentas tendem a ocupar posições estruturalmente distintas na rede: seja como pontos de concentração de fluxo (\textit{authority}) ou como nós dispersores (\textit{hub}).
 
-A validação temporal do estudo de ablação, realizada através de \textit{forward-chaining} em 6 janelas consecutivas, confere robustez aos resultados. A consistência dos ganhos ao longo de 5 das 6 janelas indica que os padrões topológicos aprendidos pelo modelo generalizam bem para períodos futuros, um requisito importante para a implantação em ambientes de produção.
+A validação temporal do estudo de ablação, realizada através de \textit{forward-chaining} em 6 janelas consecutivas, confere robustez aos resultados. A evolução comparativa do AUPRC, o ganho incremental absoluto ($\Delta$AUPRC) e a estabilidade da métrica Precisão@100 ao longo das janelas são ilustrados nas Figuras~\ref{fig:ablation-auprc-small}, \ref{fig:ablation-delta-auprc-small} e \ref{fig:ablation-precision100-small} para o \textit{dataset} HI Small, e nas Figuras~\ref{fig:ablation-auprc-medium}, \ref{fig:ablation-delta-auprc-medium} e \ref{fig:ablation-precision100-medium} para o HI Medium. A consistência dos ganhos ao longo de 5 das 6 janelas indica que os padrões topológicos aprendidos pelo modelo generalizam bem para períodos futuros, um requisito importante para a implantação em ambientes de produção.
 
 \begin{figure}{\linewidth}
     \centering

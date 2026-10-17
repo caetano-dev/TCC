@@ -1045,6 +1045,20 @@ O gráfico de dispersão SHAP (\textit{beeswarm plot}), ilustrado na Figura~\ref
     \label{fig:shap-beeswarm}
 \end{figure}
 
+A inspeção da dispersão dos pontos na Figura~\ref{fig:shap-beeswarm} permite entender como os valores de cada variável influenciam as decisões do modelo no \textit{dataset} HI Small:
+
+\begin{itemize}
+    \item \textbf{Transferências eletrônicas ACH (\texttt{ach\_count\_sent} e \texttt{ach\_count\_recv}):} Os pontos vermelhos (que indicam valores altos) concentram-se fortemente do lado direito (valores SHAP positivos, chegando a passar de $+1{,}0$ no envio e $+2{,}0$ no recebimento). Já os pontos azuis (valores baixos ou zerados) ficam do lado esquerdo (valores SHAP negativos). Isso mostra que realizar muitas transferências eletrônicas via ACH — tanto enviando quanto recebendo — é o sinal mais forte de suspeita de fraude para o modelo. Esse comportamento reflete a prática comum de criminosos, que utilizam transferências eletrônicas rápidas para movimentar, fracionar (\textit{smurfing}) e esvaziar contas antes que sejam bloqueadas.
+    
+    \item \textbf{Contas que concentram recursos (\texttt{hits\_auth} e \texttt{in\_degree}):} As duas variáveis de grafo mais bem posicionadas (3ª e 4ª posições) mostram uma longa faixa de pontos vermelhos do lado positivo à direita (SHAP de até $+1{,}8$). A métrica \texttt{hits\_auth} identifica se uma conta recebe dinheiro de várias contas intermediárias que distribuem recursos. No contexto de combate à fraude, essa é a característica clássica de contas de coleta ou ``contas-mula'', que juntam o dinheiro fracionado vindo de diversos remetentes para repassá-lo adiante. Da mesma forma, um grau de entrada alto (\texttt{in\_degree}) indica que a conta recebeu recursos de muitos parceiros distintos, aumentando bastante a probabilidade de alerta.
+    
+    \item \textbf{Uso de cheques como indicativo legítimo (\texttt{cheque\_count\_sent} e \texttt{cheque\_count\_recv}):} Ao contrário do ACH, a variável \texttt{cheque\_count\_sent} (5ª posição) apresenta um comportamento inverso: pontos vermelhos (muitos cheques emitidos) ficam do lado esquerdo (SHAP negativo, entre $-0{,}8$ e $-0{,}2$), enquanto pontos azuis (poucos ou nenhum cheque) concentram-se do lado direito (SHAP positivo). O mesmo padrão reverso ocorre em \texttt{cheque\_count\_recv} (15ª posição). Isso acontece porque o cheque é um meio de pagamento mais lento, formal e rastreável, típico de comércios e empresas tradicionais. O modelo aprendeu que a movimentação regular de cheques funciona como um indicativo de legitimidade (um fator de proteção), ao passo que a ausência total de cheques em contas que movimentam muito dinheiro eletrônico eleva o nível de suspeita.
+    
+    \item \textbf{Volume de dinheiro recebido (\texttt{vol\_recv}):} Em \texttt{vol\_recv} (6ª posição), os pontos azuis (volumes muito baixos) ficam bem à esquerda no gráfico (SHAP em torno de $-1{,}5$). Isso significa que contas que movimentam valores quase nulos são rapidamente descartadas como suspeitas pelo modelo.
+    
+    \item \textbf{Conexões e grupos fechados (\texttt{average\_neighbor\_degree}, \texttt{degree} e \texttt{leiden\_macro\_modularity}):} As variáveis de vizinhança mostram que estar conectado a contas que também transacionam intensamente eleva a suspeita sobre o titular. Além disso, na modularidade (\texttt{leiden\_macro\_modularity}, 10ª posição), valores altos (pontos vermelhos) ficam do lado direito (SHAP positivo até $+1{,}0$). Isso indica que contas que operam dentro de grupos muito fechados e isolados da rede têm maior chance de serem fraudulentas, o que reproduz o padrão de quadrilhas que circulam recursos apenas entre cúmplices antes de tentar sacar ou transferir para fora da rede.
+\end{itemize}
+
 \subsection{Análise SHAP no HI Medium}
 
 A Tabela~\ref{tab:shap-top15-medium} apresenta as 15 \textit{features} de maior importância global no \textit{dataset} HI Medium, permitindo avaliar se a hierarquia de importância é preservada em escala maior.
@@ -1076,7 +1090,9 @@ A Tabela~\ref{tab:shap-top15-medium} apresenta as 15 \textit{features} de maior 
     \end{tabular}
 \end{table}
 
-A hierarquia de importância das \textit{features} é consistente entre HI Small e HI Medium, com as mesmas três \textit{features} ocupando os primeiros lugares (\texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth}). Destaca-se que \texttt{in\_degree} mantém a 4ª posição em ambos os \textit{datasets}, reforçando que a centralidade de entrada é um sinal robusto de fraude independentemente da escala. A posição de destaque de atributos topológicos a partir da 3ª feature sugere que a topologia da rede financeira fornece sinais fortes para discriminar fraudes, conforme sintetizado visualmente na distribuição de valores SHAP da Figura~\ref{fig:shap-beeswarm-medium}.
+Ao comparar as Tabelas~\ref{tab:shap-top15} e \ref{tab:shap-top15-medium}, nota-se que as variáveis mais determinantes permanecem as mesmas: as cinco primeiras posições são idênticas em ambos os conjuntos (\texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth}, \texttt{in\_degree} e \texttt{cheque\_count\_sent}). Além disso, a importância média dessas variáveis de topo aumenta na rede maior: o SHAP de \texttt{ach\_count\_sent} sobe de 0,9514 no Small para 1,0822 no Medium, e o de \texttt{ach\_count\_recv} vai de 0,7401 para 0,8111.
+
+A Figura~\ref{fig:shap-beeswarm-medium} apresenta a distribuição global de valores SHAP para o modelo treinado no HI Medium, permitindo avaliar o comportamento das variáveis em uma rede seis vezes maior.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1086,6 +1102,22 @@ A hierarquia de importância das \textit{features} é consistente entre HI Small
     \fonte{Elaborado pelo autor.}
     \label{fig:shap-beeswarm-medium}
 \end{figure}
+
+A partir do gráfico da Figura~\ref{fig:shap-beeswarm-medium}, destacam-se os seguintes resultados:
+
+\begin{itemize}
+    \item \textbf{Sinais do topo ainda mais evidentes:} As variáveis \texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth} e \texttt{in\_degree} mantêm a mesma direção observada no HI Small, mas seus pontos positivos espalham-se ainda mais para a direita. No caso de \texttt{ach\_count\_recv}, os valores chegam a ultrapassar $+2{,}5$, e em \texttt{hits\_auth} superam $+1{,}7$. Isso mostra que, em uma rede muito maior e com mais clientes normais, as contas que centralizam recursos e recebem grandes volumes eletrônicos tornam-se ainda mais fáceis de distinguir do comportamento legítimo.
+
+    \item \textbf{Maior peso da conectividade geral (\texttt{degree} e \texttt{pr\_count}):} O total de conexões da conta (\texttt{degree}) subiu da 8ª posição no HI Small para a 6ª no HI Medium (SHAP de 0,3135), e o PageRank (\texttt{pr\_count}) subiu da 12ª para a 7ª posição (0,2677). Em redes maiores, a maioria das pessoas comuns interage com poucos parceiros e de forma dispersa. Já as redes de fraude precisam criar várias contas e fluxos interligados para movimentar o dinheiro, fazendo com que o número total de conexões e a relevância no fluxo financeiro ganhem ainda mais peso na classificação.
+
+    \item \textbf{Concentração de contatos próximos (\texttt{egonet\_node\_count}):} A quantidade de vizinhos diretos ao redor da conta subiu da 13ª para a 10ª posição (0,2202). No gráfico, valores altos dessa métrica (pontos magenta) puxam a predição para o lado positivo, indicando que contas inseridas em grupos densos de contatos próximos têm maior chance de participar de esquemas coordenados.
+
+    \item \textbf{Detecção de transferências em rajada (\texttt{temporal\_fan\_in\_count}):} Uma novidade no HI Medium é o ingresso de \texttt{temporal\_fan\_in\_count} no Top 15 (13ª posição, SHAP de 0,1503). Essa métrica mede se a conta recebeu muitas transações em uma janela curta de tempo. Em redes amplas, quadrilhas costumam realizar vários depósitos rápidos e concentrados para diminuir o tempo em que o dinheiro fica exposto antes do saque. O modelo aprendeu a identificar esse comportamento em rajada, associando valores altos a maior probabilidade de fraude.
+
+    \item \textbf{Contas intermediárias como pontes (\texttt{betweenness}):} A centralidade de intermediação (\texttt{betweenness}) subiu para a 15ª posição (SHAP de 0,1232, contra a 21ª colocação no Small), com pontos vermelhos atingindo SHAP de até $+1{,}3$. Em redes maiores, contas que funcionam como pontes ligando grupos ou bancos diferentes tornam-se essenciais para detectar esquemas que usam contas de passagem para esconder a origem dos recursos.
+
+    \item \textbf{Confirmação do papel protetivo dos cheques:} O uso de cheques (\texttt{cheque\_count\_sent} e \texttt{cheque\_count\_recv}) preserva o mesmo comportamento inverso: quem movimenta cheques continua recebendo pontuação menor de risco, enquanto a ausência de cheques eleva a suspeita. Isso comprova que a preferência dos fraudadores por canais puramente eletrônicos é uma característica estável, independentemente do tamanho da base analisada.
+\end{itemize}
 
 \section{Métricas Topológicas dos Algoritmos}
 \label{sec:analise_critica_topologia}

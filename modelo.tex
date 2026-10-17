@@ -248,12 +248,23 @@ A todos que, direta ou indiretamente, contribuíram para a realização deste pr
 %
 \pretextualchapter{}
   \vfill
-  \vspace*{10cm}
+  \vspace*{6cm}
   \begin{flushright}
-  Networks are present everywhere.\\
-  All we need is an eye for them.\\    
+  One accurate measurement is worth a thousand expert opinions.\\
   \vspace{0.2cm}
-  \textit{Albert-László Barabási}
+  \textit{Grace Hopper}
+
+  \vspace{0.8cm}
+
+  A wealth of information creates a poverty of attention.\\
+  \vspace{0.2cm}
+  \textit{Herbert A. Simon}
+
+  \vspace{0.8cm}
+
+  Information is the resolution of uncertainty.\\
+  \vspace{0.2cm}
+  \textit{Claude Shannon}
   \end{flushright}
 %
 % ----------------------------------------------------------
@@ -391,7 +402,7 @@ A lavagem de dinheiro compreende o conjunto de operações comerciais ou finance
     \centering
     \caption{As três fases clássicas da lavagem de dinheiro}
     \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth]{imagens/fases_ml}
+    \includegraphics[width=0.85\textwidth]{imagens_pt/fases_ml}
     \fonte{\citeonline{eimf_aml}.}
     \label{fig:fases_ml}
 \end{figure}
@@ -667,7 +678,7 @@ Os padrões comportamentais de vizinhança foram extraídos para mapear a estrut
     \centering
     \caption{Fan-in, Fan-out e Ciclo Direcionado em Grafos Financeiros}
     \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth]{imagens/faninfanoutcycle}
+    \includegraphics[width=0.85\textwidth]{imagens_pt/faninfanoutcycle}
     \fonte{Elaborado pelo autor.}
     \label{fig:faninfanoutcycle}
 \end{figure}
@@ -757,7 +768,7 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_ablation_metric_comparison}
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_ablation_metric_comparison}
     \caption{Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}
     \label{fig:model-comparison-small}
 \end{figure}
@@ -790,7 +801,7 @@ Os resultados no HI Medium apresentam um padrão consistente com o observado no 
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_ablation_metric_comparison}
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_ablation_metric_comparison}
     \caption{Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}
     \label{fig:model-comparison-medium}
 \end{figure}
@@ -805,14 +816,14 @@ A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema a
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_precision_at_k_comparison}
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_precision_at_k_comparison}
     \caption{Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}
     \label{fig:precision-at-k-small}
 \end{figure}
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_precision_at_k_comparison}
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_precision_at_k_comparison}
     \caption{Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}
     \label{fig:precision-at-k-medium}
 \end{figure}
@@ -963,7 +974,7 @@ Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 ponto
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.85\linewidth]{imagens/HI_Small_entity_level_recall}
+    \includegraphics[width=0.85\linewidth]{imagens_pt/HI_Small_entity_level_recall}
     \caption{Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}
     \label{fig:entity-recall}
 \end{figure}
@@ -979,7 +990,7 @@ A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais),
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.85\linewidth]{imagens/HI_Medium_entity_level_recall}
+    \includegraphics[width=0.85\linewidth]{imagens_pt/HI_Medium_entity_level_recall}
     \caption{Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}
     \label{fig:entity-recall-medium}
 \end{figure}
@@ -1037,7 +1048,7 @@ A distribuição equilibrada entre \textit{features} comportamentais e topológi
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_global_shap_beeswarm}
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_global_shap_beeswarm}
     \caption{Distribuição de valores SHAP para as principais features do modelo (HI Small)}
     \label{fig:shap-beeswarm}
 \end{figure}
@@ -1077,7 +1088,7 @@ A hierarquia de importância das \textit{features} é consistente entre HI Small
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_global_shap_beeswarm}
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_global_shap_beeswarm}
     \caption{Distribuição de valores SHAP para as principais features do modelo (HI Medium)}
     \label{fig:shap-beeswarm-medium}
 \end{figure}
@@ -1136,16 +1147,44 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Small_ablation_lift}
-    \caption{Lift percentual por janela temporal e métrica de avaliação (HI Small)}
-    \label{fig:ablation-lift}
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_ablation_auprc}
+    \caption{Comparação de AUPRC e Lift percentual por janela temporal (HI Small)}
+    \label{fig:ablation-auprc-small}
 \end{figure}
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens/HI_Medium_ablation_lift}
-    \caption{Lift percentual por janela temporal e métrica de avaliação (HI Medium)}
-    \label{fig:ablation-lift-medium}
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_ablation_delta_auprc}
+    \caption{Ganho absoluto de AUPRC ($\Delta$AUPRC) por janela temporal (HI Small)}
+    \label{fig:ablation-delta-auprc-small}
+\end{figure}
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_ablation_precision100}
+    \caption{Precisão@100 por janela temporal no estudo de ablação (HI Small)}
+    \label{fig:ablation-precision100-small}
+\end{figure}
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_ablation_auprc}
+    \caption{Comparação de AUPRC e Lift percentual por janela temporal (HI Medium)}
+    \label{fig:ablation-auprc-medium}
+\end{figure}
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_ablation_delta_auprc}
+    \caption{Ganho absoluto de AUPRC ($\Delta$AUPRC) por janela temporal (HI Medium)}
+    \label{fig:ablation-delta-auprc-medium}
+\end{figure}
+
+\begin{figure}{\linewidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_ablation_precision100}
+    \caption{Precisão@100 por janela temporal no estudo de ablação (HI Medium)}
+    \label{fig:ablation-precision100-medium}
 \end{figure}
 
 Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -3,08\%, HI Medium: -2,00\%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, potencialmente deixando de capturar fraudes de baixa sinalização topológica. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, onde a priorização de alertas de alta confiança reduz a sobrecarga investigativa, mesmo que isso implique em uma pequena perda marginal de cobertura total.

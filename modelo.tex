@@ -248,20 +248,8 @@ A todos que, direta ou indiretamente, contribuíram para a realização deste pr
 %
 \pretextualchapter{}
   \vfill
-  \vspace*{6cm}
+  \vspace*{10cm}
   \begin{flushright}
-  One accurate measurement is worth a thousand expert opinions.\\
-  \vspace{0.2cm}
-  \textit{Grace Hopper}
-
-  \vspace{0.8cm}
-
-  A wealth of information creates a poverty of attention.\\
-  \vspace{0.2cm}
-  \textit{Herbert A. Simon}
-
-  \vspace{0.8cm}
-
   Information is the resolution of uncertainty.\\
   \vspace{0.2cm}
   \textit{Claude Shannon}
@@ -1044,12 +1032,16 @@ Entre os atributos topológicos, destaca-se a importância de:
     \item \textbf{Agregação de Vizinhança:} O grau médio dos vizinhos (\texttt{average\_neighbor\_degree}) e o volume médio enviado aos sucessores (\texttt{successor\_avg\_volume}) fornecem sinais sobre o comportamento pós-transferência, revelando se o dinheiro é imediatamente dispersado ou concentrado após a transação inicial.
 \end{itemize}
 
-A distribuição equilibrada entre \textit{features} comportamentais e topológicas no gráfico SHAP sugere que  ambos os tipos de informação são complementares e necessários para uma detecção eficaz de lavagem de dinheiro.
+A distribuição equilibrada entre \textit{features} comportamentais e topológicas no gráfico SHAP sugere que ambos os tipos de informação são complementares e necessários para uma detecção eficaz de lavagem de dinheiro.
+
+O gráfico de dispersão SHAP (\textit{beeswarm plot}), ilustrado na Figura~\ref{fig:shap-beeswarm}, sintetiza tanto a magnitude da importância de cada variável quanto o sentido e a natureza do seu impacto nas decisões do modelo. Cada linha representa uma \textit{feature}, disposta verticalmente em ordem decrescente de importância global, enquanto o eixo horizontal mede o valor SHAP (\textit{SHAP value}), que indica o quanto a presença daquela variável desvia a predição da saída média do modelo (valores à direita aumentam a probabilidade de fraude, enquanto valores à esquerda a reduzem). Cada ponto na linha corresponde a uma transação individual da amostra, e a sua cor indica o valor real assumido pela variável naquela instância: tons de vermelho/rosa representam valores altos da \textit{feature}, ao passo que tons de azul representam valores baixos. A espessura ou densidade vertical de pontos em torno de uma determinada posição reflete o volume de instâncias que compartilham impactos similares. Dessa forma, além de identificar quais variáveis governam as decisões, o gráfico permite diagnosticar relações de causa e efeito (por exemplo, se valores elevados de uma métrica favorecem ou inibem a classificação de anomalia).
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_global_shap_beeswarm}
     \caption{Distribuição de valores SHAP para as principais features do modelo (HI Small)}
+    \vspace{0.2cm}
+    \includegraphics[width=0.82\linewidth,height=0.68\textheight,keepaspectratio]{imagens_pt/HI_Small_global_shap_beeswarm}
+    \fonte{Elaborado pelo autor.}
     \label{fig:shap-beeswarm}
 \end{figure}
 
@@ -1088,8 +1080,10 @@ A hierarquia de importância das \textit{features} é consistente entre HI Small
 
 \begin{figure}{\linewidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_global_shap_beeswarm}
     \caption{Distribuição de valores SHAP para as principais features do modelo (HI Medium)}
+    \vspace{0.2cm}
+    \includegraphics[width=0.82\linewidth,height=0.68\textheight,keepaspectratio]{imagens_pt/HI_Medium_global_shap_beeswarm}
+    \fonte{Elaborado pelo autor.}
     \label{fig:shap-beeswarm-medium}
 \end{figure}
 

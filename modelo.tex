@@ -102,8 +102,8 @@
 %----------------------------------------------------------------
 
 \instituicao{Universidade do Estado do Rio de Janeiro}
-            {Centro setorial}  
-            {Unidade}{Patrono} 
+            {Centro de Tecnologia e Ciências}  
+            {Instituto de Matemática, Estatística e Computação}{} 
 
 %----------------------------------------------------------------
 % Informações da autoria do documento
@@ -128,7 +128,7 @@
 % Aqui deve-se inserir as informações sobre orientador e coorientados (se houver)
 \orientador{Prof. D.Sc.} 
            {Bruno}{Porto Masquio} 
-           {Unidade -- UERJ} 
+           {Instituto de Matemática, Estatística e Computação -- UERJ} 
 
 
 \grau{Bacharel} % Doutor, Mestre, Bacharel, Licenciado
@@ -204,16 +204,12 @@
 % ----------------------------------------------------------
 %
 \begin{folhadeaprovacao}
-  \assinatura{Cargo Título Nome Completo}
-             {Instituição por extenso}
-  \assinatura{Cargo Título Nome Completo}
-             {Instituição por extenso}
-  \assinatura{Cargo Título Nome Completo}
-             {\UERJunidade \UERJunidadenome\ -- UERJ}
-  \assinatura{Cargo Título Nome Completo}
-             {\UERJunidade \UERJunidadenome\ -- UERJ}
-  \assinatura{Cargo Título Nome Completo}
-             {\UERJunidade \UERJunidadenome\ -- UERJ}
+  \assinatura{Prof. Título Nome Completo}
+             {Instituto de Matemática, Estatística e Computação -- UERJ}
+  \assinatura{Prof. Título Nome Completo}
+             {Instituto de Matemática, Estatística e Computação -- UERJ}
+  \assinatura{Prof. Título Nome Completo}
+             {Instituto de Matemática, Estatística e Computação -- UERJ}
 \end{folhadeaprovacao}
 %
 % ----------------------------------------------------------
@@ -222,7 +218,11 @@
 %
 \pretextualchapter{Dedicatória}
 \vfill
-Conforme \citeonline[p.38]{bib:RoteiroUERJ2ed}, é um elemento opcional. [...] O texto da dedicatória deve estar localizado na parte inferior da folha, seguindo as regras gerais de apresentação gráfica.
+\begin{flushright}
+  \begin{minipage}{8cm}
+    \textit{Aos meus pais, com todo o meu amor e profunda gratidão por todo o apoio, incentivo e dedicação ao longo desta jornada.}
+  \end{minipage}
+\end{flushright}
 %
 % ----------------------------------------------------------
 % Agradecimentos
@@ -230,7 +230,17 @@ Conforme \citeonline[p.38]{bib:RoteiroUERJ2ed}, é um elemento opcional. [...] O
 %
 \pretextualchapter{Agradecimentos}
 
-Segundo \citeonline[p.39]{bib:RoteiroUERJ2ed}, é um elemento opcional. O texto dos agradecimentos deve ser separado do título por duas linhas em branco com espaçamento 1,5 e digitado de acordo as regras gerais de apresentação gráfica. Se houver necessidade, o texto pode continuar nas folhas seguintes, sem incluir a palavra Agradecimentos.
+Agradeço primeiramente à Universidade do Estado do Rio de Janeiro (UERJ) e ao Instituto de Matemática, Estatística e Computação (IMEC) por proporcionarem um ambiente de formação de excelência.
+
+Ao meu orientador, Prof. D.Sc. Bruno Porto Masquio, pela orientação, disponibilidade, confiança e discussões acadêmicas que guiaram a consolidação deste trabalho.
+
+A todos os professores que tive ao longo do curso, por cada aula, conselho e ensinamento compartilhado.
+
+Aos meus pais e familiares, por sempre me apoiarem e incentivarem meus estudos e aspirações.
+
+Aos amigos e colegas de curso, pelas horas compartilhadas de estudo, companheirismo e apoio mútuo ao longo de toda a graduação.
+
+A todos que, direta ou indiretamente, contribuíram para a realização deste projeto.
 %
 % ----------------------------------------------------------
 % Epigrafe (opcional)
@@ -678,9 +688,11 @@ O processo de modelagem preditiva foi desenhado para lidar com os dois maiores d
 
 \subsection{Divisão Cronológica dos Dados (\textit{Forward-Chaining})}
 
-Para garantir a validade estatística do experimento e evitar o vazamento de informações futuras para o passado (\textit{look-ahead bias}), empregou-se a validação cruzada temporal (\textit{forward-chaining cross-validation}), na qual os \textit{snapshots} temporais do grafo foram estritamente ordenados de forma cronológica \cite{sizan2025machine}. 
+Para preservar a causalidade temporal estrita e eliminar o risco de viés de antecipação (\textit{look-ahead bias}) e vazamento de dados (\textit{data leakage}), adotou-se o protocolo de validação cruzada temporal por encadeamento progressivo (\textit{forward-chaining cross-validation}) \cite{sizan2025machine}. Sob esse arranjo, os \textit{snapshots} temporais do grafo e suas matrizes de atributos correspondentes foram estritamente ordenados no tempo. Esse protocolo metodológico rege tanto o treinamento do classificador XGBoost quanto o particionamento sobre o qual as métricas de desempenho são mensuradas a cada ciclo temporal.
 
-O modelo foi treinado recursivamente em uma janela histórica de dados e testado exclusivamente nas janelas temporais subsequentes (futuras em relação ao treino). Essa abordagem simula o ambiente de produção de uma instituição financeira, onde o algoritmo de \textit{compliance} não possui qualquer conhecimento sobre as transações que ocorrerão no dia seguinte.
+O processo de avaliação opera de forma iterativa por meio de janelas temporais expansivas (\textit{expanding window}). Estabeleceu-se um período mínimo inicial de duas janelas ($W_0$ e $W_1$) para compor o histórico de treinamento. A partir da terceira janela ($t \ge 2$), em cada iteração, o modelo utiliza como treino o histórico acumulado de todas as janelas passadas ($W_0, \dots, W_{t-1}$) e é avaliado de forma cega exclusivamente na janela imediatamente subsequente ($W_t$).
+
+Para assegurar que a calibração do limiar de decisão (visando ao \textit{Recall} mínimo de 85\%) também não incorra em vazamento de dados, o conjunto histórico de treino de cada iteração foi particionado temporalmente em treino interno (80\%) e validação interna (20\%). O limiar ótimo obtido nessa partição de validação foi então congelado e aplicado à inferência da janela de teste $W_t$. Essa formulação reproduz fielmente as condições operacionais de uma instituição financeira, onde o motor de \textit{compliance} opera com retreinamento periódico sobre o histórico acumulado e realiza inferências sobre janelas futuras sem qualquer conhecimento prévio dos fluxos transacionais subsequentes.
 
 \section{Modelos Preditivos e Avaliação de Desempenho} 
 
@@ -1147,6 +1159,11 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
 Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -3,08\%, HI Medium: -2,00\%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, potencialmente deixando de capturar fraudes de baixa sinalização topológica. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, onde a priorização de alertas de alta confiança reduz a sobrecarga investigativa, mesmo que isso implique em uma pequena perda marginal de cobertura total.
 
 \chapter{Conclusão}
+
+\begin{epigrafeonline}
+\hfill ``O fim de uma jornada é apenas o ponto de partida para a próxima.''\hspace{0.2cm}\null\\
+\hspace*{\fill}\textit{T. S. Eliot}\\
+\end{epigrafeonline}
 
 Este trabalho investigou a contribuição de atributos topológicos extraídos de grafos temporais para a detecção de esquemas de lavagem de dinheiro utilizando algoritmos de \textit{Gradient Boosting}. Através de um estudo de ablação controlado e estatisticamente validado, demonstrou-se que a incorporação de \textit{features} estruturais de rede resulta em ganhos significativos de desempenho em relação a modelos baseados exclusivamente em atributos comportamentais.
 

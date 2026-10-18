@@ -310,6 +310,7 @@ While money laundering circulates between 2\% and 5\% of global GDP, traditional
 \abreviatura{AUPRC}{\textit{Area Under the Precision-Recall Curve}}
 \abreviatura{CDLA}{\textit{Community Data License Agreement}}
 \abreviatura{COAF}{Conselho de Controle de Atividades Financeiras}
+\abreviatura{COS}{Comunicações de Operações Suspeitas}
 \abreviatura{CSV}{\textit{Comma-Separated Values}}
 \abreviatura{FATF}{\textit{Financial Action Task Force}}
 \abreviatura{FN}{\textit{False Negative}}
@@ -317,7 +318,10 @@ While money laundering circulates between 2\% and 5\% of global GDP, traditional
 \abreviatura{FPR}{\textit{False Positive Rate}}
 \abreviatura{GAFI}{Grupo de Ação Financeira contra a Lavagem de Dinheiro e o Financiamento do Terrorismo}
 \abreviatura{GPU}{\textit{Graphics Processing Unit}}
+\abreviatura{HI}{\textit{High Illicit}}
 \abreviatura{HITS}{\textit{Hyperlink-Induced Topic Search}}
+\abreviatura{LI}{\textit{Low Illicit}}
+\abreviatura{LGPD}{Lei Geral de Proteção de Dados}
 \abreviatura{LIME}{\textit{Local Interpretable Model-agnostic Explanations}}
 \abreviatura{PIB}{Produto Interno Bruto}
 \abreviatura{RAM}{\textit{Random Access Memory}}
@@ -550,7 +554,7 @@ Este capítulo detalha a metodologia proposta para investigar e quantificar o im
 
 \section{Base de Dados}
 
-Para o treinamento e a validação da arquitetura proposta, este estudo utiliza o \textit{dataset} sintético AMLworld \cite{altman2023realistic}. O conjunto de dados foi desenvolvido especificamente para pesquisas em detecção de lavagem de dinheiro e disponibilizado publicamente pelos autores sob a licença Community Data License Agreement – Sharing 1.0 (CDLA-Sharing-1.0), uma licença aberta destinada ao compartilhamento e à reutilização de dados. A escolha por uma base de dados sintética decorre, entre outros fatores, das restrições de privacidade e confidencialidade associadas ao acesso a dados financeiros reais. Além disso, no cenário financeiro real, parcela expressiva das infrações passa despercebida pelas autoridades, resultando em conjuntos de dados com rotulagem incompleta ou ruidosa. O AMLworld foi projetado especificamente para simular padrões de lavagem de dinheiro em larga escala e oferecer rótulos confiáveis para transações lícitas e ilícitas, o que viabiliza o treinamento supervisionado.
+Para o treinamento e a validação da arquitetura proposta, este estudo utiliza o \textit{dataset} sintético AMLworld \cite{altman2023realistic}. O conjunto de dados foi desenvolvido especificamente para pesquisas em detecção de lavagem de dinheiro e disponibilizado publicamente pelos autores sob a licença Community Data License Agreement – Sharing 1.0 (CDLA-Sharing-1.0), uma licença aberta destinada ao compartilhamento e à reutilização de dados. A escolha por uma base de dados sintética decorre, fundamentalmente, das rigorosas restrições legais de confidencialidade, sigilo bancário e proteção de dados (como a Lei Geral de Proteção de Dados -- LGPD no Brasil), as quais inviabilizam a disponibilização pública de históricos transacionais reais de ecossistemas bancários ou de pagamentos instantâneos como o Pix. Além disso, no cenário financeiro real, parcela expressiva das infrações passa despercebida pelas autoridades, resultando em conjuntos de dados com rotulagem incompleta ou ruidosa. O AMLworld foi projetado especificamente para simular padrões de lavagem de dinheiro em larga escala com alta fidelidade estrutural e oferecer rótulos confiáveis para transações lícitas e ilícitas, o que viabiliza o treinamento supervisionado.
 
 A base de dados oferece, ao todo, seis variações que combinam escala (\textit{Small},
 \textit{Medium} e \textit{Large}) e nível de atividade ilícita (HI: \textit{High Illicit};
@@ -805,7 +809,7 @@ A comparação entre o HI Small e o HI Medium revela características importante
 
 \subsection{Métrica Precision@k e Eficácia Operacional}
 
-A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema ao ranquear as entidades de maior risco, manteve-se em elevada em ambos os modelos e nos dois \textit{datasets}, conforme demonstrado nas Figuras~\ref{fig:precision-at-k-small} e~\ref{fig:precision-at-k-medium}. Com P@100 próximo de 0,99 no HI Small e variando entre 0,98 e 1,00 no HI Medium, o sistema demonstra alta confiabilidade na priorização de alertas.
+A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema ao ranquear as entidades de maior risco, manteve-se elevada em ambos os modelos e nos dois \textit{datasets}, conforme demonstrado nas Figuras~\ref{fig:precision-at-k-small} e~\ref{fig:precision-at-k-medium}. Com P@100 próximo de 0,99 no HI Small e variando entre 0,98 e 1,00 no HI Medium, o sistema demonstra alta confiabilidade na priorização de alertas.
 
 \begin{figure}{\linewidth}
     \centering
@@ -958,7 +962,7 @@ A Tabela~\ref{tab:statistical-tests-medium} apresenta os testes de significânci
     \source{Elaborado pelo autor. Teste t pareado bicaudal sobre as diferenças ($\text{Full Model} - \text{Baseline}$) ao longo das 12 janelas de teste.}
 \end{table}
 
-Os testes no HI Medium mostram uma significância estatística ainda maior para acurácia, precisão, F1-Score, ROC-AUC e AUPRC, todos com $p < 0{,}01$. A significância elevada para ROC-AUC ($p < 0{,}0001$) indica que a discriminação geral entre fraudes e operações legítimas beneficia-se consistentemente das \textit{features} topológicas em toda a janela temporal. De forma similar ao HI Small, não há significância estatística em Recall, P@100, P@200 e P@300, sugerindo que os modelos capturam igualmente bem as fraudes de altíssimo risco, diferenciando-se principalmente em faixas intermediárias de risco.
+Os testes no HI Medium mostram uma significância estatística ainda maior para acurácia, precisão, F1-Score, ROC-AUC e AUPRC, todos com $p < 0{,}01$. A significância elevada para ROC-AUC ($p < 0{,}0001$) indica que a discriminação geral entre fraudes e operações legítimas beneficia-se consistentemente das \textit{features} topológicas em toda a janela temporal. De forma similar ao HI Small, não há significância estatística em Recall, P@100 e P@200 (bem como em P@300 e P@500 na escala do HI Medium), sugerindo que os modelos capturam com eficácia comparável as fraudes de altíssimo risco nos alertas prioritários.
 
 \section{Captura de Entidades Fraudulentas em Nível Operacional}
 
@@ -1170,7 +1174,7 @@ Os resultados experimentais revelam uma dicotomia clara entre capacidade de ranq
 
 Em contrapartida, métricas locais centradas na contagem bruta, como \texttt{TX\_COUNT} (ROC-AUC de 0,6412) e \texttt{PR\_COUNT} (0,6014), embora exibam menor poder de separação global, alcançam Precision@10 de 100,00\%. Do ponto de vista prático de engenharia de risco, esses algoritmos funcionam como filtros de topo de funil, ideais para triagem primária. Eles não resolvem o problema de classificação da base como um todo, mas são extremamente eficazes para concentrar a investigação nas anomalias mais evidentes da rede.
 
-Um dos achados mais expressivos da análise estrutural reside na assimetria exibida pelo algoritmo HITS quando avaliado de forma univariada. Enquanto o perfil de \textit{hub} (\texttt{HITS\_HUB}) obteve poder de ranqueamento relevante, o perfil isolado de autoridade (\texttt{HITS\_AUTH}) apresentou Average Precision de 0,0174 e mediana de Precision@10 nula. Esse contraste evidencia que, ao ser avaliado como filtro independente, o grau de autoridade gera elevado número de falsos positivos, pois grandes recebedores legítimos (como serviços de utilidade pública ou estabelecimentos comerciais) compartilham essa mesma centralidade de recepção. Contudo, quando integrado ao XGBoost, o atributo \texttt{HITS\_AUTH} ascendeu ao terceiro posto de importância global (conforme evidenciado na Seção~\ref{tab:shap-top15}), uma vez que o modelo baseado em árvores aprende interações não-lineares, discernindo com precisão nós receptores de alto risco ao combiná-los à ausência de canais legítimos (cheques) e à alta frequência de transferências eletrônicas rápidas.
+Um dos achados mais expressivos da análise estrutural reside na assimetria exibida pelo algoritmo HITS quando avaliado de forma univariada. Enquanto o perfil de \textit{hub} (\texttt{HITS\_HUB}) obteve poder de ranqueamento relevante, o perfil isolado de autoridade (\texttt{HITS\_AUTH}) apresentou Average Precision de 0,0174 e mediana de Precision@10 nula. Esse contraste evidencia que, ao ser avaliado como filtro independente, o grau de autoridade gera elevado número de falsos positivos, pois grandes recebedores legítimos (como serviços de utilidade pública ou estabelecimentos comerciais) compartilham essa mesma centralidade de recepção. Contudo, quando integrado ao XGBoost, o atributo \texttt{HITS\_AUTH} ascendeu ao terceiro posto de importância global (conforme evidenciado na Tabela~\ref{tab:shap-top15}), uma vez que o modelo baseado em árvores aprende interações não-lineares, discernindo com precisão nós receptores de alto risco ao combiná-los à ausência de canais legítimos (cheques) e à alta frequência de transferências eletrônicas rápidas.
 
 Métricas de contexto financeiro muito específicas, como \texttt{BITCOIN\_COUNT\_RECV} (ROC-AUC de 0,5018) e \texttt{TIME\_VARIANCE} (0,5883 no HI Small e 0,6181 no HI Medium), apresentaram desempenho similar ao aleatório. Essa proximidade com o acaso, combinada a Average Precision muito baixa, indica baixo valor informacional para a tarefa de ranking. Em um pipeline de produção, esses atributos tendem a aumentar custo computacional sem entregar sinal preditivo proporcional.
 
@@ -1285,7 +1289,7 @@ Do ponto de vista operacional, os resultados possuem implicações diretas para 
 Embora os resultados sejam promissores, o estudo apresenta limitações que devem ser consideradas:
 
 \begin{enumerate}
-    \item \textbf{Uso de dados sintéticos:} A validação foi realizada exclusivamente sobre o \textit{dataset} AMLworld, que, apesar de sua fidelidade estrutural, não captura toda a complexidade e diversidade de padrões observados em transações bancárias reais. A aplicação do sistema a dados reais de instituições financeiras é um próximo passo essencial.
+    \item \textbf{Uso de dados sintéticos e aplicação a arranjos instantâneos:} A validação foi realizada sobre o \textit{dataset} AMLworld, que, apesar de sua fidelidade estrutural, não captura toda a complexidade e diversidade de padrões observados em transações bancárias reais. A extensão e validação empírica deste pipeline em redes reais de pagamentos instantâneos de alta velocidade, a exemplo do ecossistema do Pix no Brasil, constitui um próximo passo de grande relevância prática, demandando parcerias institucionais e convênios técnicos com entidades custodiantes para assegurar o estrito cumprimento da LGPD e do sigilo bancário.
     
     \item \textbf{Escala computacional:} O processamento de grafos com milhões de transações e centenas de milhares de vértices impõe gargalos severos de memória e tempo de execução. Embora o uso de aproximações amostrais (como $k=80$ nós sentinelas para \textit{betweenness}) e tetos computacionais de busca na enumeração de ciclos tenham viabilizado o processamento, arquiteturas de produção em tempo real demandarão migração para frameworks distribuídos (como Apache Spark GraphX ou cuGraph em GPU).
     

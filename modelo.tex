@@ -308,11 +308,13 @@ While money laundering circulates between 2\% and 5\% of global GDP, traditional
 \abreviatura{AML}{\textit{Anti-Money Laundering}}
 \abreviatura{AUPRC}{\textit{Area Under the Precision-Recall Curve}}
 \abreviatura{COAF}{Conselho de Controle de Atividades Financeiras}
+\abreviatura{FATF}{\textit{Financial Action Task Force}}
 \abreviatura{FN}{\textit{False Negative}}
 \abreviatura{FP}{\textit{False Positive}}
 \abreviatura{FPR}{\textit{False Positive Rate}}
 \abreviatura{GAFI}{Grupo de Ação Financeira contra a Lavagem de Dinheiro e o Financiamento do Terrorismo}
 \abreviatura{HITS}{\textit{Hyperlink-Induced Topic Search}}
+\abreviatura{LIME}{\textit{Local Interpretable Model-agnostic Explanations}}
 \abreviatura{PIB}{Produto Interno Bruto}
 \abreviatura{ROC-AUC}{\textit{Receiver Operating Characteristic - Area Under the Curve}}
 \abreviatura{SHAP}{\textit{SHapley Additive exPlanations}}
@@ -472,7 +474,7 @@ A topologia local e global da rede fornece sinais preditivos estruturais que nã
 As métricas de centralidade quantificam a importância ou influência de um vértice na rede, enquanto as de coesão avaliam seu aninhamento estrutural.
 
 \begin{itemize}
-\item \textbf{Grau (\textit{Degree}):} Dividido em grau de entrada (\textit{in-degree}) e de saída (\textit{out-degree}), ele mede o número de conexões distintas de um nó. Matematicamente, dado a matriz de adjacência $A$ do grafo, os graus de um vértice $i$ são definidos como:
+\item \textbf{Grau (\textit{Degree}):} Dividido em grau de entrada (\textit{in-degree}) e de saída (\textit{out-degree}), ele mede o número de conexões distintas de um nó. Matematicamente, dada a matriz de adjacência $A$ do grafo, os graus de um vértice $i$ são definidos como:
 \begin{equation}
     k_i^{in} = \sum_{j \in V} A_{ji}, \quad k_i^{out} = \sum_{j \in V} A_{ij}
 \end{equation}
@@ -494,7 +496,7 @@ Onde $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$, e
 \begin{equation}
     PR(u) = \frac{1-\alpha}{N} + \alpha \sum_{v \in B_u} \frac{PR(v)}{L(v)}
 \end{equation}
-Sendo $N$ o número total de vértices, $B_u$ o conjunto de vértices que apontam para $u$, e $L(v)$ o número de links de saída do vértice $v$. A formulação com $\alpha=0{,}85$ (\textit{deep}) permite ao algoritmo encontrar padrões mais longos  na rede, enquanto $\alpha=0{,}75$ (\textit{shallow}) foca na influência local, otimizando a detecção de anéis de lavagem curtos e rápidos \cite{page1999pagerank}.
+Sendo $N$ o número total de vértices, $B_u$ o conjunto de vértices que apontam para $u$, e $L(v)$ o número de links de saída do vértice $v$. A formulação com $\alpha=0{,}85$ (\textit{deep}) permite ao algoritmo encontrar padrões mais longos na rede, enquanto $\alpha=0{,}75$ (\textit{shallow}) foca na influência local, otimizando a detecção de anéis de lavagem curtos e rápidos \cite{page1999pagerank}.
 
 \item \textbf{Decomposição \textit{K-Core}:} Avalia a profundidade de aninhamento de uma conta na rede \cite{shin2016corescope, shin2018patterns, conte2024kcores}. Dado um grafo $G = (V, E)$, um subgrafo induzido $H = (V_k, E_k)$ é definido como um \textit{k-core} se for o subgrafo maximal onde o grau de todo vértice $v \in V_k$, restrito a $H$, é maior ou igual a $k$:
 \begin{equation}
@@ -620,7 +622,7 @@ O cálculo exato de algumas métricas de centralidade em grafos esparsos e de gr
     
     \item \textbf{\textit{PageRank}:} A fim de capturar diferentes dinâmicas de circulação financeira, o \textit{PageRank} foi instanciado em quatro variações. Para abranger múltiplas escalas de profundidade na rede, adotaram-se dois fatores de amortecimento (\textit{damping factor}): o valor padrão $\alpha=0{,}85$, cuja probabilidade de continuidade propaga influência por caminhos mais longos (capturando cadeias extensas de estratificação financeira), e um valor reduzido $\alpha=0{,}75$, que penaliza trajetórias longas e confina o fluxo à vizinhança imediata (ideal para identificar anéis locais e esquemas rápidos de estruturação/\textit{smurfing}). Ambas as formulações foram calculadas sob duas perspectivas de peso: ponderadas pelo volume financeiro transacionado ($w_{vol}$) e pela frequência de transações ($w_{count}$), permitindo distinguir a concentração de capital de fluxos repetitivos. O critério de convergência foi fixado em 100 iterações.
     
-    \item \textbf{Algoritmo HITS:} O processamento das pontuações de \textit{Hub} e \textit{Authority} foi parametrizado com um limite máximo de 500 iterações (\textit{max\_iter} = 500), com o objetivo de garantir a convergência mesmo em janelas temporais de com alta densidade de vértices e arestas.
+    \item \textbf{Algoritmo HITS:} O processamento das pontuações de \textit{Hub} e \textit{Authority} foi parametrizado com um limite máximo de 500 iterações (\textit{max\_iter} = 500), com o objetivo de garantir a convergência mesmo em janelas temporais com alta densidade de vértices e arestas.
     
     \item \textbf{Decomposição \textit{K-Core}:} Devido à exigência topológica do algoritmo, o grafo direcionado ponderado foi primeiramente convertido para uma projeção simples não-direcionada e sem auto-laços (\textit{self-loops}) \cite{shin2018patterns}. A partir dessa projeção, extraiu-se o valor de \textit{coreness} máximo atingido por cada entidade na referida janela temporal.
 \end{itemize}
@@ -662,7 +664,7 @@ Os padrões comportamentais de vizinhança foram extraídos para mapear a estrut
     \source{Elaborado pelo autor.}
 \end{figure}
 
-Ao término da extração das \textit{features}, as tabelas tabulares isoladas de cada \textit{chunk} foram concatenadas pelo DuckDB, construindo o \textit{dataset} final (\texttt{sliding\_window\_}\discretionary{}{}{}\texttt{features.parquet}) que servirá de matriz de entrada ($X$) para o modelo preditivo e um arquivo com métricas (\texttt{sliding\_window\_}\discretionary{}{}{}\texttt{metrics.parquet}) para cada umas das \textit{features} extraídas.
+Ao término da extração das \textit{features}, as tabelas tabulares isoladas de cada \textit{chunk} foram concatenadas pelo DuckDB. Esse processo gerou o arquivo consolidado de entrada ($X$) do classificador (\texttt{sliding\_window\_features.parquet}) e o respectivo arquivo de métricas agregadas (\texttt{sliding\_window\_metrics.parquet}) para cada uma das \textit{features} extraídas.
 
 \section{Arquitetura Preditiva e Calibração de Limiar com XGBoost}
 
@@ -741,7 +743,7 @@ A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempe
         P@500 & 0,9280 & 0,9320 & +0,0040 & +0,43{\%} \\
         \hline
     \end{tabular}
-    \source{Elaborado pelo autor.}
+    \source{Elaborado pelo autor. Métricas de Precisão, F1-Score e Recall reportadas pela média das janelas temporais de teste, conforme Figura~\ref{fig:model-comparison-small}.}
 \end{table}
 
 Os resultados no HI Small indicam que a adição das \textit{features} topológicas resultou em melhorias substanciais em múltiplas métricas de desempenho, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, onde a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
@@ -776,10 +778,10 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
         P@300     & 0,9800 & 1,0000 & +0,0200 & +2,04\%  \\
         P@500     & 0,9840 & 1,0000 & +0,0160 & +1,63\%  \\ \hline
     \end{tabular}
-    \source{Elaborado pelo autor.}
+    \source{Elaborado pelo autor. Métricas consolidadas sobre o conjunto integral de teste (12 janelas).}
 \end{table}
 
-Os resultados no HI Medium, detalhados na Tabela~\ref{tab:model-summary-medium} e ilustrados na Figura~\ref{fig:model-comparison-medium}, apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a \textit{datasets} de maior escala. A AUPRC apresenta um ganho (+10,85\%) similar ao HI Small (+18,00\%), validando que o benefício das \textit{features} topológicas é robusto e não depende apenas da escala do \textit{dataset}. A precisão (+29,83\%) também mostra ganho substancial, ainda que ligeiramente inferior ao HI Small, sugerindo um \textit{trade-off} entre complexidade e benefício em \textit{datasets} maiores.
+Os resultados no HI Medium, detalhados na Tabela~\ref{tab:model-summary-medium} e ilustrados na Figura~\ref{fig:model-comparison-medium}, apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a \textit{datasets} de maior escala. A AUPRC apresenta um ganho (+18,88\%) em linha com o HI Small (+18,00\%), validando que o benefício das \textit{features} topológicas é robusto e não depende da escala do \textit{dataset}. A precisão (+32,28\%) e o F1-Score (+29,04\%) também registram ganhos substanciais, confirmando a capacidade do modelo completo de reduzir falsos positivos em larga escala.
 
 \begin{figure}{\linewidth}
     \centering
@@ -816,7 +818,7 @@ A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema a
     \source{Elaborado pelo autor.}
 \end{figure}
 
-Observa-se uma leve redução no \textit{Recall} geral (HI Small: -3,08\%, HI Medium: -2,00\%), o que indica um \textit{trade-off} esperado: ao refinar a fronteira de decisão para reduzir falsos positivos (aumentando a precisão), o modelo torna-se ligeiramente mais conservador, deixando de capturar uma pequena fração de fraudes. No entanto, essa perda é compensada pelo ganho substancial em precisão e pela redução da sobrecarga investigativa.
+Observa-se uma leve redução no \textit{Recall} geral (HI Small: -2,61\%, HI Medium: -2,00\%), o que indica um \textit{trade-off} esperado: ao refinar a fronteira de decisão para reduzir falsos positivos (aumentando a precisão), o modelo torna-se ligeiramente mais conservador, deixando de capturar uma pequena fração de fraudes. No entanto, essa perda é compensada pelo ganho substancial em precisão e pela redução da sobrecarga investigativa.
 
 \subsection{Análise de Desempenho Temporal no HI Small}
 
@@ -846,6 +848,8 @@ A Tabela~\ref{tab:window-comparison} apresenta a comparação detalhada de desem
 \end{table}
 
 A análise temporal no HI Small revela que o modelo completo apresentou ganhos positivos de AUPRC em 5 das 6 janelas testadas, com \textit{lifts} variando entre +15,5\% e +28,2\%. A exceção ocorreu na janela 6, onde houve uma leve degradação de -4,8\%. Essa variação pode estar associada a mudanças na distribuição temporal dos padrões de fraude ou a diferenças na densidade topológica do grafo naquele período específico.
+
+Cabe pontuar que as Tabelas~\ref{tab:model-summary-small} e~\ref{tab:model-summary-medium} reportam a métrica \textit{Precision@k} calculada sobre o \textit{ranking} consolidado de todo o conjunto de teste, priorizando os alertas de maior probabilidade global no período. Por sua vez, a análise temporal subsequente avalia a precisão dos $k$ maiores alertas gerados isoladamente dentro de cada janela temporal, refletindo a dinâmica operacional ciclo a ciclo.
 
 Para as métricas de \textit{Precision@k}, observa-se um padrão mais heterogêneo. Em algumas janelas (especialmente as janelas iniciais), o modelo \textit{Baseline} apresentou desempenho superior, o que sugere que, para os alertas de altíssimo risco (top-100), os atributos comportamentais isolados já forneciam sinais preditivos robustos. No entanto, conforme se expande o horizonte investigativo para P@300 e P@500, o modelo completo recupera vantagem consistente, demonstrando que as \textit{features} topológicas são especialmente úteis para refinar a classificação em níveis intermediários de risco.
 
@@ -955,7 +959,7 @@ Os testes no HI Medium mostram uma significância estatística ainda maior para 
 
 Além das métricas agregadas, avaliou-se a eficácia dos modelos no HI Small e  HI Medium em encontrar entidades fraudulentas únicas durante o período de teste. Isso simula a quantidade de criminosos que podem ser identificados pelo modelo, mesmo que os mesmos utilizem mais de uma conta bancária para suas atividades. 
 
-No HI Small, do total de 3.842 entidades ilícitas presentes no conjunto de validação:
+No HI Small, do total de 3.842 entidades ilícitas presentes no conjunto de teste:
 
 \begin{itemize}
     \item \textbf{Modelo Baseline:} Detectou 3.603 entidades (93,78\% de cobertura).
@@ -973,14 +977,14 @@ Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 ponto
     \source{Elaborado pelo autor.}
 \end{figure}
 
-No HI Medium, do total de 29.781 entidades ilícitas presentes no conjunto de validação:
+No HI Medium, do total de 29.781 entidades ilícitas presentes no conjunto de teste:
 
 \begin{itemize}
     \item \textbf{Modelo Baseline:} Detectou 26.877 entidades (90,25\% de cobertura).
     \item \textbf{Modelo Full:} Detectou 26.980 entidades (90,59\% de cobertura).
 \end{itemize}
 
-A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais), o que representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base, conforme detalhado na Figura~\ref{fig:entity-recall-medium}. Embora a captura incremental de 103 entidades fraudulentas no HI Medium seja maior que a de 29 no HI Small, o dataset apresenta uma melhoria percentual menor comparada ao HI Small.
+A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais), o que representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base, conforme detalhado na Figura~\ref{fig:entity-recall-medium}. Embora a captura incremental de 103 entidades fraudulentas no HI Medium seja maior que a de 29 no HI Small, o dataset apresenta uma melhoria percentual inferior à observada no HI Small.
 
 \begin{figure}{\linewidth}
     \centering
@@ -1029,14 +1033,14 @@ A Tabela~\ref{tab:shap-top15} apresenta as 15 \textit{features} de maior import�
     \source{Elaborado pelo autor.}
 \end{table}
 
-A análise revela que as duas \textit{features} mais influentes são comportamentais (\texttt{ach\_count\_sent} e \texttt{ach\_count\_recv}), o que corrobora a intuição de que transações via \textit{Automated Clearing House} (ACH) são frequentemente associadas a esquemas de fraude no \textit{dataset} AMLworld. No entanto, as posições subsequentes são dominadas por atributos topológicos, incluindo a pontuação de autoridade do algoritmo HITS (\texttt{hits\_auth}), o grau de entrada (\texttt{in\_degree}) e métricas de vizinhança.
+A análise demonstra que os dois atributos mais influentes são comportamentais: \texttt{ach\_count\_sent} e \texttt{ach\_count\_recv}. Esse resultado corrobora a intuição de que transações via \textit{Automated Clearing House} (ACH) concentram padrões suspeitos no \textit{dataset} AMLworld. As posições seguintes, contudo, são amplamente dominadas por variáveis topológicas, como o indicador de autoridade do HITS (\texttt{hits\_auth}), o grau de entrada (\texttt{in\_degree}) e as métricas de vizinhança.
 
 Entre os atributos topológicos, destaca-se a importância de:
 
 \begin{itemize}
     \item \textbf{Centralidade (HITS e Grau):} Entidades fraudulentas tendem a ocupar posições centrais na rede, seja como concentradoras de fluxo financeiro (\textit{hits\_auth}) ou como nós de dispersão (\textit{hits\_hub}).
     
-    \item \textbf{Métricas de Comunidade:} A modularidade da macro-comunidade (\texttt{leiden\_macro\_modularity}) captura o nível de isolamento topológico de um vértice, indicando se ele faz parte de um anel financeiro fechado e compartimentado.
+    \item \textbf{Métricas de Comunidade:} O atributo \texttt{leiden\_macro\_modularity} mensura a modularidade da macro-comunidade, capturando o nível de isolamento topológico de um vértice e indicando se ele integra um anel financeiro fechado e compartimentado.
     
     \item \textbf{Agregação de Vizinhança:} O grau médio dos vizinhos (\texttt{average\_neighbor\_degree}) e o volume médio enviado aos sucessores (\texttt{successor\_avg\_volume}) fornecem sinais sobre o comportamento pós-transferência, revelando se o dinheiro é imediatamente dispersado ou concentrado após a transação inicial.
 \end{itemize}
@@ -1061,11 +1065,11 @@ A inspeção da dispersão dos pontos na Figura~\ref{fig:shap-beeswarm} permite 
     
     \item \textbf{Contas que concentram recursos} (\texttt{hits\_auth} e \texttt{in\_degree}): As duas variáveis de grafo mais bem posicionadas (3ª e 4ª posições) mostram uma longa faixa de pontos vermelhos do lado positivo à direita (SHAP de até $+1{,}8$). A métrica \texttt{hits\_auth} identifica se uma conta recebe dinheiro de várias contas intermediárias que distribuem recursos. No contexto de combate à fraude, essa é a característica clássica de contas de coleta ou ``contas-mula'', que juntam o dinheiro fracionado vindo de diversos remetentes para repassá-lo adiante. Da mesma forma, um grau de entrada alto (\texttt{in\_degree}) indica que a conta recebeu recursos de muitos parceiros distintos, aumentando bastante a probabilidade de alerta.
     
-    \item \textbf{Uso de cheques como indicativo legítimo} (\texttt{cheque\_count\_sent} e \texttt{cheque\_count\_recv}): Ao contrário do ACH, a variável \texttt{cheque\_count\_sent} (5ª posição) apresenta um comportamento inverso: pontos vermelhos (muitos cheques emitidos) ficam do lado esquerdo (SHAP negativo, entre $-0{,}8$ e $-0{,}2$), enquanto pontos azuis (poucos ou nenhum cheque) concentram-se do lado direito (SHAP positivo). O mesmo padrão reverso ocorre em \texttt{cheque\_count\_recv} (15ª posição). Isso acontece porque o cheque é um meio de pagamento mais lento, formal e rastreável, típico de comércios e empresas tradicionais. O modelo aprendeu que a movimentação regular de cheques funciona como um indicativo de legitimidade (um fator de proteção), ao passo que a ausência total de cheques em contas que movimentam muito dinheiro eletrônico eleva o nível de suspeita.
+    \item \textbf{Uso de cheques como indicativo de legitimidade:} Ao contrário do ACH, as variáveis \texttt{cheque\_count\_sent} (5ª posição) e \texttt{cheque\_count\_recv} (15ª posição) exibem comportamento inverso. Em \texttt{cheque\_count\_sent}, pontos vermelhos (muitos cheques emitidos) concentram-se à esquerda (SHAP negativo, entre $-0{,}8$ e $-0{,}2$), ao passo que pontos azuis (ausência de cheques) situam-se à direita (SHAP positivo). Esse efeito decorre do caráter formal, lento e rastreável do cheque, comum em comércios tradicionais: sua emissão regular atua como fator de proteção, enquanto sua ausência total em contas com intensa movimentação eletrônica eleva a suspeita.
     
     \item \textbf{Volume de dinheiro recebido} (\texttt{vol\_recv}): Em \texttt{vol\_recv} (6ª posição), os pontos azuis (volumes muito baixos) ficam bem à esquerda no gráfico (SHAP em torno de $-1{,}5$). Isso significa que contas que movimentam valores quase nulos são rapidamente descartadas como suspeitas pelo modelo.
     
-    \item \textbf{Conexões e grupos fechados} (\texttt{average\_neighbor\_degree}, \texttt{degree} e \texttt{leiden\_macro\_modularity}): As variáveis de vizinhança mostram que estar conectado a contas que também transacionam intensamente eleva a suspeita sobre o titular. Além disso, na modularidade (\texttt{leiden\_macro\_modularity}, 10ª posição), valores altos (pontos vermelhos) ficam do lado direito (SHAP positivo até $+1{,}0$). Isso indica que contas que operam dentro de grupos muito fechados e isolados da rede têm maior chance de serem fraudulentas, o que reproduz o padrão de quadrilhas que circulam recursos apenas entre cúmplices antes de tentar sacar ou transferir para fora da rede.
+    \item \textbf{Conexões e grupos fechados:} Métricas como grau (\texttt{degree}) e conectividade de vizinhos (\texttt{average\_neighbor\_degree}) revelam que conexões com contas ativas elevam o risco do titular. Ademais, na variável \texttt{leiden\_macro\_modularity} (10ª posição), valores elevados (pontos vermelhos) posicionam-se à direita (SHAP positivo de até $+1{,}0$). Essa dinâmica confirma que contas inseridas em agrupamentos densos e isolados apresentam maior propensão a fraude, reproduzindo anéis de lavagem que circulam fundos exclusivamente entre cúmplices.
 \end{itemize}
 
 \subsection{Análise SHAP no HI Medium}
@@ -1116,17 +1120,17 @@ A Figura~\ref{fig:shap-beeswarm-medium} apresenta a distribuição global de val
 A partir do gráfico da Figura~\ref{fig:shap-beeswarm-medium}, destacam-se os seguintes resultados:
 
 \begin{itemize}
-    \item \textbf{Sinais do topo ainda mais evidentes:} As variáveis \texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth} e \texttt{in\_degree} mantêm a mesma direção observada no HI Small, mas seus pontos positivos espalham-se ainda mais para a direita. No caso de \texttt{ach\_count\_recv}, os valores chegam a ultrapassar $+2{,}5$, e em \texttt{hits\_auth} superam $+1{,}7$. Isso mostra que, em uma rede muito maior e com mais clientes normais, as contas que centralizam recursos e recebem grandes volumes eletrônicos tornam-se ainda mais fáceis de distinguir do comportamento legítimo.
+    \item \textbf{Sinais do topo ainda mais evidentes:} Os atributos de topo (\texttt{ach\_count\_sent}, \texttt{ach\_count\_recv}, \texttt{hits\_auth} e \texttt{in\_degree}) preservam a direção observada no HI Small, com impactos positivos ainda mais acentuados à direita. Para o atributo \texttt{ach\_count\_recv}, os valores ultrapassam $+2{,}5$, e em \texttt{hits\_auth} superam $+1{,}7$. Em redes mais densas, polos concentradores de recursos eletrônicos destacam-se com facilidade do fluxo financeiro legítimo.
 
     \item \textbf{Maior peso da conectividade geral} (\texttt{degree} e \texttt{pr\_count}): O total de conexões da conta (\texttt{degree}) subiu da 8ª posição no HI Small para a 6ª no HI Medium (SHAP de 0,3135), e o PageRank (\texttt{pr\_count}) subiu da 12ª para a 7ª posição (0,2677). Em redes maiores, a maioria das pessoas comuns interage com poucos parceiros e de forma dispersa. Já as redes de fraude precisam criar várias contas e fluxos interligados para movimentar o dinheiro, fazendo com que o número total de conexões e a relevância no fluxo financeiro ganhem ainda mais peso na classificação.
 
     \item \textbf{Concentração de contatos próximos} (\texttt{egonet\_node\_count}): A quantidade de vizinhos diretos ao redor da conta subiu da 13ª para a 10ª posição (0,2202). No gráfico, valores altos dessa métrica (pontos magenta) puxam a predição para o lado positivo, indicando que contas inseridas em grupos densos de contatos próximos têm maior chance de participar de esquemas coordenados.
 
-    \item \textbf{Detecção de transferências em rajada} (\texttt{temporal\_fan\_in\_count}): Uma novidade no HI Medium é o ingresso de \texttt{temporal\_fan\_in\_count} no Top 15 (13ª posição, SHAP de 0,1503). Essa métrica mede se a conta recebeu muitas transações em uma janela curta de tempo. Em redes amplas, quadrilhas costumam realizar vários depósitos rápidos e concentrados para diminuir o tempo em que o dinheiro fica exposto antes do saque. O modelo aprendeu a identificar esse comportamento em rajada, associando valores altos a maior probabilidade de fraude.
+    \item \textbf{Detecção de transferências em rajada:} Uma novidade no HI Medium é a inclusão da variável \texttt{temporal\_fan\_in\_count} no Top 15 (13ª posição, SHAP de 0,1503). Esta métrica contabiliza transações concentradas em intervalos curtos. Em redes de grande porte, organizações criminosas pulverizam múltiplos depósitos rápidos para abreviar a exposição dos fundos antes do saque, padrão capturado com precisão pelo modelo.
 
     \item \textbf{Contas intermediárias como pontes} (\texttt{betweenness}): A centralidade de intermediação (\texttt{betweenness}) subiu para a 15ª posição (SHAP de 0,1232, contra a 21ª colocação no Small), com pontos vermelhos atingindo SHAP de até $+1{,}3$. Em redes maiores, contas que funcionam como pontes ligando grupos ou bancos diferentes tornam-se essenciais para detectar esquemas que usam contas de passagem para esconder a origem dos recursos.
 
-    \item \textbf{Confirmação do papel protetivo dos cheques:} O uso de cheques (\texttt{cheque\_count\_sent} e \texttt{cheque\_count\_recv}) preserva o mesmo comportamento inverso: quem movimenta cheques continua recebendo pontuação menor de risco, enquanto a ausência de cheques eleva a suspeita. Isso comprova que a preferência dos fraudadores por canais puramente eletrônicos é uma característica estável, independentemente do tamanho da base analisada.
+    \item \textbf{Papel protetor de cheques:} A emissão (\texttt{cheque\_count\_sent}) e o recebimento (\texttt{cheque\_count\_recv}) de cheques preservam o padrão inverso: contas com movimentação regular de cheques recebem menor escore de risco, ao passo que a ausência de cheques eleva a suspeição, comprovando que a preferência por canais puramente eletrônicos independe da escala.
 \end{itemize}
 
 \section{Métricas Topológicas dos Algoritmos}
@@ -1236,7 +1240,7 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \source{Elaborado pelo autor.}
 \end{figure}
 
-Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -3,08\%, HI Medium: -2,00\%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, potencialmente deixando de capturar fraudes de baixa sinalização topológica. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, onde a priorização de alertas de alta confiança reduz a sobrecarga investigativa, mesmo que isso implique em uma pequena perda marginal de cobertura total.
+Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -2,61\%, HI Medium: -2,00\%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, potencialmente deixando de capturar fraudes de baixa sinalização topológica. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, onde a priorização de alertas de alta confiança reduz a sobrecarga investigativa, mesmo que isso implique em uma pequena perda marginal de cobertura total.
 
 \chapter{Conclusão}
 
@@ -1252,11 +1256,11 @@ Este trabalho investigou a contribuição de atributos topológicos extraídos d
 Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem evidências quantitativas para as seguintes contribuições:
 
 \begin{enumerate}
-    \item \textbf{Validação do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0,2965, representando um ganho estatisticamente significativo de +18,00\% ($p = 0{,}0188$) em relação ao modelo de base (AUPRC = 0,2513). Ganhos similares foram observados em precisão (+46,67\%, $p = 0{,}0070$), F1-Score (+41,86\%, $p = 0{,}0055$) e ROC-AUC (+3,00\%, $p = 0{,}0042$).
+    \item \textbf{Validação do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0,2965 no HI Small e 0,3197 no HI Medium, representando ganhos estatisticamente significativos de +18,00\% ($p = 0{,}0188$) e +18,88\% ($p = 0{,}0001$), respectivamente, em relação ao modelo de base. Ganhos expressivos e consistentes foram igualmente observados em precisão (+46,67\% no Small e +32,28\% no Medium), F1-Score (+41,86\% e +29,04\%) e ROC-AUC (+3,00\% e +2,69\%).
     
     \item \textbf{Identificação de \textit{features} topológicas críticas:} A análise SHAP revelou que métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança ocupam posições de destaque no ranking de importância preditiva, demonstrando que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
     
-    \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} em 6 janelas temporais demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros.
+    \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} ao longo de 6 janelas temporais no HI Small e 12 janelas no HI Medium demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros em diferentes escalas de volume transacional.
 \end{enumerate}
 
 \section{Implicações Práticas}
@@ -1266,7 +1270,7 @@ Do ponto de vista operacional, os resultados possuem implicações diretas para 
 \begin{itemize}
   \item \textbf{Redução de falsos positivos:} Os ganhos em precisão de +46,67\% no HI Small e +32,28\% no HI Medium implicam em uma redução substancial de alertas falsos, diminuindo a sobrecarga investigativa e permitindo que analistas foquem em casos de alto risco real.
     
-    \item \textbf{Captura incremental de fraudes:} O modelo completo identificou 29 entidades fraudulentas adicionais (0,80\% de melhoria relativa), demonstrando que as \textit{features} topológicas capturam padrões estruturais que escapam à análise comportamental isolada.
+    \item \textbf{Captura incremental de fraudes:} O modelo completo identificou 29 entidades fraudulentas adicionais no HI Small (0,80\% de melhoria relativa) e 103 entidades adicionais no HI Medium (0,38\% de melhoria relativa), demonstrando que as \textit{features} topológicas capturam padrões estruturais que escapam à análise comportamental isolada mesmo em redes de grande porte.
 \end{itemize}
 
 \section{Limitações e Trabalhos Futuros}
@@ -1276,7 +1280,7 @@ Embora os resultados sejam promissores, o estudo apresenta limitações que deve
 \begin{enumerate}
     \item \textbf{Uso de dados sintéticos:} A validação foi realizada exclusivamente sobre o \textit{dataset} AMLworld, que, apesar de sua fidelidade estrutural, não captura toda a complexidade e diversidade de padrões observados em transações bancárias reais. A aplicação do sistema a dados reais de instituições financeiras é um próximo passo essencial.
     
-    \item \textbf{Escala computacional:} O processamento de grafos com milhões de nós exige recursos significativos.
+    \item \textbf{Escala computacional:} O processamento de grafos com milhões de transações e centenas de milhares de vértices impõe gargalos severos de memória e tempo de execução. Embora o uso de aproximações amostrais (como $k=80$ nós sentinelas para \textit{betweenness}) e travas de segurança na busca de ciclos tenham viabilizado o processamento, arquiteturas de produção em tempo real demandarão migração para frameworks distribuídos (como Apache Spark GraphX ou cuGraph em GPU).
     
     \item \textbf{Evolução temporal dos padrões:} Organizações criminosas adaptam dinamicamente suas táticas para contornar os mecanismos de fiscalização. Trabalhos futuros devem investigar estratégias de retreinamento contínuo e detecção de desvio de conceito (\textit{concept drift}), isto é, a alteração das propriedades estatísticas e dos padrões de fraude ao longo do tempo, que tende a degradar a acurácia de modelos estáticos, para assegurar a eficácia do sistema em cenários de evolução adversarial.
     
@@ -1287,7 +1291,7 @@ Embora os resultados sejam promissores, o estudo apresenta limitações que deve
 
 Este trabalho demonstrou que a modelagem de redes financeiras como grafos temporais e a extração de atributos topológicos fornecem ganhos mensuráveis e estatisticamente validados para a detecção de lavagem de dinheiro. A integração de Ciência de Dados de Grafos com algoritmos de \textit{Gradient Boosting} representa uma abordagem promissora para sistemas de \textit{Anti-Money Laundering}, capaz de capturar tanto o comportamento individual das entidades quanto as propriedades estruturais das redes de transações.
 
-Os resultados reforçam a importância de abordagens multimodais que combinam sinais comportamentais e topológicos, especialmente em cenários onde fraudadores utilizam estratégias sofisticadas de ofuscação, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph, tiwari2020review, chainalysis2025crypto}. \`{A} medida que os esquemas de lavagem de dinheiro tornam-se cada vez mais complexos e distribuídos, a incorporação de técnicas baseadas em grafos deixa de ser opcional e torna-se um requisito fundamental para a eficácia dos sistemas de detecção de fraudes financeiras.
+Os resultados reforçam a importância de abordagens multimodais que combinam sinais comportamentais e topológicos, especialmente em cenários onde fraudadores utilizam estratégias sofisticadas de ofuscação, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph, tiwari2020review, chainalysis2025crypto}. À medida que os esquemas de lavagem de dinheiro tornam-se cada vez mais complexos e distribuídos, a incorporação de técnicas baseadas em grafos deixa de ser opcional e torna-se um requisito fundamental para a eficácia dos sistemas de detecção de fraudes financeiras.
 
 
 \bibliography{bibliografia,abnt-options}

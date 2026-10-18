@@ -1,12 +1,16 @@
-\contentsline {figure}{\numberline {Figura\ 1\hfill \ - }{\ignorespaces As três fases clássicas da lavagem de dinheiro}}{15}{figure.caption.3}%
-\contentsline {figure}{\numberline {Figura\ 2\hfill \ - }{\ignorespaces Fan-in, Fan-out e Ciclo Direcionado em Grafos Financeiros}}{28}{figure.caption.51}%
-\contentsline {figure}{\numberline {Figura\ 3\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}}{32}{figure.caption.69}%
-\contentsline {figure}{\numberline {Figura\ 4\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}}{33}{figure.caption.73}%
-\contentsline {figure}{\numberline {Figura\ 5\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}}{34}{figure.caption.78}%
-\contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}}{34}{figure.caption.79}%
-\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}}{39}{figure.caption.98}%
-\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}}{40}{figure.caption.99}%
-\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{42}{figure.caption.105}%
-\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{43}{figure.caption.109}%
-\contentsline {figure}{\numberline {Figura\ 11\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Small)}}{47}{figure.caption.117}%
-\contentsline {figure}{\numberline {Figura\ 12\hfill \ - }{\ignorespaces Lift percentual por janela temporal e métrica de avaliação (HI Medium)}}{48}{figure.caption.118}%
+\contentsline {figure}{\numberline {Figura\ 1\hfill \ - }{\ignorespaces As três fases clássicas da lavagem de dinheiro}}{17}{figure.caption.9}%
+\contentsline {figure}{\numberline {Figura\ 2\hfill \ - }{\ignorespaces Fan-in, Fan-out e Ciclo Direcionado em Grafos Financeiros}}{31}{figure.caption.65}%
+\contentsline {figure}{\numberline {Figura\ 3\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}}{36}{figure.caption.83}%
+\contentsline {figure}{\numberline {Figura\ 4\hfill \ - }{\ignorespaces Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}}{37}{figure.caption.87}%
+\contentsline {figure}{\numberline {Figura\ 5\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}}{38}{figure.caption.92}%
+\contentsline {figure}{\numberline {Figura\ 6\hfill \ - }{\ignorespaces Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}}{39}{figure.caption.93}%
+\contentsline {figure}{\numberline {Figura\ 7\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}}{43}{figure.caption.112}%
+\contentsline {figure}{\numberline {Figura\ 8\hfill \ - }{\ignorespaces Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}}{44}{figure.caption.113}%
+\contentsline {figure}{\numberline {Figura\ 9\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Small)}}{47}{figure.caption.119}%
+\contentsline {figure}{\numberline {Figura\ 10\hfill \ - }{\ignorespaces Distribuição de valores SHAP para as principais features do modelo (HI Medium)}}{49}{figure.caption.123}%
+\contentsline {figure}{\numberline {Figura\ 11\hfill \ - }{\ignorespaces Comparação de AUPRC e Lift percentual por janela temporal (HI Small)}}{54}{figure.caption.131}%
+\contentsline {figure}{\numberline {Figura\ 12\hfill \ - }{\ignorespaces Ganho absoluto de AUPRC ($\Delta $AUPRC) por janela temporal (HI Small)}}{55}{figure.caption.132}%
+\contentsline {figure}{\numberline {Figura\ 13\hfill \ - }{\ignorespaces Precisão@100 por janela temporal no estudo de ablação (HI Small)}}{56}{figure.caption.133}%
+\contentsline {figure}{\numberline {Figura\ 14\hfill \ - }{\ignorespaces Comparação de AUPRC e Lift percentual por janela temporal (HI Medium)}}{57}{figure.caption.134}%
+\contentsline {figure}{\numberline {Figura\ 15\hfill \ - }{\ignorespaces Ganho absoluto de AUPRC ($\Delta $AUPRC) por janela temporal (HI Medium)}}{58}{figure.caption.135}%
+\contentsline {figure}{\numberline {Figura\ 16\hfill \ - }{\ignorespaces Precisão@100 por janela temporal no estudo de ablação (HI Medium)}}{59}{figure.caption.136}%

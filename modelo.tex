@@ -141,8 +141,8 @@
 \curso{Ciência da Computação}
 \local{Rio de Janeiro}
 \data{\underline{\hspace{0.8cm}}}{\underline{\hspace{2.5cm}}}{2026}
-\cabecalho{CAETANO PIRES, Pedro. \emph{Detecção de Lavagem de Dinheiro via Grafos Temporais e XGBoost: Um Estudo de Ablação sobre Atributos Topológicos}. \UERJano. (número de páginas)~f. \UERJdocumento\ (\UERJgrau\ em \UERJcurso) -- \UERJunidade, \UERJnome, \UERJlocal, \UERJano.}
-\cabecalh{CAETANO PIRES, Pedro. \emph{\tituloingles}. \UERJano. (número de páginas)~f. \UERJdocumento\ (\UERJgrau\ em \UERJcurso) -- \UERJunidade, \UERJnome, \UERJlocal, \UERJano.}
+\cabecalho{CAETANO PIRES, Pedro. \emph{Detecção de Lavagem de Dinheiro via Grafos Temporais e XGBoost: Um Estudo de Ablação sobre Atributos Topológicos}. \UERJano. 62~f. \UERJdocumento\ (\UERJgrau\ em \UERJcurso) -- \UERJunidade, \UERJnome, \UERJlocal, \UERJano.}
+\cabecalh{CAETANO PIRES, Pedro. \emph{\tituloingles}. \UERJano. 62~f. \UERJdocumento\ (\UERJgrau\ em \UERJcurso) -- \UERJunidade, \UERJnome, \UERJlocal, \UERJano.}
 
 \hypersetup{unicode=true, pdftitle={\UERJtitulo{}}, pdfauthor={\UERJautor{}}, pdfsubject={\UERJpreambulo{}}, bookmarksdepth=4, hypertexnames=false, colorlinks=true, linkcolor=blue, citecolor=red, filecolor=green, urlcolor=magenta}
 
@@ -321,14 +321,14 @@ While money laundering circulates between 2\% and 5\% of global GDP, traditional
 %===========================================================
 \pretextualchapter{Lista de símbolos} % (opcional) 
 %===========================================================
-\simbolo{$\alpha$}{Fator de amortecimento do algoritmo PageRank}
-\simbolo{$\Delta t$}{Tamanho da janela temporal deslizante}
-\simbolo{$\gamma$}{Parâmetro de resolução do algoritmo Leiden}
-\simbolo{$G = (V, E)$}{Grafo composto por vértices $V$ e arestas $E$}
-\simbolo{$Q$}{Métrica de modularidade de comunidades do algoritmo Leiden}
-\simbolo{$\tau$}{Limiar de probabilidade para decisão binária}
-\simbolo{$w_{vol}$}{Peso da aresta baseado em volume financeiro}
-\simbolo{$w_{count}$}{Peso da aresta baseado em contagem de transações}
+\simbolo{\ensuremath{\alpha}}{Fator de amortecimento do algoritmo PageRank}
+\simbolo{\ensuremath{\Delta t}}{Tamanho da janela temporal deslizante}
+\simbolo{\ensuremath{\gamma}}{Parâmetro de resolução do algoritmo Leiden}
+\simbolo{\ensuremath{G = (V, E)}}{Grafo composto por vértices $V$ e arestas $E$}
+\simbolo{\ensuremath{Q}}{Métrica de modularidade de comunidades do algoritmo Leiden}
+\simbolo{\ensuremath{\tau}}{Limiar de probabilidade para decisão binária}
+\simbolo{\ensuremath{w_{vol}}}{Peso da aresta baseado em volume financeiro}
+\simbolo{\ensuremath{w_{count}}}{Peso da aresta baseado em contagem de transações}
 
 \sumario
 \mainmatter 
@@ -345,7 +345,7 @@ A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de form
 
 Para mascarar a origem ilícita dos recursos, organizações criminosas estruturam operações que geram padrões relacionais característicos na rede, tais como dispersão fracionada (\textit{smurfing}), ciclos fechados de transferência e nós intermediários de concentração \cite{cheng2025graph, dumitrescu2022anomaly, fatf2018concealment}. Enquanto a análise tabular tradicional restringe-se a atributos isolados de cada conta, a Ciência de Dados de Grafos permite mapear a arquitetura transacional por meio de métricas de centralidade, modularidade de comunidades e anomalias de vizinhança, capturando as interdependências estruturais dos agentes na rede \cite{baigabyl2025using}.
 
-Algoritmos de \textit{Gradient Boosting}, como o XGBoost~\cite{chen2016xgboost}, são amplamente utilizados para análise de dados estruturados devido à eficiência computacional e robustez no tratamento do desbalanceamento extremo de classes, típico da detecção de fraudes \cite{alarab2020comparative}. No entanto, algoritmos de \textit{Gradient Boosting} não processam topologias relacionais de forma nativa. Portanto, faz-se necessário isolar e quantificar o ganho efetivo de desempenho proporcionado pela incorporação de atributos topológicos a modelos tabulares \cite{karim2024scalable}. Complementarmente, cabe investigar se o custo de treinar um modelo de aprendizado supervisionado é justificado quando comparado ao emprego direto e univariado de algoritmos de grafos.
+Algoritmos de \textit{Gradient Boosting}, como o XGBoost~\cite{chen2016xgboost}, são amplamente utilizados para análise de dados estruturados devido à eficiência computacional e robustez no tratamento do desbalanceamento extremo de classes, típico da detecção de fraudes \cite{alarab2020comparative}. Em sua aplicação convencional, algoritmos tabulares baseados em árvores operam sobre matrizes de atributos nas quais cada instância é tratada como uma observação independente, sem representação explícita das relações entre as entidades. Para capturar as relações da rede em grafos. Isso exige que seja feita a engenharia de atributos topológicos e que eles sejam incorporados à matriz de entrada do modelo. Desta forma, é possível isolar e quantificar o ganho efetivo de desempenho proporcionado por essa incorporação aos modelos tabulares \cite{karim2024scalable}. Complementarmente, cabe investigar se o custo de treinar um modelo de aprendizado supervisionado é justificado quando comparado ao emprego direto e univariado de algoritmos de grafos.
 
 O objetivo principal deste trabalho é investigar e quantificar o impacto da adição de variáveis topológicas de grafos na eficácia do algoritmo XGBoost para a detecção de entidades participantes em esquemas de lavagem de dinheiro, utilizando a base de dados AMLworld \cite{altman2023realistic}.
 
@@ -373,7 +373,7 @@ A lavagem de dinheiro compreende o conjunto de operações comerciais ou finance
     \item \textbf{Integração (\textit{Integration}):} reintrodução definitiva dos valores na economia formal sob a forma de investimentos produtivos, empreendimentos imobiliários ou aquisição de bens de capital, consolidando a falsa aparência de legitimidade dos recursos.
 \end{enumerate}
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{As três fases clássicas da lavagem de dinheiro}
     \label{fig:fases_ml}
@@ -434,7 +434,7 @@ Para contornar essa distorção, a literatura recomenda a \textit{AUPRC} (\texti
 \begin{equation}
     \mathrm{AUPRC} = \int_{0}^{1} \mathrm{Precision}(r) \, dr \approx \sum_{k=1}^{N} \big( \mathrm{Recall}(k) - \mathrm{Recall}(k-1) \big) \cdot \mathrm{Precision}(k)
 \end{equation}
-onde $\mathrm{Precision}(k)$ e $\mathrm{Recall}(k)$ representam a precisão e o \textit{recall} obtidos no $k$-ésimo limiar de probabilidade ordenado. Em contrapartida à ROC-AUC, a linha de base aleatória da AUPRC corresponde à proporção real de exemplos positivos na base de dados (da ordem de 1\%), de modo que qualquer incremento nessa métrica reflete um ganho concreto na detecção da classe minoritária.
+onde $\mathrm{Precision}(k)$ e $\mathrm{Recall}(k)$ representam a precisão e o \textit{recall} obtidos no $k$-ésimo limiar de probabilidade ordenado. Esse limiar corresponde à $k$-ésima probabilidade predita na ordenação decrescente das probabilidades atribuídas pelo classificador, isto é, $p_{(1)} \geq p_{(2)} \geq \cdots \geq p_{(N)}$, de modo que cada ponto da curva incorpora progressivamente as instâncias a partir das maiores probabilidades preditas. Em contrapartida à ROC-AUC, a linha de base aleatória da AUPRC corresponde à proporção real de exemplos positivos na base de dados (da ordem de 1\%), de modo que qualquer incremento nessa métrica reflete um ganho concreto na detecção da classe minoritária.
 
 \subsubsection{Precisão nos Primeiros \texorpdfstring{$k$}{k} Alertas (Precision@k)}
 Em ambientes operacionais de \textit{compliance}, os analistas humanos possuem capacidade finita de investigação diária. A métrica operacional $\mathrm{Precision@}k$ avalia a fração de fraudes reais identificadas entre os $k$ primeiros alertas com maior probabilidade estimada pelo modelo preditivo \cite{karim2024scalable}:
@@ -494,11 +494,12 @@ Em que $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$,
 \end{equation}
 onde $N$ é o número total de vértices, $B_u$ representa o conjunto de vértices adjacentes que apontam para $u$, e $L(v)$ denota o grau de saída do vértice $v$. A formulação com $\alpha=0{,}85$ (alcance profundo) permite ao algoritmo capturar cadeias de circulação mais extensas na rede, enquanto $\alpha=0{,}75$ (alcance raso) foca na influência da vizinhança imediata, otimizando a detecção de anéis de lavagem curtos e rápidos \cite{page1999pagerank}.
 
-\item \textbf{Decomposição \textit{K-Core}:} Avalia a profundidade de aninhamento de uma conta na rede \cite{shin2016corescope, shin2018patterns, conte2024kcores}. Dado um grafo $G = (V, E)$, um subgrafo induzido $H = (V_k, E_k)$ é definido como um \textit{k-core} se for o subgrafo maximal em que o grau de todo vértice $v \in V_k$, restrito a $H$, é maior ou igual a $k$:
+\item \textbf{Decomposição \textit{K-Core}:} Avalia a profundidade de aninhamento de uma conta na rede \cite{shin2016corescope, shin2018patterns, conte2024kcores}. Seja $G=(V,E)$ um grafo e seja $k \in \mathbb{N}$. O \textit{k-core} de $G$ é o subgrafo induzido $G_k=(V_k,E_k)$, em que $V_k \subseteq V$ e
 \begin{equation}
-    \forall v \in V_k, \quad d_H(v) \ge k
+    E_k = \{(u,v) \in E \mid u \in V_k,\ v \in V_k\},
+    \qquad \forall v \in V_k,\quad d_{G_k}(v) \ge k.
 \end{equation}
-A métrica individual extraída para o modelo preditivo é o valor de \textit{coreness} (ou número \textit{core}) de um vértice, denotado por $c(v)$. Este valor representa o grau máximo $k$ para o qual o vértice $v$ ainda pertence a um \textit{k-core}:
+O conjunto $V_k$ é maximal com essa propriedade, isto é, não se pode adicionar qualquer vértice de $V \setminus V_k$ sem violar a restrição de grau mínimo. A métrica individual extraída para o modelo preditivo é o valor de \textit{coreness} (ou número \textit{core}) de um vértice, denotado por $c(v)$. Este valor representa o grau máximo $k$ para o qual o vértice $v$ ainda pertence ao \textit{k-core} de $G$:
 \begin{equation}
     c(v) = \max \{ k \mid v \in V_k \}
 \end{equation}
@@ -510,9 +511,9 @@ A detecção de comunidades particiona o grafo em subconjuntos de vértices que 
 \begin{itemize}
 \item \textbf{Algoritmo Leiden:} Utilizado pela sua eficiência e garantia de conectividade interna. O algoritmo busca particionar a rede de modo a maximizar a métrica de modularidade ($Q$), proposta originalmente por \citeonline{newman2004finding}, que compara a densidade de arestas dentro das comunidades com a densidade esperada em um grafo aleatório:
 \begin{equation}
-    Q = \frac{1}{2m} \sum_{i,j} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(c_i, c_j)
+    Q = \frac{1}{W_{total}} \sum_{i,j} \left[ W_{ij} - \frac{s_i s_j}{W_{total}} \right] \delta(c_i, c_j)
 \end{equation}
-Em que $A_{ij}$ representa o peso da aresta entre $i$ e $j$, $k_i$ é o grau do vértice $i$, $m$ é a soma de todos os pesos das arestas e a função indicadora $\delta(c_i, c_j)$ assume valor 1 se $i$ e $j$ pertencem à mesma comunidade e 0 caso contrário. Fundamentalmente, a modularidade das macro e microcomunidades quantifica o quão isolado e compartimentado está um anel financeiro ilícito em relação à economia lícita adjacente.
+Em que $W_{ij}$ representa o peso da aresta entre $i$ e $j$, $s_i=\sum_j W_{ij}$ é a força ponderada do vértice $i$, $W_{total}=\sum_{i,j}W_{ij}$ é a soma total dos pesos das arestas e a função indicadora $\delta(c_i, c_j)$ assume valor 1 se $i$ e $j$ pertencem à mesma comunidade e 0 caso contrário. O símbolo $m$ fica reservado para representar o número total de arestas do grafo, quando necessário. Fundamentalmente, a modularidade das macro e microcomunidades quantifica o quão isolado e compartimentado está um anel financeiro ilícito em relação à economia lícita adjacente.
 \end{itemize}
 
 \subsubsection{Padrões de Vizinhança e \textit{Motifs}}
@@ -536,6 +537,8 @@ A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs})
 \end{epigrafeonline}
 
 Este capítulo detalha a metodologia proposta para investigar e quantificar o impacto da adição de variáveis topológicas na detecção de esquemas de lavagem de dinheiro. O desenvolvimento do trabalho é estruturado de forma a replicar os desafios de um ambiente de \textit{compliance} do mundo real, considerando a avaliação cronológica e eficiência computacional.
+
+Na Seção 2.1, veremos a base de dados AMLworld, suas características, variações de escala e o processo de pré-processamento. Na Seção 2.2, apresentaremos a modelagem da janela temporal deslizante e a agregação das transações em arestas ponderadas. Na Seção 2.3, detalharemos a engenharia dos atributos topológicos e as métricas extraídas dos grafos. Na Seção 2.4, descreveremos a arquitetura preditiva baseada em XGBoost e o protocolo de validação temporal. Por fim, na Seção 2.5, apresentaremos os modelos preditivos, a ponderação da função de perda e o estudo de ablação utilizado para mensurar a contribuição dos atributos topológicos.
 
 \section{Base de Dados}
 
@@ -651,7 +654,7 @@ Os padrões comportamentais de vizinhança foram extraídos para mapear a estrut
     \item \textbf{Mapeamento de Padrões Topológicos:} Uma função de busca de subgrafos isomorfos foi implementada para quantificar padrões conhecidos de lavagem de dinheiro presentes na base de dados, ilustrados esquematicamente na Figura~\ref{fig:faninfanoutcycle}. O limiar para detecção de estruturas de dispersão e concentração (\textit{fan-out} e \textit{fan-in}) foi estipulado em $k \ge 6$ vizinhos. Para focar a busca no escopo de interesse e mitigar a sobrecarga computacional, o grau máximo analisado foi restrito a 16 conexões, correspondendo ao limite documentado para os padrões sintéticos de fraude injetados na base AMLworld \cite{altman2023realistic}. Com base nessa filtragem, quantificaram-se as ocorrências de \textit{fan-out} e \textit{fan-in}. Adicionalmente, rastreou-se a presença de ciclos simples fechados limitados a até 6 saltos de distância (\textit{cycle\_bound} = 6). Como a enumeração de ciclos em grafos direcionados pode exibir custo exponencial em subgrafos densos, estabeleceu-se um teto computacional de busca limitado a 2.000 ciclos por vértice (\textit{max\_cycles} = 2000), assegurando a viabilidade do processamento em larga escala.
 \end{itemize}
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Fan-in, Fan-out e Ciclo Direcionado em Grafos Financeiros}
     \label{fig:faninfanoutcycle}
@@ -744,7 +747,7 @@ A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempe
 
 Os resultados no HI Small indicam que a adição dos atributos topológicos resultou em melhorias substanciais em múltiplas métricas de desempenho, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, no qual a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Comparação de métricas entre os modelos Base e Completo (HI Small)}
     \label{fig:model-comparison-small}
@@ -779,7 +782,7 @@ Os resultados no HI Small indicam que a adição dos atributos topológicos resu
 
 Os resultados no HI Medium, detalhados na Tabela~\ref{tab:model-summary-medium} e ilustrados na Figura~\ref{fig:model-comparison-medium}, apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a conjuntos de dados de maior escala. A AUPRC apresenta um ganho (+18,88\%) em linha com o HI Small (+18,00\%), validando que o benefício dos atributos topológicos é robusto e não depende da escala do conjunto de dados. A precisão (+32,28\%) e o F1-Score (+29,04\%) também registram ganhos substanciais, confirmando a capacidade do modelo completo de reduzir falsos positivos em larga escala.
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Comparação de métricas entre os modelos Base e Completo (HI Medium)}
     \label{fig:model-comparison-medium}
@@ -796,7 +799,7 @@ A comparação entre o HI Small e o HI Medium revela características importante
 
 A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema ao ranquear as entidades de maior risco, manteve-se elevada em ambos os modelos e em ambos os conjuntos de dados, conforme demonstrado nas Figuras~\ref{fig:precision-at-k-small} e~\ref{fig:precision-at-k-medium}. Com P@100 próximo de 0,99 no HI Small e variando entre 0,98 e 1,00 no HI Medium, o sistema demonstra alta confiabilidade na priorização de alertas.
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Comparação de Precision@k entre os modelos Base e Completo (HI Small)}
     \label{fig:precision-at-k-small}
@@ -805,7 +808,7 @@ A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema a
     \source{Elaborado pelo autor.}
 \end{figure}
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Comparação de Precision@k entre os modelos Base e Completo (HI Medium)}
     \label{fig:precision-at-k-medium}
@@ -964,7 +967,7 @@ No HI Small, do total de 3.842 entidades ilícitas presentes no conjunto de test
 
 Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,80\% na taxa de captura em relação ao modelo base, conforme ilustrado na Figura~\ref{fig:entity-recall}. Em um contexto de \textit{compliance} em larga escala, no qual cada entidade fraudulenta não detectada pode acarretar perdas financeiras expressivas e severas sanções regulatórias, esse incremento possui valor prático relevante.
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Captura de entidades fraudulentas: Modelo Base vs Modelo Completo (HI Small)}
     \label{fig:entity-recall}
@@ -982,7 +985,7 @@ No HI Medium, do total de 29.781 entidades ilícitas presentes no conjunto de te
 
 A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais), o que representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base, conforme detalhado na Figura~\ref{fig:entity-recall-medium}. Embora a captura incremental de 103 entidades fraudulentas no HI Medium seja maior que a de 29 no HI Small, a base apresenta uma melhoria percentual inferior à observada no HI Small.
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Captura de entidades fraudulentas: Modelo Base vs Modelo Completo (HI Medium)}
     \label{fig:entity-recall-medium}
@@ -1045,7 +1048,7 @@ A distribuição equilibrada entre atributos comportamentais e topológicos no g
 
 O gráfico de dispersão SHAP (\textit{beeswarm plot}), ilustrado na Figura~\ref{fig:shap-beeswarm}, sintetiza a magnitude da importância de cada variável e a direção do seu impacto sobre as estimativas do modelo. Cada linha do gráfico representa um atributo, ordenado verticalmente pela relevância global, enquanto o eixo horizontal expressa o valor SHAP (\textit{SHAP value}), indicando o deslocamento que a variável impõe sobre a probabilidade predita em relação à média (valores positivos à direita elevam a probabilidade de ilicitude, enquanto valores negativos à esquerda a atenuam). Cada ponto na linha corresponde a uma entidade individual amostrada no conjunto de teste, e sua coloração reflete a magnitude assumida pelo atributo: tons quentes (vermelho) indicam valores elevados, ao passo que tons frios (azul) denotam valores reduzidos ou nulos. A dispersão vertical sintetiza a densidade de observações que compartilham contribuições semelhantes, permitindo diagnosticar diretamente como variações em cada atributo afetam a classificação do modelo.
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Distribuição de valores SHAP para os principais atributos do modelo (HI Small)}
     \label{fig:shap-beeswarm}
@@ -1104,7 +1107,7 @@ Ao comparar as Tabelas~\ref{tab:shap-top15} e \ref{tab:shap-top15-medium}, nota-
 
 A Figura~\ref{fig:shap-beeswarm-medium} apresenta a distribuição global de valores SHAP para o modelo treinado no HI Medium, permitindo avaliar o comportamento das variáveis em uma rede seis vezes maior.
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Distribuição de valores SHAP para os principais atributos do modelo (HI Medium)}
     \label{fig:shap-beeswarm-medium}
@@ -1182,7 +1185,7 @@ A análise de importância via SHAP revelou que, embora os atributos comportamen
 
 A validação temporal do estudo de ablação, realizada através de \textit{forward-chaining} em 6 janelas consecutivas, confere robustez aos resultados. A evolução comparativa do AUPRC, o ganho incremental absoluto ($\Delta$AUPRC) e a estabilidade da métrica Precisão@100 ao longo das janelas são ilustrados nas Figuras~\ref{fig:ablation-auprc-small}, \ref{fig:ablation-delta-auprc-small} e \ref{fig:ablation-precision100-small} para o conjunto HI Small, e nas Figuras~\ref{fig:ablation-auprc-medium}, \ref{fig:ablation-delta-auprc-medium} e \ref{fig:ablation-precision100-medium} para o HI Medium. A consistência dos ganhos ao longo de 5 das 6 janelas indica que os padrões topológicos aprendidos pelo modelo generalizam bem para períodos futuros, um requisito importante para a implantação em ambientes de produção.
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Comparação de AUPRC e Lift percentual por janela temporal (HI Small)}
     \label{fig:ablation-auprc-small}
@@ -1191,7 +1194,7 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \source{Elaborado pelo autor.}
 \end{figure}
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Ganho absoluto de AUPRC ($\Delta$AUPRC) por janela temporal (HI Small)}
     \label{fig:ablation-delta-auprc-small}
@@ -1200,7 +1203,7 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \source{Elaborado pelo autor.}
 \end{figure}
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Precisão@100 por janela temporal no estudo de ablação (HI Small)}
     \label{fig:ablation-precision100-small}
@@ -1209,7 +1212,7 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \source{Elaborado pelo autor.}
 \end{figure}
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Comparação de AUPRC e Lift percentual por janela temporal (HI Medium)}
     \label{fig:ablation-auprc-medium}
@@ -1218,7 +1221,7 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \source{Elaborado pelo autor.}
 \end{figure}
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Ganho absoluto de AUPRC ($\Delta$AUPRC) por janela temporal (HI Medium)}
     \label{fig:ablation-delta-auprc-medium}
@@ -1227,7 +1230,7 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \source{Elaborado pelo autor.}
 \end{figure}
 
-\begin{figure}{\linewidth}
+\begin{figure}
     \centering
     \caption{Precisão@100 por janela temporal no estudo de ablação (HI Medium)}
     \label{fig:ablation-precision100-medium}

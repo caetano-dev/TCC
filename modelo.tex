@@ -254,7 +254,7 @@ A todos que, direta ou indiretamente, contribuíram para a realização deste pr
 \pretextualchapter{Resumo}
 \referencia % linha em branco depois
 
-Embora a lavagem de dinheiro movimente entre 2\% e 5\% do PIB mundial, os métodos tradicionais de detecção ainda falham ao analisar contas de forma isolada. Dependentes de heurísticas rígidas, esses sistemas não conseguem mapear as tipologias complexas que se aproveitam da estrutura da rede transacional. Neste trabalho, investigamos como atributos topológicos extraídos de grafos temporais podem mitigar essa lacuna utilizando o algoritmo XGBoost. Para isso, estruturamos um estudo de ablação controlado para comparar um modelo base, treinado com 21 \textit{features} comportamentais, a um modelo completo composto por 49 atributos (as 21 comportamentais somadas a 28 variáveis topológicas). A abordagem foi avaliada em dois \textit{datasets} do AMLworld sob janelas temporais deslizantes, preservando a causalidade cronológica estrita: o HI Small (1,25 milhão de instâncias consolidadas a partir de 4,87 milhões de transações) e o HI Medium (7,38 milhões de instâncias derivadas de 28,87 milhões de transações), com taxas de fraude de 1,15\% e 1,35\% no teste, respectivamente. A introdução de métricas de rede (como centralidade, detecção de comunidades e padrões de vizinhança) gerou melhorias estatisticamente significativas. No HI Small, observamos aumentos de +18,00\% em AUPRC ($p=0{,}0188$), +46,67\% em precisão ($p=0{,}0070$) e +41,86\% em F1-Score ($p=0{,}0055$). O ganho se manteve robusto no HI Medium, com altas de +18,88\% em AUPRC, +32,28\% em precisão e +29,04\% em F1-Score. Por fim, a análise SHAP confirmou o papel decisivo das variáveis de grafo, destacando métricas como HITS, grau de entrada e modularidade de comunidades entre os principais preditores. Os resultados comprovam que o comportamento fraudulento deixa uma assinatura estrutural clara e persistente na rede transacional, mantendo-se consistente independentemente da escala dos dados.\\
+Embora a lavagem de dinheiro movimente entre 2\% e 5\% do PIB mundial, os métodos tradicionais de detecção ainda falham ao analisar contas de forma isolada. Dependentes de heurísticas rígidas, esses sistemas não conseguem mapear as tipologias complexas que se aproveitam da estrutura da rede transacional. Neste trabalho, investigamos como atributos topológicos extraídos de grafos temporais podem mitigar essa lacuna utilizando o algoritmo XGBoost. Para isso, estruturamos um estudo de ablação controlado para comparar um modelo base, treinado com 21 atributos comportamentais, a um modelo completo composto por 49 atributos (as 21 comportamentais somadas a 28 variáveis topológicas). A abordagem foi avaliada em dois \textit{datasets} do AMLworld sob janelas temporais deslizantes, preservando a causalidade cronológica estrita: o HI Small (1,25 milhão de instâncias consolidadas a partir de 4,87 milhões de transações) e o HI Medium (7,38 milhões de instâncias derivadas de 28,87 milhões de transações), com taxas de fraude de 1,15\% e 1,35\% no teste, respectivamente. A introdução de métricas de rede (como centralidade, detecção de comunidades e padrões de vizinhança) gerou melhorias estatisticamente significativas. No HI Small, observamos aumentos de +18,00\% em AUPRC ($p=0{,}0188$), +46,67\% em precisão ($p=0{,}0070$) e +41,86\% em F1-Score ($p=0{,}0055$). O ganho se manteve robusto no HI Medium, com altas de +18,88\% em AUPRC, +32,28\% em precisão e +29,04\% em F1-Score. Por fim, a análise SHAP confirmou o papel decisivo das variáveis de grafo, destacando métricas como HITS, grau de entrada e modularidade de comunidades entre os principais preditores. Os resultados comprovam que o comportamento fraudulento deixa uma assinatura estrutural clara e persistente na rede transacional, mantendo-se consistente independentemente da escala dos dados.\\
 
 \imprimirchaves % linha em branco antes
 %
@@ -461,7 +461,7 @@ A representação de múltiplos pesos nas arestas permite a extração de métri
 \label{subsec:grafos_temporais}
 Em modelagem preditiva, o vazamento de dados (\textit{data leakage}) ocorre quando informações externas ao conjunto de treino, em especial eventos futuros que não estariam disponíveis no momento real da inferência (\textit{look-ahead bias}), são incorporadas inadvertidamente ao modelo ou à engenharia de atributos, gerando métricas de desempenho infladas e irrealistas. No contexto de transações financeiras, a análise baseada em um grafo puramente estático (que consolida todo o histórico em uma única topologia atemporal) introduz \textit{data leakage}, pois permite que fluxos de capital futuros contaminem as propriedades estruturais calculadas para eventos passados \cite{sizan2025machine}.
 
-Para assegurar a causalidade cronológica e reproduzir as restrições informacionais de um ambiente de produção real, a rede transacional deve ser formulada como um grafo temporal dinâmico. Matematicamente, a rede temporal é decomposta em uma sequência de grafos instantâneos (denominados \textit{snapshots}) $G = \{G_1, G_2, \ldots, G_T\}$. Um \textit{snapshot} $G_i = (V_i, E_i)$ representa o estado da rede restrito a um intervalo temporal delimitado por uma janela deslizante (\textit{sliding window}) de duração $\Delta t$, a qual avança ao longo do tempo com um passo predefinido (\textit{stride}). Dessa forma, a extração de métricas topológicas para avaliar um vértice no instante $i$ restringe-se exclusivamente às arestas $E_i$ registradas dentro daquela janela temporal específica, impedindo qualquer contaminação por dados futuros.
+Para assegurar a causalidade cronológica e reproduzir as restrições informacionais de um ambiente de produção real, a rede transacional deve ser formulada como um grafo temporal dinâmico. Matematicamente, a rede temporal é decomposta em uma sequência de grafos instantâneos (denominados \textit{snapshots}) $G = \{G_1, G_2, \ldots, G_T\}$. Um \textit{snapshot} $G_i = (V_i, E_i)$ representa o estado da rede restrito a um intervalo temporal delimitado por uma janela temporal deslizante de duração $\Delta t$, a qual avança ao longo do tempo com um passo predefinido (\textit{stride}). Dessa forma, a extração de métricas topológicas para avaliar um vértice no instante $i$ restringe-se exclusivamente às arestas $E_i$ registradas dentro daquela janela temporal específica, impedindo qualquer contaminação por dados futuros.
 
 \subsection{Atributos Topológicos}
 A topologia local e global da rede fornece sinais preditivos estruturais que não podem ser descobertos quando os vértices são analisados de forma isolada. Os atributos extraídos dividem-se em três categorias principais:
@@ -600,9 +600,9 @@ Durante este processo de agrupamento via SQL, os seguintes atributos consolidado
     \item \textbf{Frequência por Formato de Pagamento ($w_{count}$):} Além do número absoluto de transações consolidadas, a agregação também identifica a volumetria pela contagem de meios de pagamento específicos utilizados na janela (e.g., \textit{cash}, \textit{bitcoin}, \textit{cheque}, \textit{credit card} e \textit{ACH}). 
 \end{itemize}
 
-Esta agregação gerou a matriz de adjacência ponderada final do \textit{snapshot}, a qual serviu como estrutura base para a extração computacional das \textit{features} topológicas na etapa subsequente.
+Esta agregação gerou a matriz de adjacência ponderada final do \textit{snapshot}, a qual serviu como estrutura base para a extração computacional dos atributos topológicos na etapa subsequente.
 
-\section{Engenharia de \textit{Features} Topológicas}
+\section{Engenharia de Atributos Topológicos}
 
 A extração de atributos topológicos foi aplicada individualmente a cada um dos grafos instantâneos ($G_i$) gerados na etapa anterior. Para viabilizar o processamento em tempo hábil das centenas de milhares de transações por janela, a rotina de extração foi implementada com suporte a multiprocessamento através da biblioteca \texttt{concurrent.futures} do Python, distribuindo a carga computacional das janelas temporais de forma paralela. A base principal para o cálculo das métricas foi a biblioteca \texttt{NetworkX} \cite{hagberg2008exploring}, com exceção da detecção de comunidades via algoritmo de Leiden, a qual foi executada por meio da biblioteca \texttt{igraph} \cite{traag2019leiden}.
 
@@ -660,7 +660,7 @@ Os padrões comportamentais de vizinhança foram extraídos para mapear a estrut
     \source{Elaborado pelo autor.}
 \end{figure}
 
-Ao término da extração das \textit{features}, as tabelas tabulares isoladas de cada \textit{chunk} foram concatenadas pelo DuckDB. Esse processo gerou o arquivo consolidado de entrada ($X$) do classificador (\texttt{sliding\_window\_features.parquet}) e o respectivo arquivo de métricas agregadas (\texttt{sliding\_window\_metrics.parquet}) para cada uma das \textit{features} extraídas.
+Ao término da extração dos atributos, as tabelas tabulares isoladas de cada \textit{chunk} foram concatenadas pelo DuckDB. Esse processo gerou o arquivo consolidado de entrada ($X$) do classificador (\texttt{sliding\_window\_features.parquet}) e o respectivo arquivo de métricas agregadas (\texttt{sliding\_window\_metrics.parquet}) para cada um dos atributos extraídos.
 
 \section{Arquitetura Preditiva e Calibração de Limiar com XGBoost}
 
@@ -679,9 +679,9 @@ Para assegurar que a calibração do limiar de decisão (visando ao \textit{Reca
 Para garantir que o comportamento real das transações seja preservado, optou-se por não aplicar algoritmos de reamostragem sintética, evitando assim distorções no espaço de dados. Em vez disso, a assimetria do problema é tratada diretamente na função de perda do \textit{Gradient Boosting}. A estrutura experimental compara dois modelos preditivos independentes submetidos à validação temporal \textit{forward-chaining}:
 
 \begin{itemize}
-    \item \textbf{Modelo Base (\textit{Baseline}):} O objetivo deste modelo é estabelecer o piso de desempenho preditivo do sistema. Ele é treinado exclusivamente com as \textit{features} tabulares comportamentais e financeiras (e.g., volume de transações, razão de fluxo).
+    \item \textbf{Modelo Base (\textit{Baseline}):} O objetivo deste modelo é estabelecer o piso de desempenho preditivo do sistema. Ele é treinado exclusivamente com atributos tabulares comportamentais e financeiros (e.g., volume de transações, razão de fluxo).
     
-    \item \textbf{Modelo Completo (\textit{Full Model}):} Este classificador ingere o conjunto total de dados enriquecido, unindo as variáveis comportamentais do \textit{Baseline} às \textit{features} topológicas de grafos (como \textit{coreness}, comunidades do algoritmo Leiden, \textit{motifs} direcionais e ciclos). O objetivo é isolar e quantificar o ganho real de informação (\textit{lift}) gerado pela topologia da rede no poder preditivo do sistema.
+    \item \textbf{Modelo Completo (\textit{Full Model}):} Este classificador ingere o conjunto total de dados enriquecido, unindo as variáveis comportamentais do modelo base aos atributos topológicos de grafos (como \textit{coreness}, comunidades do algoritmo Leiden, \textit{motifs} direcionais e ciclos). O objetivo é isolar e quantificar o ganho real de informação (\textit{lift}) gerado pela topologia da rede no poder preditivo do sistema.
 \end{itemize}
 
 \subsection{Ponderação Dinâmica da Função de Perda}
@@ -698,9 +698,9 @@ O desempenho do sistema foi mensurado através da métrica Área Sob a Curva de 
 
 \subsection{Estudo de Ablação}
 
-Para quantificar o impacto da adição das \textit{features} topológicas, implementou-se um estudo de ablação controlado, comparando estatisticamente o desempenho de dois modelos: um modelo de base (\textit{Baseline}) treinado exclusivamente com atributos comportamentais e um modelo completo (\textit{Full Model}) que inclui tanto os atributos comportamentais quanto os topológicos extraídos dos grafos.
+Para quantificar o impacto da adição dos atributos topológicos, implementou-se um estudo de ablação controlado, comparando estatisticamente o desempenho de dois modelos: o modelo base, treinado exclusivamente com atributos comportamentais, e o modelo completo, que inclui tanto os atributos comportamentais quanto os topológicos extraídos dos grafos.
 
-O experimento foi conduzido sob validação temporal estrita (\textit{forward-chaining}), na qual cada modelo foi treinado em janelas históricas e avaliado em janelas subsequentes. Para verificar se as diferenças de desempenho entre os conjuntos de \textit{features} foram estatisticamente significativas, aplicou-se o teste $t$ pareado entre as janelas temporais \cite{dietterich1998approximate, japkowicz2011evaluating}.
+O experimento foi conduzido sob validação temporal estrita (\textit{forward-chaining}), na qual cada modelo foi treinado em janelas históricas e avaliado em janelas subsequentes. Para verificar se as diferenças de desempenho entre os dois modelos foram estatisticamente significativas, aplicou-se o teste $t$ pareado entre as janelas temporais \cite{dietterich1998approximate, japkowicz2011evaluating}.
 
 Nesse teste, a hipótese nula ($H_0$) assume que não há diferença real de desempenho entre as abordagens comparadas (ou seja, a média das diferenças de desempenho entre os modelos ao longo das janelas é igual a zero), enquanto a hipótese alternativa ($H_1$) indica que a inclusão das variáveis topológicas gera alteração significativa no resultado. Adotou-se o nível de significância padrão $\alpha = 0{,}05$ ($95\%$ de confiança) para a rejeição de $H_0$. Adicionalmente, resultados com $p$-valor inferior a $\alpha = 0{,}01$ ($99\%$ de confiança) foram sinalizados com asterisco duplo.
 \chapter{Resultados e Discussão}
@@ -712,9 +712,9 @@ Nesse teste, a hipótese nula ($H_0$) assume que não há diferença real de des
 
 Este capítulo apresenta os resultados experimentais obtidos através da aplicação da metodologia descrita no Capítulo~\ref{cap:metodologia}. A avaliação foi conduzida utilizando dois \textit{datasets} sintéticos do AMLworld: o HI Small, contendo 1.245.666 instâncias de entidades ativas agregadas ao longo de 8 janelas temporais (a partir de 4,87 milhões de transações brutas, com taxa de fraude de 1,15\% no conjunto de teste composto por 920.945 observações), e o HI Medium, com 7.376.519 instâncias de teste avaliadas ao longo de 12 janelas (originadas da consolidação de 28,87 milhões de transações brutas, com taxa de fraude de 1,35\%). Os experimentos em ambos os \textit{datasets} utilizaram processamento através de janelas temporais deslizantes (\textit{forward-chaining}) para preservar a causalidade estrita.
 
-\section{Desempenho dos Modelos Baseline e Full}
+\section{Desempenho dos Modelos Base e Completo}
 
-A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempenho dos dois modelos avaliados em ambos os \textit{datasets}: o modelo de base (\textit{Baseline}), treinado com 21 atributos puramente comportamentais, e o modelo completo (\textit{Full Model}), treinado com 49 atributos (21 comportamentais + 28 topológicos).
+A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempenho dos dois modelos avaliados em ambos os \textit{datasets}: o modelo base, treinado com 21 atributos puramente comportamentais, e o modelo completo, treinado com 49 atributos (21 comportamentais + 28 topológicos).
 
 \subsection{Resultados no Dataset HI Small}
 
@@ -724,7 +724,7 @@ A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempe
     \label{tab:model-summary-small}
     \begin{tabular}{lSSSS}
         \hline
-        \textbf{Métrica} & {\textbf{Baseline}} & {\textbf{Full Model}} & {\textbf{Lift}} & {\textbf{Lift (\%)}} \\
+        \textbf{Métrica} & {\textbf{Modelo Base}} & {\textbf{Modelo Completo}} & {\textbf{Ganho (Lift)}} & {\textbf{Ganho (\%)}} \\
         \hline
         Acurácia & 0,7622 & 0,8408 & +0,0786 & +10,31{\%} \\
         AUPRC & 0,2513 & 0,2965 & +0,0452 & +18,00{\%} \\
@@ -742,11 +742,11 @@ A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempe
     \source{Elaborado pelo autor. Métricas de Precisão, F1-Score e Recall reportadas pela média das janelas temporais de teste, conforme Figura~\ref{fig:model-comparison-small}.}
 \end{table}
 
-Os resultados no HI Small indicam que a adição das \textit{features} topológicas resultou em melhorias substanciais em múltiplas métricas de desempenho, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, no qual a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
+Os resultados no HI Small indicam que a adição dos atributos topológicos resultou em melhorias substanciais em múltiplas métricas de desempenho, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, no qual a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
 
 \begin{figure}{\linewidth}
     \centering
-    \caption{Comparação de métricas entre os modelos Baseline e Full Model (HI Small)}
+    \caption{Comparação de métricas entre os modelos Base e Completo (HI Small)}
     \label{fig:model-comparison-small}
     \vspace{0.2cm}
     \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_ablation_metric_comparison}
@@ -761,7 +761,7 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
     \label{tab:model-summary-medium}
     \begin{tabular}{lcccc}
         \hline
-        \textbf{Métrica} & \textbf{Baseline} & \textbf{Full Model} & \textbf{Lift} & \textbf{Lift (\%)} \\
+        \textbf{Métrica} & \textbf{Modelo Base} & \textbf{Modelo Completo} & \textbf{Ganho (Lift)} & \textbf{Ganho (\%)} \\
         \hline
         Acurácia  & 0,8357 & 0,8803 & +0,0446 & +5,34\%  \\
         AUPRC     & 0,2689 & 0,3197 & +0,0508 & +18,88\% \\
@@ -777,11 +777,11 @@ Os resultados no HI Small indicam que a adição das \textit{features} topológi
     \source{Elaborado pelo autor. Métricas consolidadas sobre o conjunto integral de teste (12 janelas).}
 \end{table}
 
-Os resultados no HI Medium, detalhados na Tabela~\ref{tab:model-summary-medium} e ilustrados na Figura~\ref{fig:model-comparison-medium}, apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a \textit{datasets} de maior escala. A AUPRC apresenta um ganho (+18,88\%) em linha com o HI Small (+18,00\%), validando que o benefício das \textit{features} topológicas é robusto e não depende da escala do \textit{dataset}. A precisão (+32,28\%) e o F1-Score (+29,04\%) também registram ganhos substanciais, confirmando a capacidade do modelo completo de reduzir falsos positivos em larga escala.
+Os resultados no HI Medium, detalhados na Tabela~\ref{tab:model-summary-medium} e ilustrados na Figura~\ref{fig:model-comparison-medium}, apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a \textit{datasets} de maior escala. A AUPRC apresenta um ganho (+18,88\%) em linha com o HI Small (+18,00\%), validando que o benefício dos atributos topológicos é robusto e não depende da escala do \textit{dataset}. A precisão (+32,28\%) e o F1-Score (+29,04\%) também registram ganhos substanciais, confirmando a capacidade do modelo completo de reduzir falsos positivos em larga escala.
 
 \begin{figure}{\linewidth}
     \centering
-    \caption{Comparação de métricas entre os modelos Baseline e Full Model (HI Medium)}
+    \caption{Comparação de métricas entre os modelos Base e Completo (HI Medium)}
     \label{fig:model-comparison-medium}
     \vspace{0.2cm}
     \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_ablation_metric_comparison}
@@ -798,7 +798,7 @@ A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema a
 
 \begin{figure}{\linewidth}
     \centering
-    \caption{Comparação de Precision@k entre os modelos Baseline e Full Model (HI Small)}
+    \caption{Comparação de Precision@k entre os modelos Base e Completo (HI Small)}
     \label{fig:precision-at-k-small}
     \vspace{0.2cm}
     \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Small_precision_at_k_comparison}
@@ -807,7 +807,7 @@ A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema a
 
 \begin{figure}{\linewidth}
     \centering
-    \caption{Comparação de Precision@k entre os modelos Baseline e Full Model (HI Medium)}
+    \caption{Comparação de Precision@k entre os modelos Base e Completo (HI Medium)}
     \label{fig:precision-at-k-medium}
     \vspace{0.2cm}
     \includegraphics[width=0.95\linewidth]{imagens_pt/HI_Medium_precision_at_k_comparison}
@@ -818,7 +818,7 @@ Observa-se uma leve redução no \textit{Recall} geral (HI Small: -2,61\%, HI Me
 
 \subsection{Análise de Desempenho Temporal no HI Small}
 
-A Tabela~\ref{tab:window-comparison} apresenta a comparação detalhada de desempenho entre os modelos \textit{Baseline} e \textit{Full} ao longo das seis janelas de teste do \textit{dataset} HI Small, permitindo avaliar a consistência temporal dos ganhos observados.
+A Tabela~\ref{tab:window-comparison} apresenta a comparação detalhada de desempenho entre os modelos base e completo ao longo das seis janelas de teste do \textit{dataset} HI Small, permitindo avaliar a consistência temporal dos ganhos observados.
 
 \begin{table}
     \centering
@@ -827,7 +827,7 @@ A Tabela~\ref{tab:window-comparison} apresenta a comparação detalhada de desem
     \resizebox{\linewidth}{!}{%
     \begin{tabular}{cSSSSSS}
         \hline
-        \textbf{Janela} & {\textbf{AUPRC (B)}} & {\textbf{AUPRC (F)}} & {\textbf{Lift AUPRC}} & {\textbf{P@100 (B)}} & {\textbf{P@100 (F)}} & {\textbf{Lift P@100}} \\
+        \textbf{Janela} & {\textbf{AUPRC (Base)}} & {\textbf{AUPRC (Compl.)}} & {\textbf{Ganho AUPRC}} & {\textbf{P@100 (Base)}} & {\textbf{P@100 (Compl.)}} & {\textbf{Ganho P@100}} \\
         \hline
         2 & 0,180 & 0,208 & +15,5{\%} & 0,82 & 0,75 & -8,5{\%} \\
         3 & 0,234 & 0,293 & +25,6{\%} & 0,91 & 0,92 & +1,1{\%} \\
@@ -847,7 +847,7 @@ A análise temporal no HI Small revela que o modelo completo apresentou ganhos p
 
 Cabe pontuar que as Tabelas~\ref{tab:model-summary-small} e~\ref{tab:model-summary-medium} reportam a métrica \textit{Precision@k} calculada sobre o \textit{ranking} consolidado de todo o conjunto de teste, priorizando os alertas de maior probabilidade global no período. Por sua vez, a análise temporal subsequente avalia a precisão dos $k$ maiores alertas gerados isoladamente dentro de cada janela temporal, refletindo a dinâmica operacional ciclo a ciclo.
 
-Para as métricas de \textit{Precision@k}, observa-se um padrão mais heterogêneo. Em algumas janelas (especialmente as janelas iniciais), o modelo \textit{Baseline} apresentou desempenho superior, o que sugere que, para os alertas de altíssimo risco (top-100), os atributos comportamentais isolados já forneciam sinais preditivos robustos. No entanto, conforme se expande o horizonte investigativo para P@300 e P@500, o modelo completo recupera vantagem consistente, demonstrando que as \textit{features} topológicas são especialmente úteis para refinar a classificação em níveis intermediários de risco.
+Para as métricas de \textit{Precision@k}, observa-se um padrão mais heterogêneo. Em algumas janelas (especialmente as janelas iniciais), o modelo base apresentou desempenho superior, o que sugere que, para os alertas de altíssimo risco (top-100), os atributos comportamentais isolados já forneciam sinais preditivos robustos. No entanto, conforme se expande o horizonte investigativo para P@300 e P@500, o modelo completo recupera vantagem consistente, demonstrando que os atributos topológicos são especialmente úteis para refinar a classificação em níveis intermediários de risco.
 
 \subsection{Análise de Desempenho Temporal no HI Medium}
 
@@ -878,7 +878,7 @@ Para o \textit{dataset} HI Medium, a análise temporal abrange 12 janelas de tes
 
 A análise temporal no HI Medium mostra um padrão robusto: o modelo completo apresentou ganhos positivos de AUPRC nas 12 janelas testadas, com \textit{lifts} variando entre +0,7\% e +34,2\%. A janela 3 apresentou ganho marginal (+0,7\%), enquanto as demais mostraram contribuições mais expressivas. Destaca-se a variabilidade maior em comparação ao HI Small, sugerindo que a escala aumentada do \textit{dataset} captura dinâmicas temporais mais complexas.
 
-Para as métricas de \textit{Precision@100}, observa-se um padrão heterogêneo similar ao HI Small: em algumas janelas, o modelo \textit{Baseline} mantém desempenho ligeiramente superior, o que sugere que para alertas de altíssimo risco, os atributos comportamentais isolados já fornecem sinais preditivos robustos em escalas maiores. No entanto, o ganho geral em AUPRC (+19,0\% na média por janela) demonstra que a vantagem das \textit{features} topológicas emerge quando se expande o horizonte investigativo para alertas de médio risco.
+Para as métricas de \textit{Precision@100}, observa-se um padrão heterogêneo similar ao HI Small: em algumas janelas, o modelo base mantém desempenho ligeiramente superior, o que sugere que para alertas de altíssimo risco, os atributos comportamentais isolados já fornecem sinais preditivos robustos em escalas maiores. No entanto, o ganho geral em AUPRC (+19,0\% na média por janela) demonstra que a vantagem dos atributos topológicos emerge quando se expande o horizonte investigativo para alertas de médio risco.
 
 \section{Validação Estatística do Estudo de Ablação}
 
@@ -911,12 +911,12 @@ A Tabela~\ref{tab:statistical-tests} apresenta os resultados para o \textit{data
         \hline
         \multicolumn{5}{l}{* Significativo em $\alpha = 0{,}05$ \quad ** Significativo em $\alpha = 0{,}01$}
     \end{tabular}
-    \source{Elaborado pelo autor. Teste t pareado bicaudal sobre as diferenças ($\text{Full Model} - \text{Baseline}$) ao longo das 6 janelas de teste.}
+    \source{Elaborado pelo autor. Teste t pareado bicaudal sobre as diferenças ($\text{Modelo Completo} - \text{Modelo Base}$) ao longo das 6 janelas de teste.}
 \end{table}
 
 Os testes confirmam que os ganhos observados em acurácia, precisão, F1-Score, ROC-AUC e AUPRC são estatisticamente significativos ao nível de confiança de 95\% ($p < 0{,}05$). Em particular, as métricas de precisão, F1-Score e ROC-AUC apresentaram significância ao nível de 99\% ($p < 0{,}01$), o que valida a contribuição das \textit{features} topológicas.
 
-A ausência de significância estatística no \textit{Recall} ($p = 0{,}534$) e nas métricas P@100 e P@200 sugere que, embora haja variação numérica, essas diferenças podem ser atribuídas à variabilidade natural das janelas temporais. Entretanto, as métricas P@300 ($p = 0{,}0128$) e P@500 ($p = 0{,}0137$) apresentaram ganhos estatisticamente significativos, reforçando o argumento de que as \textit{features} topológicas contribuem especialmente para a discriminação de entidades em níveis intermediários de risco, nos quais a separação entre fraudes e operações lícitas torna-se mais desafiadora.
+A ausência de significância estatística no \textit{Recall} ($p = 0{,}534$) e nas métricas P@100 e P@200 sugere que, embora haja variação numérica, essas diferenças podem ser atribuídas à variabilidade natural das janelas temporais. Entretanto, as métricas P@300 ($p = 0{,}0128$) e P@500 ($p = 0{,}0137$) apresentaram ganhos estatisticamente significativos, reforçando o argumento de que os atributos topológicos contribuem especialmente para a discriminação de entidades em níveis intermediários de risco, nos quais a separação entre fraudes e operações lícitas torna-se mais desafiadora.
 
 \subsection{Testes Estatísticos no HI Medium}
 
@@ -944,10 +944,10 @@ A Tabela~\ref{tab:statistical-tests-medium} apresenta os testes de significânci
         \hline
         \multicolumn{5}{l}{** Significativo em $\alpha = 0{,}01$}
     \end{tabular}
-    \source{Elaborado pelo autor. Teste t pareado bicaudal sobre as diferenças ($\text{Full Model} - \text{Baseline}$) ao longo das 12 janelas de teste.}
+    \source{Elaborado pelo autor. Teste t pareado bicaudal sobre as diferenças ($\text{Modelo Completo} - \text{Modelo Base}$) ao longo das 12 janelas de teste.}
 \end{table}
 
-Os testes no HI Medium mostram uma significância estatística ainda maior para acurácia, precisão, F1-Score, ROC-AUC e AUPRC, todos com $p < 0{,}01$. A significância elevada para ROC-AUC ($p < 0{,}0001$) indica que a discriminação geral entre fraudes e operações legítimas beneficia-se consistentemente das \textit{features} topológicas em toda a janela temporal. De forma similar ao HI Small, não há significância estatística em Recall, P@100 e P@200 (bem como em P@300 e P@500 na escala do HI Medium), sugerindo que os modelos capturam com eficácia comparável as fraudes de altíssimo risco nos alertas prioritários.
+Os testes no HI Medium mostram uma significância estatística ainda maior para acurácia, precisão, F1-Score, ROC-AUC e AUPRC, todos com $p < 0{,}01$. A significância elevada para ROC-AUC ($p < 0{,}0001$) indica que a discriminação geral entre fraudes e operações legítimas beneficia-se consistentemente dos atributos topológicos em toda a janela temporal. De forma similar ao HI Small, não há significância estatística em Recall, P@100 e P@200 (bem como em P@300 e P@500 na escala do HI Medium), sugerindo que os modelos capturam com eficácia comparável as fraudes de altíssimo risco nos alertas prioritários.
 
 \section{Captura de Entidades Fraudulentas em Nível Operacional}
 
@@ -958,15 +958,15 @@ Além das métricas agregadas, avaliou-se a eficácia dos modelos no HI Small e 
 No HI Small, do total de 3.842 entidades ilícitas presentes no conjunto de teste:
 
 \begin{itemize}
-    \item \textbf{Modelo Baseline:} Detectou 3.603 entidades (93,78\% de cobertura).
-    \item \textbf{Modelo Full:} Detectou 3.632 entidades (94,53\% de cobertura).
+    \item \textbf{Modelo Base:} Detectou 3.603 entidades (93,78\% de cobertura).
+    \item \textbf{Modelo Completo:} Detectou 3.632 entidades (94,53\% de cobertura).
 \end{itemize}
 
 Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,80\% na taxa de captura em relação ao modelo base, conforme ilustrado na Figura~\ref{fig:entity-recall}. Em um contexto de \textit{compliance} em larga escala, no qual cada entidade fraudulenta não detectada pode acarretar perdas financeiras expressivas e severas sanções regulatórias, esse incremento possui valor prático relevante.
 
 \begin{figure}{\linewidth}
     \centering
-    \caption{Captura de entidades fraudulentas: Baseline vs Full Model (HI Small)}
+    \caption{Captura de entidades fraudulentas: Modelo Base vs Modelo Completo (HI Small)}
     \label{fig:entity-recall}
     \vspace{0.2cm}
     \includegraphics[width=0.85\linewidth]{imagens_pt/HI_Small_entity_level_recall}
@@ -976,15 +976,15 @@ Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 ponto
 No HI Medium, do total de 29.781 entidades ilícitas presentes no conjunto de teste:
 
 \begin{itemize}
-    \item \textbf{Modelo Baseline:} Detectou 26.877 entidades (90,25\% de cobertura).
-    \item \textbf{Modelo Full:} Detectou 26.980 entidades (90,59\% de cobertura).
+    \item \textbf{Modelo Base:} Detectou 26.877 entidades (90,25\% de cobertura).
+    \item \textbf{Modelo Completo:} Detectou 26.980 entidades (90,59\% de cobertura).
 \end{itemize}
 
 A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais), o que representa uma melhoria relativa de 0,38\% na taxa de captura em relação ao modelo base, conforme detalhado na Figura~\ref{fig:entity-recall-medium}. Embora a captura incremental de 103 entidades fraudulentas no HI Medium seja maior que a de 29 no HI Small, o dataset apresenta uma melhoria percentual inferior à observada no HI Small.
 
 \begin{figure}{\linewidth}
     \centering
-    \caption{Captura de entidades fraudulentas: Baseline vs Full Model (HI Medium)}
+    \caption{Captura de entidades fraudulentas: Modelo Base vs Modelo Completo (HI Medium)}
     \label{fig:entity-recall-medium}
     \vspace{0.2cm}
     \includegraphics[width=0.85\linewidth]{imagens_pt/HI_Medium_entity_level_recall}
@@ -993,21 +993,21 @@ A diferença absoluta é de 103 entidades adicionais (+0,34 pontos percentuais),
 
 A consistência nos ganhos de AUPRC (+18{,}88\%) entre HI Small e HI Medium, a despeito de uma escala de dados seis vezes superior, demonstra que a contribuição dos atributos topológicos não sofre degradação com o aumento do volume de transações. Esse resultado tem implicações diretas para a viabilidade de implantação em ambientes de produção com volumes ainda maiores.
 
-\section{Importância Global das Features via SHAP}
+\section{Importância Global dos Atributos via SHAP}
 
-Para interpretar o comportamento do modelo e identificar quais atributos exercem maior influência nas predições, aplicou-se a técnica SHAP (\textit{SHapley Additive exPlanations}) \cite{lundberg2017unified} ao modelo completo. Devido à alta complexidade computacional para calcular permutações de 49 features, a análise SHAP de cada janela foi calculada sobre uma amostragem aleatória controlada de 1.000 instâncias de teste.
+Para interpretar o comportamento do modelo e identificar quais atributos exercem maior influência nas predições, aplicou-se a técnica SHAP (\textit{SHapley Additive exPlanations}) \cite{lundberg2017unified} ao modelo completo. Devido à alta complexidade computacional para calcular permutações de 49 atributos, a análise SHAP de cada janela foi calculada sobre uma amostragem aleatória controlada de 1.000 instâncias de teste.
 
 \subsection{Análise SHAP no HI Small}
 
-A Tabela~\ref{tab:shap-top15} apresenta as 15 \textit{features} de maior importância global no \textit{dataset} HI Small.
+A Tabela~\ref{tab:shap-top15} apresenta os 15 atributos de maior importância global no \textit{dataset} HI Small.
 
 \begin{table}
     \centering
-    \caption{Top 15 features por importância SHAP global (HI Small)}
+    \caption{Top 15 atributos por importância SHAP global (HI Small)}
     \label{tab:shap-top15}
     \begin{tabular}{clSl}
         \hline
-        \textbf{Posição} & \textbf{Feature} & {\textbf{SHAP Médio}} & \textbf{Tipo} \\
+        \textbf{Posição} & \textbf{Atributo} & {\textbf{SHAP Médio}} & \textbf{Tipo} \\
         \hline
         1 & \texttt{ach\_count\_sent} & 0,9514 & Comportamental \\
         2 & \texttt{ach\_count\_recv} & 0,7401 & Comportamental \\
@@ -1041,13 +1041,13 @@ Entre os atributos topológicos, destaca-se a importância de:
     \item \textbf{Agregação de Vizinhança:} O grau médio dos vizinhos (\texttt{average\_neighbor\_degree}) e o volume médio enviado aos sucessores (\texttt{successor\_avg\_volume}) fornecem sinais sobre o comportamento pós-transferência, revelando se o dinheiro é imediatamente dispersado ou concentrado após a transação inicial.
 \end{itemize}
 
-A distribuição equilibrada entre \textit{features} comportamentais e topológicas no gráfico SHAP sugere que ambos os tipos de informação são complementares e necessários para uma detecção eficaz de lavagem de dinheiro.
+A distribuição equilibrada entre atributos comportamentais e topológicos no gráfico SHAP sugere que ambos os tipos de informação são complementares e necessários para uma detecção eficaz de lavagem de dinheiro.
 
 O gráfico de dispersão SHAP (\textit{beeswarm plot}), ilustrado na Figura~\ref{fig:shap-beeswarm}, sintetiza a magnitude da importância de cada variável e a direção do seu impacto sobre as estimativas do modelo. Cada linha do gráfico representa um atributo, ordenado verticalmente pela relevância global, enquanto o eixo horizontal expressa o valor SHAP (\textit{SHAP value}), indicando o deslocamento que a variável impõe sobre a probabilidade predita em relação à média (valores positivos à direita elevam a probabilidade de ilicitude, enquanto valores negativos à esquerda a atenuam). Cada ponto na linha corresponde a uma entidade individual amostrada no conjunto de teste, e sua coloração reflete a magnitude assumida pelo atributo: tons quentes (vermelho) indicam valores elevados, ao passo que tons frios (azul) denotam valores reduzidos ou nulos. A dispersão vertical sintetiza a densidade de observações que compartilham contribuições semelhantes, permitindo diagnosticar diretamente como variações em cada atributo afetam a classificação do modelo.
 
 \begin{figure}{\linewidth}
     \centering
-    \caption{Distribuição de valores SHAP para as principais features do modelo (HI Small)}
+    \caption{Distribuição de valores SHAP para os principais atributos do modelo (HI Small)}
     \label{fig:shap-beeswarm}
     \vspace{0.2cm}
     \includegraphics[width=0.82\linewidth,height=0.68\textheight,keepaspectratio]{imagens_pt/HI_Small_global_shap_beeswarm}
@@ -1070,15 +1070,15 @@ A inspeção da dispersão dos pontos na Figura~\ref{fig:shap-beeswarm} permite 
 
 \subsection{Análise SHAP no HI Medium}
 
-A Tabela~\ref{tab:shap-top15-medium} apresenta as 15 \textit{features} de maior importância global no \textit{dataset} HI Medium, permitindo avaliar se a hierarquia de importância é preservada em escala maior.
+A Tabela~\ref{tab:shap-top15-medium} apresenta os 15 atributos de maior importância global no \textit{dataset} HI Medium, permitindo avaliar se a hierarquia de importância é preservada em escala maior.
 
 \begin{table}
     \centering
-    \caption{Top 15 features por importância SHAP global (HI Medium)}
+    \caption{Top 15 atributos por importância SHAP global (HI Medium)}
     \label{tab:shap-top15-medium}
     \begin{tabular}{clSl}
         \hline
-        \textbf{Posição} & \textbf{Feature} & {\textbf{SHAP Médio}} & \textbf{Tipo} \\
+        \textbf{Posição} & \textbf{Atributo} & {\textbf{SHAP Médio}} & \textbf{Tipo} \\
         \hline
         1 & \texttt{ach\_count\_sent} & 1,0822 & Comportamental \\
         2 & \texttt{ach\_count\_recv} & 0,8111 & Comportamental \\
@@ -1106,7 +1106,7 @@ A Figura~\ref{fig:shap-beeswarm-medium} apresenta a distribuição global de val
 
 \begin{figure}{\linewidth}
     \centering
-    \caption{Distribuição de valores SHAP para as principais features do modelo (HI Medium)}
+    \caption{Distribuição de valores SHAP para os principais atributos do modelo (HI Medium)}
     \label{fig:shap-beeswarm-medium}
     \vspace{0.2cm}
     \includegraphics[width=0.82\linewidth,height=0.68\textheight,keepaspectratio]{imagens_pt/HI_Medium_global_shap_beeswarm}
@@ -1174,11 +1174,11 @@ Conclui-se, portanto, que o Leiden é valioso como descrição da macroestrutura
 
 \section{Discussão dos Resultados}
 
-Os resultados experimentais confirmam que a incorporação de atributos topológicos extraídos de grafos temporais fornece ganhos estatisticamente significativos na detecção de esquemas de lavagem de dinheiro quando comparada a modelos baseados exclusivamente em \textit{features} comportamentais.
+Os resultados experimentais confirmam que a incorporação de atributos topológicos extraídos de grafos temporais fornece ganhos estatisticamente significativos na detecção de esquemas de lavagem de dinheiro quando comparada a modelos baseados exclusivamente em atributos comportamentais.
 
 O ganho médio de +18\% em AUPRC, validado estatisticamente com $p = 0{,}0188$, demonstra que as propriedades estruturais da rede financeira carregam informação preditiva complementar que não é capturada por análises isoladas de comportamento transacional. Esse resultado alinha-se com a literatura recente, que destaca a importância de abordagens baseadas em grafos para identificar tipologias avançadas de fraude, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph,baigabyl2025using}.
 
-A análise de importância via SHAP revelou que, embora as \textit{features} comportamentais tradicionais (especialmente as relacionadas a ACH e cheques) permaneçam altamente relevantes, as métricas topológicas ocupam posições de destaque no ranking de influência. Em particular, o algoritmo HITS e as métricas de grau demonstraram alta capacidade discriminativa, sugerindo que entidades fraudulentas tendem a ocupar posições estruturalmente distintas na rede: seja como pontos de concentração de fluxo (\textit{authority}) ou como nós dispersores (\textit{hub}).
+A análise de importância via SHAP revelou que, embora os atributos comportamentais tradicionais (especialmente as relacionadas a ACH e cheques) permaneçam altamente relevantes, as métricas topológicas ocupam posições de destaque no ranking de influência. Em particular, o algoritmo HITS e as métricas de grau demonstraram alta capacidade discriminativa, sugerindo que entidades fraudulentas tendem a ocupar posições estruturalmente distintas na rede: seja como pontos de concentração de fluxo (\textit{authority}) ou como nós dispersores (\textit{hub}).
 
 A validação temporal do estudo de ablação, realizada através de \textit{forward-chaining} em 6 janelas consecutivas, confere robustez aos resultados. A evolução comparativa do AUPRC, o ganho incremental absoluto ($\Delta$AUPRC) e a estabilidade da métrica Precisão@100 ao longo das janelas são ilustrados nas Figuras~\ref{fig:ablation-auprc-small}, \ref{fig:ablation-delta-auprc-small} e \ref{fig:ablation-precision100-small} para o \textit{dataset} HI Small, e nas Figuras~\ref{fig:ablation-auprc-medium}, \ref{fig:ablation-delta-auprc-medium} e \ref{fig:ablation-precision100-medium} para o HI Medium. A consistência dos ganhos ao longo de 5 das 6 janelas indica que os padrões topológicos aprendidos pelo modelo generalizam bem para períodos futuros, um requisito importante para a implantação em ambientes de produção.
 
@@ -1246,7 +1246,7 @@ Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -2,61\
 \hspace*{\fill}\textit{Leonardo da Vinci}\\
 \end{epigrafeonline}
 
-Este trabalho investigou a contribuição de atributos topológicos extraídos de grafos temporais para a detecção de esquemas de lavagem de dinheiro utilizando algoritmos de \textit{Gradient Boosting}. Através de um estudo de ablação controlado e estatisticamente validado, demonstrou-se que a incorporação de \textit{features} estruturais de rede resulta em ganhos significativos de desempenho em relação a modelos baseados exclusivamente em atributos comportamentais.
+Este trabalho investigou a contribuição de atributos topológicos extraídos de grafos temporais para a detecção de esquemas de lavagem de dinheiro utilizando algoritmos de \textit{Gradient Boosting}. Através de um estudo de ablação controlado e estatisticamente validado, demonstrou-se que a incorporação de variáveis estruturais de rede resulta em ganhos significativos de desempenho em relação a modelos baseados exclusivamente em atributos comportamentais.
 
 \section*{Principais Contribuições}
 
@@ -1255,7 +1255,7 @@ Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem ev
 \begin{enumerate}
     \item \textbf{Validação do ganho topológico:} O modelo completo (comportamental + topológico) alcançou AUPRC média de 0,2965 no HI Small e 0,3197 no HI Medium, representando ganhos estatisticamente significativos de +18,00\% ($p = 0{,}0188$) e +18,88\% ($p = 0{,}0001$), respectivamente, em relação ao modelo de base. Ganhos expressivos e consistentes foram igualmente observados em precisão (+46,67\% no Small e +32,28\% no Medium), F1-Score (+41,86\% e +29,04\%) e ROC-AUC (+3,00\% e +2,69\%).
     
-    \item \textbf{Identificação de \textit{features} topológicas críticas:} A análise SHAP revelou que métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança ocupam posições de destaque no ranking de importância preditiva, demonstrando que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
+    \item \textbf{Identificação de atributos topológicos críticos:} A análise SHAP revelou que métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança ocupam posições de destaque no ranking de importância preditiva, demonstrando que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
     
     \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} ao longo de 6 janelas temporais no HI Small e 12 janelas no HI Medium demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros em diferentes escalas de volume transacional.
 \end{enumerate}
@@ -1267,7 +1267,7 @@ Do ponto de vista operacional, os resultados possuem implicações diretas para 
 \begin{itemize}
   \item \textbf{Redução de falsos positivos:} Os ganhos em precisão de +46,67\% no HI Small e +32,28\% no HI Medium implicam em uma redução substancial de alertas falsos, diminuindo a sobrecarga investigativa e permitindo que analistas foquem em casos de alto risco real.
     
-    \item \textbf{Captura incremental de fraudes:} O modelo completo identificou 29 entidades fraudulentas adicionais no HI Small (0,80\% de melhoria relativa) e 103 entidades adicionais no HI Medium (0,38\% de melhoria relativa), demonstrando que as \textit{features} topológicas capturam padrões estruturais que escapam à análise comportamental isolada mesmo em redes de grande porte.
+    \item \textbf{Captura incremental de fraudes:} O modelo completo identificou 29 entidades fraudulentas adicionais no HI Small (0,80\% de melhoria relativa) e 103 entidades adicionais no HI Medium (0,38\% de melhoria relativa), demonstrando que os atributos topológicos capturam padrões estruturais que escapam à análise comportamental isolada mesmo em redes de grande porte.
 \end{itemize}
 
 \section*{Limitações e Trabalhos Futuros}

@@ -324,7 +324,7 @@ While money laundering circulates between 2\% and 5\% of global GDP, traditional
 \simbolo{$\alpha$}{Fator de amortecimento do algoritmo PageRank}
 \simbolo{$\Delta t$}{Tamanho da janela temporal deslizante}
 \simbolo{$\gamma$}{Parâmetro de resolução do algoritmo Leiden}
-\simbolo{$G = (V, E)$}{Grafo composto por vértices V e arestas E}
+\simbolo{$G = (V, E)$}{Grafo composto por vértices $V$ e arestas $E$}
 \simbolo{$Q$}{Métrica de modularidade de comunidades do algoritmo Leiden}
 \simbolo{$\tau$}{Limiar de probabilidade para decisão binária}
 \simbolo{$w_{vol}$}{Peso da aresta baseado em volume financeiro}
@@ -416,7 +416,7 @@ O \textit{F1-score} consolida ambas as métricas através de sua média harmôni
     F1 = 2 \cdot \frac{\mathrm{Precision} \cdot \mathrm{Recall}}{\mathrm{Precision} + \mathrm{Recall}}
 \end{equation}
 
-Embora a \textit{Accuracy} (Acurácia) meça a proporção global de predições corretas em relação ao total de instâncias ($ \frac{TP+TN}{TP+TN+FP+FN} $), sua aplicação direta em cenários de desbalanceamento severo é inadequada. Em bases em que fraudes representam menos de 1\% das observações, um classificador ingênuo que rotule todos os exemplos como não fraudulentos atingirá mais de 99\% de acurácia, falhando integralmente no objetivo prático de identificação de ilícitos \cite{vassallo2021application}.
+Embora a \textit{Accuracy} (Acurácia) meça a proporção global de predições corretas em relação ao total de instâncias ($ \frac{TP+TN}{TP+TN+FP+FN} $), sua aplicação direta em cenários de desbalanceamento severo é inadequada. Em bases em que fraudes representam menos de 1\% das observações, um classificador ingênuo que rotule todos os exemplos como não fraudulentos atingirá mais de 99\% de acurácia, falhando integralmente no objetivo prático de identificação de ilícitos.
 
 Por essa razão, a literatura de \textit{Anti-Money Laundering} privilegia métricas que avaliam o poder de separação entre classes em diferentes limiares operacionais:
 
@@ -445,7 +445,7 @@ onde $y_{(i)} \in \{0, 1\}$ indica a classe real da $i$-ésima entidade ranquead
 
 \section{Teoria dos Grafos}
 
-A Teoria dos Grafos fornece ferramentas matemáticas capazes de modelar interações do mundo real no formato de vértices e arestas \cite{barabasi2016network}. No contexto de transações financeiras, as interações não ocorrem como eventos estáticos e isolados, mas sim como fluxos paralelos que variam no tempo. Por isso, a rede é modelada como um grafo direcionado, ponderado por múltiplos atributos e subdividido em janelas temporais \cite{oliveira2025complex}.
+A Teoria dos Grafos fornece ferramentas matemáticas capazes de modelar interações do mundo real no formato de vértices e arestas. No contexto de transações financeiras, as interações não ocorrem como eventos estáticos e isolados, mas sim como fluxos paralelos que variam no tempo. Por isso, a rede é modelada como um grafo direcionado, ponderado por múltiplos atributos e subdividido em janelas temporais \cite{oliveira2025complex}.
 
 Formalmente, define-se este grafo como $G = (V, E)$, onde $V$ representa o conjunto de vértices (entidades ou contas bancárias) e $E$ representa o conjunto de arestas direcionadas (fluxos financeiros agregados). 
 
@@ -470,7 +470,7 @@ A topologia local e global da rede fornece sinais preditivos estruturais que nã
 As métricas de centralidade quantificam a importância ou influência de um vértice na rede, enquanto as de coesão avaliam seu aninhamento estrutural.
 
 \begin{itemize}
-\item \textbf{Grau (\textit{Degree}):} Dividido em grau de entrada (\textit{in-degree}) e de saída (\textit{out-degree}), ele mede o número de conexões distintas de um nó. Matematicamente, dada a matriz de adjacência $A$ do grafo, os graus de um vértice $i$ são definidos como:
+\item \textbf{Grau (\textit{Degree}):} Dividido em grau de entrada (\textit{in-degree}) e de saída (\textit{out-degree}), ele mede o número de conexões distintas de um vértice. Matematicamente, dada a matriz de adjacência $A$ do digrafo, os graus de um vértice $i$ são definidos como:
 \begin{equation}
     k_i^{in} = \sum_{j \in V} A_{ji}, \quad k_i^{out} = \sum_{j \in V} A_{ij}
 \end{equation}
@@ -480,13 +480,13 @@ Contas utilizadas como vértices de passagem ou que possuem uma concentração a
 \begin{equation}
     h(u) = \sum_{v \in N_{out}(u)} a(v), \quad a(v) = \sum_{u \in N_{in}(v)} h(u)
 \end{equation}
-onde $N_{out}(u)$ e $N_{in}(v)$ representam os conjuntos de vizinhos de saída de $u$ e de entrada de $v$, respectivamente \cite{kleinberg1999authoritative}.
+onde $N_{out}(u)$ e $N_{in}(v)$ representam os conjuntos de vizinhos de saída de $u$ e de entrada de $v$, respectivamente.
 
 \item \textbf{Centralidade de Intermediação (\textit{Betweenness Centrality}):} Mede a frequência com que um vértice aparece nos caminhos mais curtos entre outros pares de nós. A centralidade do vértice $v$ é dada por:
 \begin{equation}
     C_B(v) = \sum_{s \neq v \neq t \in V} \frac{\sigma_{st}(v)}{\sigma_{st}}
 \end{equation}
-Em que $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$, e $\sigma_{st}(v)$ é o número desses caminhos que passam obrigatoriamente por $v$. Na lavagem de dinheiro, contas de ofuscação atuam como pontes entre diferentes aglomerados da rede \cite{freeman1977set}.
+Em que $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$, e $\sigma_{st}(v)$ é o número desses caminhos que passam por $v$. Na lavagem de dinheiro, contas de ofuscação atuam como pontes entre diferentes aglomerados da rede \cite{freeman1977set}.
 
 \item \textbf{\textit{PageRank} de Múltiplas Profundidades:} Processado com diferentes fatores de amortecimento ($\alpha$). A pontuação de um vértice $u$ é calculada iterativamente por:
 \begin{equation}
@@ -664,7 +664,7 @@ Ao término da extração dos atributos, as tabelas tabulares isoladas de cada b
 
 \section{Arquitetura Preditiva e Calibração de Limiar com XGBoost}
 
-O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: desbalanceamento extremo de classes, no qual as fraudes representam uma fração minúscula do volume total, muitas vezes inferior a 0,1\%, e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)~\cite{chen2016xgboost} com calibração de limiar baseada em busca de maximização de precisão sob restrição de cobertura (\textit{Recall-constrained threshold calibration})~\cite{shukla2025smote}. O algoritmo busca o limiar que maximiza a precisão garantindo um Recall mínimo de 85\% para a janela de validação.
+O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: desbalanceamento extremo de classes, no qual as fraudes representam uma fração minúscula do volume total, muitas vezes inferior a 0,1\%, e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)~\cite{chen2016xgboost} com calibração de limiar baseada em busca de maximização de precisão sob restrição de cobertura ~\cite{shukla2025smote}. O algoritmo busca o limiar que maximiza a precisão garantindo um Recall mínimo de 85\% para a janela de validação.
 
 \subsection{Divisão Cronológica dos Dados (\textit{Forward-Chaining})}
 

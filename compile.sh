@@ -8,6 +8,20 @@ set -e  # Exit on error
 MAIN_FILE="modelo"
 TEX_FILE="${MAIN_FILE}.tex"
 
+# BasicTeX installs its CLI tools here on macOS. New shell sessions receive
+# this path automatically; add it for non-interactive shells as well.
+if [ "$(uname -s)" = "Darwin" ] && [ -d "/Library/TeX/texbin" ] && ! command -v pdflatex >/dev/null 2>&1; then
+    PATH="/Library/TeX/texbin:${PATH}"
+fi
+
+for command in pdflatex bibtex; do
+    if ! command -v "$command" >/dev/null 2>&1; then
+        echo "Error: $command is required but was not found in PATH."
+        echo "Install a TeX distribution (macOS: brew install --cask basictex) and retry."
+        exit 1
+    fi
+done
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'

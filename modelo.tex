@@ -693,8 +693,9 @@ Para lidar com o severo desbalanceamento das classes no conjunto de dados, evito
 
 Durante cada iteração da validação temporal, a razão exata de desbalanceamento do conjunto de treino é calculada dinamicamente:
 \begin{equation}
-    scale\_pos\_weight = \frac{\sum (y_{train} == 0)}{\sum (y_{train} == 1)}
+    \text{scale\_pos\_weight} = \frac{\sum_{i=1}^{M} (1 - y_{\text{train}, i})}{\sum_{i=1}^{M} y_{\text{train}, i}}
 \end{equation}
+onde $y_{\text{train}} = (y_{\text{train}, 1}, y_{\text{train}, 2}, \dots, y_{\text{train}, M})^T \in \{0, 1\}^M$ representa o vetor de rótulos (classes reais) das $M$ instâncias de treinamento, com $y_{\text{train}, i} = 1$ para entidades associadas à lavagem de dinheiro (classe positiva/ilícita) e $y_{\text{train}, i} = 0$ para entidades lícitas (classe negativa/lícita).
 
 Ao incorporar este fator de escala diretamente no cálculo do gradiente da função de perda, o algoritmo intensifica a penalidade por falsos negativos, orientando o ajuste das fronteiras de decisão para a identificação de entidades ilícitas sem descartar a densidade informacional da classe majoritária.
 
@@ -794,7 +795,7 @@ Os resultados no HI Medium, detalhados na Tabela~\ref{tab:model-summary-medium} 
 
 \subsection{Análise Comparativa Entre as Bases de Dados}
 
-A comparação entre o HI Small e o HI Medium revela características importantes sobre a escalabilidade da abordagem topológica. Ambos os conjuntos de dados apresentam ganhos de AUPRC praticamente idênticos (+18,00\% e +18,88\%), evidenciando a estabilidade do poder preditivo das variáveis estruturais perante o aumento expressivo no volume de transações. Esse resultado atesta que o sinal discriminativo capturado pela topologia de rede é invariante à escala da base de dados. Entretanto, o ganho em F1-Score e Precisão é mais pronunciado no HI Small, o que decorre de variações na densidade de conexões e na distribuição das tipologias simuladas entre os dois cenários.
+A comparação entre o HI Small e o HI Medium revela características importantes sobre a escalabilidade da abordagem topológica. Ambos os conjuntos de dados apresentam ganhos de AUPRC praticamente idênticos (+18,00\% e +18,88\%), evidenciando a estabilidade do poder preditivo das variáveis estruturais perante o aumento expressivo no volume de transações. Esse resultado atesta que o sinal discriminativo capturado pela topologia de rede parace ser invariante à escala da base de dados. Entretanto, o ganho em F1-Score e Precisão é mais pronunciado no HI Small, o que decorre de variações na densidade de conexões e na distribuição das tipologias simuladas entre os dois cenários.
 
 \subsection{Métrica Precision@k e Eficácia Operacional}
 

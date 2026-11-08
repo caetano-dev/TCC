@@ -734,10 +734,10 @@ A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempe
         ROC-AUC & 0,9038 & 0,9309 & +0,0271 & +3,00{\%} \\
         F1-Score & 0,0860 & 0,1220 & +0,0360 & +41,86{\%} \\
         Precisão & 0,0450 & 0,0660 & +0,0210 & +46,67{\%} \\
-        Recall & 0,8802 & 0,8570 & -0,0230 & -2,61{\%} \\
+        Recall & 0,8802 & 0,8570 & $-0,0230$ & $-2,61\%$ \\
         \hline
         P@100 & 0,9900 & 0,9900 & 0,0000 & +0,00{\%} \\
-        P@200 & 0,9750 & 0,9700 & -0,0050 & -0,51{\%} \\
+        P@200 & 0,9750 & 0,9700 & $-0,0050$ & $-0,51\%$ \\
         P@300 & 0,9500 & 0,9600 & +0,0100 & +1,05{\%} \\
         P@500 & 0,9280 & 0,9320 & +0,0040 & +0,43{\%} \\
         \hline
@@ -771,7 +771,7 @@ Os resultados no HI Small indicam que a adição dos atributos topológicos resu
         ROC-AUC   & 0,9155 & 0,9401 & +0,0246 & +2,69\%  \\
         F1-Score  & 0,1229 & 0,1585 & +0,0357 & +29,04\% \\
         Precisão  & 0,0662 & 0,0875 & +0,0214 & +32,28\% \\
-        Recall    & 0,8550 & 0,8379 & -0,0171 & -2,00\%  \\ \hline
+        Recall    & 0,8550 & 0,8379 & $-0,0171$ & $-2,00\%$  \\ \hline
         P@100     & 0,9800 & 1,0000 & +0,0200 & +2,04\%  \\
         P@200     & 0,9850 & 1,0000 & +0,0150 & +1,52\%  \\
         P@300     & 0,9800 & 1,0000 & +0,0200 & +2,04\%  \\
@@ -817,7 +817,7 @@ A métrica \textit{Precision@k}, que avalia a eficácia operacional do sistema a
     \source{Elaborado pelo autor.}
 \end{figure}
 
-Observa-se uma leve redução no \textit{Recall} geral (HI Small: -2,61\%, HI Medium: -2,00\%), o que indica um \textit{trade-off} esperado: ao refinar a fronteira de decisão para reduzir falsos positivos (aumentando a precisão), o modelo torna-se ligeiramente mais conservador, deixando de capturar uma pequena fração de fraudes. No entanto, essa perda é compensada pelo ganho substancial em precisão e pela redução da sobrecarga investigativa.
+Observa-se uma leve redução no \textit{Recall} geral (HI Small: $-2,61\%$, HI Medium: $-2,00\%$), o que indica um \textit{trade-off} esperado: ao refinar a fronteira de decisão para reduzir falsos positivos (aumentando a precisão), o modelo torna-se ligeiramente mais conservador, deixando de capturar uma pequena fração de fraudes. No entanto, essa perda é compensada pelo ganho substancial em precisão e pela redução da sobrecarga investigativa.
 
 \subsection{Análise de Desempenho Temporal no HI Small}
 
@@ -832,21 +832,21 @@ A Tabela~\ref{tab:window-comparison} apresenta a comparação detalhada de desem
         \hline
         \textbf{Janela} & {\textbf{AUPRC (Base)}} & {\textbf{AUPRC (Compl.)}} & {\textbf{Ganho AUPRC}} & {\textbf{P@100 (Base)}} & {\textbf{P@100 (Compl.)}} & {\textbf{Ganho P@100}} \\
         \hline
-        2 & 0,180 & 0,208 & +15,5{\%} & 0,82 & 0,75 & -8,5{\%} \\
+        2 & 0,180 & 0,208 & +15,5{\%} & 0,82 & 0,75 & $-8,5\%$ \\
         3 & 0,234 & 0,293 & +25,6{\%} & 0,91 & 0,92 & +1,1{\%} \\
         4 & 0,275 & 0,353 & +28,2{\%} & 0,96 & 0,96 & +0,0{\%} \\
         5 & 0,352 & 0,414 & +17,7{\%} & 0,97 & 0,98 & +1,0{\%} \\
-        6 & 0,251 & 0,239 & -4,8{\%} & 0,88 & 0,83 & -5,7{\%} \\
-        7 & 0,217 & 0,272 & +25,8{\%} & 0,90 & 0,87 & -3,3{\%} \\
+        6 & 0,251 & 0,239 & $-4,8\%$ & 0,88 & 0,83 & $-5,7\%$ \\
+        7 & 0,217 & 0,272 & +25,8{\%} & 0,90 & 0,87 & $-3,3\%$ \\
         \hline
-        {\textbf{Média}} & \bfseries 0,251 & \bfseries 0,297 & \bfseries +18,0{\%} & \bfseries 0,907 & \bfseries 0,885 & \bfseries -2,7{\%} \\
+        {\textbf{Média}} & \bfseries 0,251 & \bfseries 0,297 & \bfseries +18,0{\%} & \bfseries 0,907 & \bfseries 0,885 & \bfseries $-2,7\%$ \\
         \hline
     \end{tabular}%
     }
     \source{Elaborado pelo autor.}
 \end{table}
 
-A análise temporal no HI Small revela que o modelo completo apresentou ganhos positivos de AUPRC em 5 das 6 janelas testadas, com ganhos relativos variando entre +15,5\% e +28,2\%. A exceção ocorreu na janela 6, na qual se observou uma leve degradação de -4,8\%. Essa variação pode estar associada a mudanças na distribuição temporal dos padrões de fraude ou a diferenças na densidade topológica do grafo naquele período específico.
+A análise temporal no HI Small revela que o modelo completo apresentou ganhos positivos de AUPRC em 5 das 6 janelas testadas, com ganhos relativos variando entre +15,5\% e +28,2\%. A exceção ocorreu na janela 6, na qual se observou uma leve degradação de $-4,8\%$. Essa variação pode estar associada a mudanças na distribuição temporal dos padrões de fraude ou a diferenças na densidade topológica do grafo naquele período específico.
 
 Cabe pontuar que as Tabelas~\ref{tab:model-summary-small} e~\ref{tab:model-summary-medium} reportam a métrica \textit{Precision@k} calculada sobre o ranqueamento consolidado de todo o conjunto de teste, priorizando os alertas de maior probabilidade global no período. Por sua vez, a análise temporal subsequente avalia a precisão dos $k$ maiores alertas gerados isoladamente dentro de cada janela temporal, refletindo a dinâmica operacional ciclo a ciclo.
 
@@ -865,14 +865,14 @@ Para o conjunto HI Medium, a análise temporal abrange 12 janelas de teste, ofer
         \hline
         \textbf{Janela} & {\textbf{AUPRC (B)}} & {\textbf{AUPRC (F)}} & {\textbf{Lift AUPRC}} & {\textbf{P@100 (B)}} & {\textbf{P@100 (F)}} & {\textbf{Lift P@100}} \\
         \hline
-        4 & 0,261 & 0,292 & +12,0{\%} & 0,99 & 0,97 & -2,0{\%} \\
+        4 & 0,261 & 0,292 & +12,0{\%} & 0,99 & 0,97 & $-2,0\%$ \\
         5 & 0,326 & 0,392 & +20,2{\%} & 1,00 & 1,00 & +0,0{\%} \\
-        7 & 0,224 & 0,300 & +34,2{\%} & 0,96 & 0,93 & -3,1{\%} \\
+        7 & 0,224 & 0,300 & +34,2{\%} & 0,96 & 0,93 & $-3,1\%$ \\
         9 & 0,292 & 0,360 & +23,0{\%} & 1,00 & 1,00 & +0,0{\%} \\
         11 & 0,352 & 0,419 & +18,9{\%} & 0,99 & 1,00 & +1,0{\%} \\
         13 & 0,258 & 0,346 & +34,0{\%} & 1,00 & 1,00 & +0,0{\%} \\
         \hline
-        {\textbf{Média (12 janelas)}} & \bfseries 0,269 & \bfseries 0,320 & \bfseries +19,0{\%} & \bfseries 0,973 & \bfseries 0,961 & \bfseries -1,2{\%} \\
+        {\textbf{Média (12 janelas)}} & \bfseries 0,269 & \bfseries 0,320 & \bfseries +19,0{\%} & \bfseries 0,973 & \bfseries 0,961 & \bfseries $-1,2\%$ \\
         \hline
     \end{tabular}%
     }
@@ -905,8 +905,8 @@ A Tabela~\ref{tab:statistical-tests} apresenta os resultados para o conjunto HI 
         ROC-AUC & +0,0300 & 0,0148 & +4,96 & 0,0042{**} \\
         AUPRC & +0,0452 & 0,0324 & +3,42 & 0,0188{*} \\
         \hline
-        Recall & -0,0227 & 0,0832 & -0,67 & 0,5340 \\
-        P@100 & -0,0217 & 0,0337 & -1,57 & 0,1763 \\
+        Recall & $-0,0227$ & 0,0832 & $-0,67$ & 0,5340 \\
+        P@100 & $-0,0217$ & 0,0337 & $-1,57$ & 0,1763 \\
         P@200 & +0,0208 & 0,0497 & +1,03 & 0,3520 \\
         \hline
         P@300 & +0,0539 & 0,0349 & +3,79 & 0,0128{*} \\
@@ -939,11 +939,11 @@ A Tabela~\ref{tab:statistical-tests-medium} apresenta os testes de significânci
         ROC-AUC & +0,0268 & 0,0048 & +19,537 & {<}0,0001{**} \\
         AUPRC & +0,0510 & 0,0306 & +5,782 & 0,0001{**} \\
         \hline
-        Recall & -0,0175 & 0,0698 & -0,870 & 0,4029 \\
-        P@100 & -0,0117 & 0,0333 & -1,215 & 0,2497 \\
-        P@200 & -0,0258 & 0,0477 & -1,877 & 0,0872 \\
-        P@300 & -0,0261 & 0,0482 & -1,878 & 0,0872 \\
-        P@500 & -0,0013 & 0,0495 & -0,093 & 0,9274 \\
+        Recall & $-0,0175$ & 0,0698 & $-0,870$ & 0,4029 \\
+        P@100 & $-0,0117$ & 0,0333 & $-1,215$ & 0,2497 \\
+        P@200 & $-0,0258$ & 0,0477 & $-1,877$ & 0,0872 \\
+        P@300 & $-0,0261$ & 0,0482 & $-1,878$ & 0,0872 \\
+        P@500 & $-0,0013$ & 0,0495 & $-0,093$ & 0,9274 \\
         \hline
         \multicolumn{5}{l}{** Significativo em $\alpha = 0{,}01$}
     \end{tabular}
@@ -1239,7 +1239,7 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \source{Elaborado pelo autor.}
 \end{figure}
 
-Por outro lado, a redução observada no \textit{Recall} geral (HI Small: -2,61\%, HI Medium: -2,00\%) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, deixando de capturar fraudes discretas. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, no qual a priorização de alertas de alta confiança reduz a sobrecarga investigativa, ainda que imponha uma discreta perda marginal de cobertura total.
+Por outro lado, a redução observada no \textit{Recall} geral (HI Small: $-2,61\%$, HI Medium: $-2,00\%$) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, deixando de capturar fraudes discretas. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, no qual a priorização de alertas de alta confiança reduz a sobrecarga investigativa, ainda que imponha uma discreta perda marginal de cobertura total.
 
 \chapter*{Conclusão}
 \addcontentsline{toc}{chapter}{\hspace{3.1em}\textbf{CONCLUSÃO}}

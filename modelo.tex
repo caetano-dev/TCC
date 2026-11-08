@@ -573,6 +573,8 @@ LI: \textit{Low Illicit}), conforme apresentado na Tabela~\ref{tab:amlworld-data
 
 Neste trabalho, foram utilizadas as bases de dados HI Small e HI Medium.
 
+O uso de dados sintéticos do AMLworld traz vantagens importantes para a pesquisa, mas também apresenta limitações que exigem reflexão. A principal vantagem é o respeito à privacidade: a simulação permite desenvolver modelos de detecção sem violar as leis de sigilo bancário e de proteção de dados (como a LGPD no Brasil). Além disso, a base sintética resolve um problema conhecido em dados reais, que é a falta de rótulos confiáveis. No mundo real, muitas fraudes não são detectadas, o que gera históricos de transações incompletos e rotulagem incorreta. No AMLworld, todas as fraudes simuladas são conhecidas, garantindo dados de treinamento confiáveis. Por outro lado, levar o modelo treinado nessa base para um ambiente real, como o sistema Pix, traz desafios de generalização. Os dados sintéticos são gerados por regras predefinidas que podem não capturar toda a complexidade do comportamento humano real, como as rápidas mudanças de táticas dos criminosos para evitar a detecção ou variações no dia a dia de transações reais. Portanto, embora a base sintética seja ideal para testar e validar o modelo de forma controlada, sua aplicação na prática de mercado exige cautela e validação futura com dados reais.
+
 \subsection{Pré-processamento e Padronização dos Dados}
 
 Devido ao volume massivo de registros gerados pelas variações da base AMLworld (alcançando até 180 milhões de transações na variação \textit{Large}), o tratamento da base bruta exigiu uma etapa de pré-processamento e engenharia de dados.

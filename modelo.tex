@@ -614,7 +614,7 @@ Além dos atributos comportamentais de vértice pré-calculados na rotina de ban
 
 \subsection{Métricas de Centralidade e Coesão}
 
-O cálculo exato de algumas métricas de centralidade em grafos esparsos e de grande escala possui uma complexidade de tempo proibitiva. Portanto, foram adotadas otimizações e parametrizações específicas para o ambiente de \textit{Big Data}:
+O cálculo exato de algumas métricas de centralidade em grafos esparsos e de grande escala possui uma complexidade de tempo proibitiva. Portanto, foram adotadas otimizações e parametrizações específicas para o ambiente de dados massivos.
 
 \begin{itemize}
 
@@ -633,7 +633,7 @@ Embora o \texttt{NetworkX} possua ampla gama de algoritmos de grafos, ele aprese
 
 A otimização de modularidade foi realizada empregando o modelo \textit{RBConfigurationVertexPartition}. Algoritmos de maximização de modularidade sofrem com a limitação teórica do ``limite de resolução'' (\textit{resolution limit}), na qual pequenas comunidades densas acabam sendo aglomeradas em grupos maiores, ocultando anomalias locais.
 
-Para contornar este problema e garantir que o modelo de \textit{Machine Learning} capture tipologias de lavagem de dinheiro em diferentes escalas, o algoritmo de Leiden foi executado em duas resoluções distintas:
+Para contornar este problema e garantir que o modelo de aprendizado de máquina capture tipologias de lavagem de dinheiro em diferentes escalas, o algoritmo de Leiden foi executado em duas resoluções distintas:
 
 \begin{itemize}
     \item \textbf{Macro-resolução ($\gamma = 1{,}0$):} Representa a formulação de modularidade padrão. O algoritmo agrupa vértices de forma mais permissiva, identificando grandes agrupamentos e a estrutura global da rede. No contexto de prevenção à lavagem de dinheiro, essa escala mapeia ecossistemas econômicos amplos, indicando a inserção da entidade em macroestruturas financeiras.

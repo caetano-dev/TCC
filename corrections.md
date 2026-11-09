@@ -12,7 +12,6 @@ Siga rigorosamente as instruções abaixo para editar o código LaTeX, mantendo 
 2. REORGANIZAÇÃO E COMPLEMENTAÇÃO DA METODOLOGIA (CAPÍTULO 2):
    - Na abertura da Metodologia, insira uma visão geral/diagrama da arquitetura preditiva proposta antes de descrever os detalhes de implementação de software (DuckDB e Apache Parquet).
    - Na Seção 2.1 (Base de Dados), inclua um parágrafo de reflexão metodológica sobre o uso de dados sintéticos (AMLworld), destacando suas vantagens para rotulagem confiável e sigilo bancário, mas discutindo os desafios de generalização para ambientes financeiros reais.
-   - Na Seção 2.3.1, defina formalmente o conceito de "nós sentinelas" utilizado na amostragem aproximação da Centralidade de Intermediação (Betweenness Centrality).
    - Adicione a explicação teórica da validação cruzada temporal (Forward-Chaining) no Referencial Teórico (Capítulo 1) e especifique na Seção 2.4.1 a composição exata das janelas históricas de treinamento do XGBoost.
    - Na Seção 2.5, forneça a lista completa das 21 variáveis comportamentais e financeiras do Modelo Base (seja em texto, tabela ou anexo).
    - Adicione o link direto para o repositório do projeto no GitHub.

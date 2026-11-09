@@ -721,7 +721,7 @@ Este capítulo apresenta os resultados experimentais obtidos através da aplica�
 
 \section{Desempenho dos Modelos Base e Completo}
 
-A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempenho dos dois modelos avaliados em ambas as bases de dados: o modelo base, treinado com 21 atributos puramente comportamentais, e o modelo completo, treinado com 49 atributos (21 comportamentais + 28 topológicos).
+A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempenho dos dois modelos avaliados no conjunto de dados HI Small: o modelo base, treinado com 21 atributos puramente comportamentais, e o modelo completo, treinado com 49 atributos (21 comportamentais + 28 topológicos). Todas as métricas apresentadas nesta tabela representam a média simples dos valores obtidos em cada uma das 6 janelas temporais de teste do protocolo \textit{forward-chaining}.
 
 \subsection{Resultados no Conjunto HI Small}
 
@@ -746,10 +746,10 @@ A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempe
         P@500 & 0,9280 & 0,9320 & +0,0040 & +0,43{\%} \\
         \hline
     \end{tabular}
-    \source{Elaborado pelo autor. Métricas de Precisão, F1-Score e Recall reportadas pela média das janelas temporais de teste, conforme Figura~\ref{fig:model-comparison-small}.}
+    \source{Elaborado pelo autor. Todas as métricas reportam a média simples das 6 janelas temporais de teste, conforme Figura~\ref{fig:model-comparison-small}.}
 \end{table}
 
-Os resultados no HI Small indicam que a adição dos atributos topológicos resultou em melhorias substanciais em múltiplas métricas de desempenho, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, no qual a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
+Os resultados no HI Small indicam que a adição dos atributos topológicos resultou em melhorias substanciais em múltiplas métricas de desempenho avaliadas pela média simples entre os ciclos temporais, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, no qual a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
 
 \begin{figure}
     \centering
@@ -781,7 +781,7 @@ Os resultados no HI Small indicam que a adição dos atributos topológicos resu
         P@300     & 0,9800 & 1,0000 & +0,0200 & +2,04\%  \\
         P@500     & 0,9840 & 1,0000 & +0,0160 & +1,63\%  \\ \hline
     \end{tabular}
-    \source{Elaborado pelo autor. Métricas consolidadas sobre o conjunto integral de teste (12 janelas).}
+    \source{Elaborado pelo autor. Todas as métricas representam a média simples das 12 janelas temporais de teste.}
 \end{table}
 
 Os resultados no HI Medium, detalhados na Tabela~\ref{tab:model-summary-medium} e ilustrados na Figura~\ref{fig:model-comparison-medium}, apresentam um padrão consistente com o observado no HI Small, demonstrando a generalização das contribuições dos atributos topológicos a conjuntos de dados de maior escala. A AUPRC apresenta um ganho (+18,88\%) em linha com o HI Small (+18,00\%), validando que o benefício dos atributos topológicos é robusto e não depende da escala do conjunto de dados. A precisão (+32,28\%) e o F1-Score (+29,04\%) também registram ganhos substanciais, confirmando a capacidade do modelo completo de reduzir falsos positivos em larga escala.

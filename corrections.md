@@ -16,7 +16,6 @@ Siga rigorosamente as instruções abaixo para editar o código LaTeX, mantendo 
    - Adicione o link direto para o repositório do projeto no GitHub.
 
 3. REVISÃO DO CAPÍTULO DE RESULTADOS E DISCUSSÃO (CAPÍTULO 3):
-   - Na Tabela 2 e no texto correspondente, esclareça se as métricas consolidadas representam a média simples ou média ponderada das janelas temporais de teste.
    - Na Seção 3.3.1 e na Conclusão, liste explicitamente quais foram os principais atributos topológicos que geraram o ganho discriminativo (ex: HITS, in-degree, modularidade de comunidades) e restrinja as generalizações aos modelos de Gradient Boosting avaliados.
 
 4. ELEMENTOS PÓS-TEXTUAIS:

@@ -586,6 +586,7 @@ Adicionalmente, a base de dados simula um ambiente global, contendo transações
 Para resolver este problema, desenvolveu-se uma etapa de padronização monetária. Utilizando a API do \textit{Yahoo Finance} (\texttt{yfinance}), foram extraídas as taxas de câmbio diárias de fechamento em relação ao Dólar Americano (USD) para todo o período da simulação dos dados (agosto a novembro de 2022). Esta tabela de câmbio foi salva de forma independente e utilizada posteriormente para converter e normalizar o peso financeiro ($w_{vol}$) de cada aresta com base na data exata da transação original. Com isso, todas as transações foram convertidas para USD utilizando a taxa de câmbio vigente no dia da operação.
 
 \section{Modelagem da Janela Deslizante e Agregação de Arestas}
+\label{sec:janela}
 
 Para mitigar o risco de vazamento de dados e preservar a causalidade estrita dos eventos financeiros \cite{sizan2025machine}, o fluxo de transações da base AMLworld foi processado cronologicamente como um grafo temporal.
 
@@ -609,6 +610,7 @@ Durante este processo de agrupamento via SQL, os seguintes atributos consolidado
 Esta agregação gerou a matriz de adjacência ponderada final do \textit{snapshot}, a qual serviu como estrutura base para a extração computacional dos atributos topológicos na etapa subsequente.
 
 \section{Engenharia de Atributos Topológicos}
+\label{sec:topologicos}
 
 A extração de atributos topológicos foi aplicada individualmente a cada um dos grafos instantâneos ($G_i$) gerados na etapa anterior. Para viabilizar o processamento em tempo hábil das centenas de milhares de transações por janela, a rotina de extração foi implementada com suporte a multiprocessamento através da biblioteca \texttt{concurrent.futures} do Python, distribuindo a carga computacional das janelas temporais de forma paralela. A base principal para o cálculo das métricas foi a biblioteca \texttt{NetworkX} \cite{hagberg2008exploring}, com exceção da detecção de comunidades via algoritmo de Leiden, a qual foi executada por meio da biblioteca \texttt{igraph} \cite{traag2019leiden}.
 
@@ -622,7 +624,7 @@ O cálculo exato de algumas métricas de centralidade em grafos esparsos e de gr
 
     \item \textbf{Centralidade de Intermediação (\textit{Betweenness}):} O cálculo exato dessa métrica exige encontrar os caminhos mais curtos entre todos os pares de nós ($O(|V||E|)$), o que é inviável em redes de grande escala. Para contornar esse custo computacional, utilizou-se uma aproximação por amostragem \cite{riondato2016fast}. Formalmente, define-se um conjunto de \textbf{nós sentinelas} como um subconjunto $S \subset V$ de tamanho $k = 80$ selecionado de forma aleatória e uniforme. O algoritmo calcula os caminhos mais curtos apenas a partir desses $k$ nós para todos os demais vértices ($O(k(|V|+|E|))$), estimando a centralidade real através do escalonamento linear das dependências acumuladas nos pivôs. Fixou-se a semente aleatória (\textit{seed} = 42) para garantir a reprodutibilidade dos experimentos e a consistência da amostragem entre as janelas temporais, equilibrando tempo de execução e precisão.
     
-    \item \textbf{\textit{PageRank}:} A fim de capturar diferentes dinâmicas de circulação financeira, o \textit{PageRank} foi instanciado em quatro variações. Para abranger múltiplas escalas de profundidade na rede, adotaram-se dois fatores de amortecimento: o valor padrão $\alpha=0{,}85$, cuja probabilidade de continuidade propaga influência por caminhos mais longos (capturando cadeias extensas de estratificação financeira), e um valor reduzido $\alpha=0{,}75$, que penaliza trajetórias longas e confina o fluxo à vizinhança imediata (ideal para identificar anéis locais e esquemas rápidos de estruturação/\textit{smurfing}). Ambas as formulações foram calculadas sob duas perspectivas de peso: ponderadas pelo volume financeiro transacionado ($w_{vol}$) e pela frequência de transações ($w_{count}$), permitindo distinguir a concentração de capital de fluxos repetitivos. O critério de convergência foi fixado em 100 iterações.
+    \item \textbf{\textit{PageRank}:} A fim de capturar diferentes dinâmicas de circulação financeira, o \textit{PageRank} foi instanciado em três variações. Para abranger múltiplas escalas de profundidade na rede, adotaram-se dois fatores de amortecimento: o valor padrão $\alpha=0{,}85$, cuja probabilidade de continuidade propaga influência por caminhos mais longos (capturando cadeias extensas de estratificação financeira), e um valor reduzido $\alpha=0{,}75$, que penaliza trajetórias longas e confina o fluxo à vizinhança imediata (ideal para identificar anéis locais e esquemas rápidos de estruturação/\textit{smurfing}). Os dois fatores de amortecimento foram aplicados ao \textit{PageRank} ponderado pelo volume financeiro transacionado ($w_{vol}$), e o valor padrão ($\alpha=0{,}85$) também foi aplicado à versão ponderada pela frequência de transações ($w_{count}$), permitindo distinguir a concentração de capital de fluxos repetitivos. O critério de convergência foi fixado em 100 iterações.
     
     \item \textbf{Algoritmo HITS:} O processamento das pontuações de \textit{Hub} e \textit{Authority} foi parametrizado com um limite máximo de 500 iterações (\textit{max\_iter} = 500), com o objetivo de garantir a convergência mesmo em janelas temporais com alta densidade de vértices e arestas.
     
@@ -689,6 +691,83 @@ Para garantir que o comportamento real das transações seja preservado, optou-s
     
     \item \textbf{Modelo Completo (\textit{Full Model}):} Este classificador ingere o conjunto total de dados enriquecido, unindo as variáveis comportamentais do modelo base aos atributos topológicos de grafos (como \textit{coreness}, comunidades do algoritmo Leiden, \textit{motifs} direcionais e ciclos). O objetivo é isolar e quantificar o ganho real de informação (\textit{lift}) gerado pela topologia da rede no poder preditivo do sistema.
 \end{itemize}
+
+A Tabela~\ref{tab:behavioral-features} lista as 21 variáveis comportamentais e financeiras que compõem o modelo base. Todas são calculadas por entidade e por janela deslizante, a partir das transações agregadas na etapa de construção do grafo (Seção~\ref{sec:janela}).
+
+\begin{table}[htbp]
+    \centering
+    \caption{Variáveis comportamentais e financeiras do Modelo Base}
+    \label{tab:behavioral-features}
+    \begin{tabular}{p{0.38\linewidth}p{0.56\linewidth}}
+        \hline
+        \textbf{Variável} & \textbf{Descrição} \\
+        \hline
+        \texttt{vol\_sent} & Volume total enviado pela entidade na janela, em USD. \\
+        \texttt{vol\_recv} & Volume total recebido pela entidade na janela, em USD. \\
+        \texttt{tx\_count} & Número total de transações (enviadas e recebidas) da entidade na janela. \\
+        \texttt{time\_variance} & Desvio-padrão amostral dos \textit{timestamps} das transações enviadas, em segundos. \\
+        \texttt{flow\_ratio} & Razão entre o volume enviado e o recebido ($vol\_sent / vol\_recv$; usa-se $vol\_sent$ no denominador quando $vol\_recv = 0$). \\
+        \texttt{distinct\_currencies\_sent} & Número de moedas distintas utilizadas nos envios. \\
+        \texttt{distinct\_currencies\_recv} & Número de moedas distintas utilizadas nos recebimentos. \\
+        \texttt{wire\_count\_sent} & Quantidade de transações enviadas pelo formato de pagamento \textit{Wire}. \\
+        \texttt{cash\_count\_sent} & Quantidade de transações enviadas pelo formato de pagamento \textit{Cash}. \\
+        \texttt{bitcoin\_count\_sent} & Quantidade de transações enviadas pelo formato de pagamento \textit{Bitcoin}. \\
+        \texttt{cheque\_count\_sent} & Quantidade de transações enviadas pelo formato de pagamento \textit{Cheque}. \\
+        \texttt{credit\_card\_count\_sent} & Quantidade de transações enviadas pelo formato de pagamento \textit{Credit Card}. \\
+        \texttt{ach\_count\_sent} & Quantidade de transações enviadas pelo formato de pagamento \textit{ACH}. \\
+        \texttt{reinvestment\_count\_sent} & Quantidade de transações enviadas pelo formato de pagamento \textit{Reinvestment}. \\
+        \texttt{wire\_count\_recv} & Quantidade de transações recebidas pelo formato de pagamento \textit{Wire}. \\
+        \texttt{cash\_count\_recv} & Quantidade de transações recebidas pelo formato de pagamento \textit{Cash}. \\
+        \texttt{bitcoin\_count\_recv} & Quantidade de transações recebidas pelo formato de pagamento \textit{Bitcoin}. \\
+        \texttt{cheque\_count\_recv} & Quantidade de transações recebidas pelo formato de pagamento \textit{Cheque}. \\
+        \texttt{credit\_card\_count\_recv} & Quantidade de transações recebidas pelo formato de pagamento \textit{Credit Card}. \\
+        \texttt{ach\_count\_recv} & Quantidade de transações recebidas pelo formato de pagamento \textit{ACH}. \\
+        \texttt{reinvestment\_count\_recv} & Quantidade de transações recebidas pelo formato de pagamento \textit{Reinvestment}. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+O modelo completo utiliza, além das 21 variáveis da Tabela~\ref{tab:behavioral-features}, as 28 variáveis topológicas exclusivas listadas na Tabela~\ref{tab:topological-features}, totalizando 49 atributos. Sua construção é detalhada na Seção~\ref{sec:topologicos}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Variáveis topológicas exclusivas do Modelo Completo}
+    \label{tab:topological-features}
+    \begin{tabular}{p{0.38\linewidth}p{0.56\linewidth}}
+        \hline
+        \textbf{Variável} & \textbf{Descrição} \\
+        \hline
+        \texttt{pr\_vol\_deep} & \textit{PageRank} ponderado por volume ($w_{vol}$) com $\alpha=0{,}85$. \\
+        \texttt{pr\_vol\_shallow} & \textit{PageRank} ponderado por volume ($w_{vol}$) com $\alpha=0{,}75$. \\
+        \texttt{pr\_count} & \textit{PageRank} ponderado por frequência ($w_{count}$) com $\alpha=0{,}85$. \\
+        \texttt{betweenness} & Centralidade de intermediação aproximada por amostragem de $k=80$ nós sentinelas. \\
+        \texttt{k\_core} & Valor máximo de \textit{coreness} da entidade na projeção não-direcionada. \\
+        \texttt{hits\_hub} & Pontuação de \textit{hub} do algoritmo HITS. \\
+        \texttt{hits\_auth} & Pontuação de \textit{authority} do algoritmo HITS. \\
+        \texttt{leiden\_macro\_size} & Tamanho da comunidade Leiden da entidade na macro-resolução ($\gamma=1{,}0$). \\
+        \texttt{leiden\_micro\_size} & Tamanho da comunidade Leiden da entidade na micro-resolução ($\gamma=2{,}0$). \\
+        \texttt{leiden\_macro\_modularity} & Modularidade local da entidade na macro-resolução. \\
+        \texttt{leiden\_micro\_modularity} & Modularidade local da entidade na micro-resolução. \\
+        \texttt{degree} & Grau total da entidade (soma de grau de entrada e de saída). \\
+        \texttt{in\_degree} & Número de entidades distintas que enviaram recursos à entidade. \\
+        \texttt{out\_degree} & Número de entidades distintas que receberam recursos da entidade. \\
+        \texttt{fan\_out\_count} & Ocorrências do padrão de dispersão (\textit{fan-out}) com a entidade como origem. \\
+        \texttt{fan\_in\_count} & Ocorrências do padrão de concentração (\textit{fan-in}) com a entidade como destino. \\
+        \texttt{cycle\_count} & Ciclos simples fechados de até 6 saltos que contêm a entidade. \\
+        \texttt{egonet\_node\_count} & Número de vértices do subgrafo de raio 1 (\textit{egonet}). \\
+        \texttt{egonet\_edge\_count} & Número de arestas da \textit{egonet}. \\
+        \texttt{egonet\_density} & Densidade da \textit{egonet}. \\
+        \texttt{egonet\_total\_weight} & Volume financeiro total transferido dentro da \textit{egonet}. \\
+        \texttt{local\_clustering\_coefficient} & Coeficiente de agrupamento local ponderado pelos valores financeiros. \\
+        \texttt{triangle\_count} & Número de triângulos que contêm a entidade na projeção não-direcionada. \\
+        \texttt{average\_neighbor\_degree} & Grau médio da vizinhança da entidade. \\
+        \texttt{successor\_avg\_volume} & Volume médio enviado aos nós sucessores. \\
+        \texttt{successor\_max\_volume} & Volume máximo enviado a um nó sucessor. \\
+        \texttt{temporal\_fan\_out\_count} & Maior número de destinatários distintos em um único dia da janela. \\
+        \texttt{temporal\_fan\_in\_count} & Maior número de remetentes distintos em um único dia da janela. \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \subsection{Ponderação Dinâmica da Função de Perda}
 Para lidar com o severo desbalanceamento das classes no conjunto de dados, evitou-se o uso tradicional de subamostragem, técnica que descarta aleatoriamente registros legítimos para equilibrar a proporção entre as classes, mas acarreta perda de informações valiosas. Em seu lugar, adotou-se a ponderação da função de perda logística do próprio XGBoost (\texttt{scale\_pos\_weight}). 

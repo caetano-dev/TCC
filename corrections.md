@@ -7,8 +7,6 @@ O documento pode ser compilado com ./compile.sh -c dentro da pasta TCC.
 Siga rigorosamente as instruções abaixo para editar o código LaTeX, mantendo o padrão da classe `repUERJ` e garantindo linguagem acadêmica formal em português:
 
 2. REORGANIZAÇÃO E COMPLEMENTAÇÃO DA METODOLOGIA (CAPÍTULO 2):
-   - Na abertura da Metodologia, insira uma visão geral da arquitetura preditiva proposta antes de descrever os detalhes de implementação de software (DuckDB e Apache Parquet).
-   - Adicione a explicação teórica da validação cruzada temporal (Forward-Chaining) no Referencial Teórico (Capítulo 1) e especifique na Seção 2.4.1 a composição exata das janelas históricas de treinamento do XGBoost.
    - Adicione o link direto para o repositório do projeto no GitHub.
 
 3. REVISÃO DO CAPÍTULO DE RESULTADOS E DISCUSSÃO (CAPÍTULO 3):

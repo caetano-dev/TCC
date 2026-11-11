@@ -361,7 +361,7 @@ Como objetivos específicos, definem-se:
 
 \chapter{Fundamentação Teórica}
 
-Neste capítulo, são apresentados os fundamentos teóricos que sustentam este trabalho. Inicialmente, abordam-se os conceitos centrais sobre o processo de lavagem de dinheiro e suas tipologias operacionais de ocultação, com ênfase na técnica de \textit{smurfing}. Em seguida, são discutidas as métricas de avaliação de modelos preditivos aplicadas ao cenário de desbalanceamento severo de classes e a formulação da Teoria dos Grafos voltada a redes temporais.
+Neste capítulo, são apresentados os fundamentos teóricos que sustentam este trabalho. Inicialmente, abordam-se os conceitos centrais sobre o processo de lavagem de dinheiro e suas tipologias operacionais de ocultação, com ênfase na técnica de \textit{smurfing}. Em seguida, são discutidas as métricas de avaliação de modelos preditivos aplicadas ao cenário de desbalanceamento severo de classes e a formulação da Teoria dos Grafos voltada a redes temporais e a validação cruzada temporal (\textit{forward-chaining}).
 
 \section{Lavagem de Dinheiro e Tipologias Transacionais}
 \label{sec:aml_tipologias}
@@ -530,6 +530,23 @@ A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs})
 \item \textbf{Agregação de Vizinhança e Dinâmica Temporal:} Sinais de fraude propagam-se topologicamente. O comportamento dos vizinhos (volume médio e máximo transferido por eles) sinaliza o destino do capital pós-transferência. Adicionalmente, \textit{motifs} temporais (\textit{temporal fan-out} e \textit{temporal fan-in}) medem a estruturação de fluxos de forma cronológica, capturando operações que ocorrem em curtos intervalos de tempo.
 
 \end{itemize}
+
+\section{Validação Cruzada Temporal}
+\label{sec:validacao_temporal}
+
+A validação cruzada tradicional em $k$ partições (\textit{k-fold}) assume que as instâncias são independentes e identicamente distribuídas, de modo que o particionamento pode ser feito de forma aleatória. Essa hipótese não se sustenta em dados transacionais ordenados no tempo: ao embaralhar as instâncias, o conjunto de treino passa a conter eventos posteriores aos do conjunto de teste, e o modelo é avaliado em situações que ele já ``viu o futuro'' \cite{sizan2025machine}. O resultado é um vazamento temporal que infla as métricas de desempenho e não corresponde ao uso real do sistema, no qual a inferência é sempre feita sobre dados posteriores aos disponíveis no treinamento.
+
+A validação cruzada temporal por encadeamento progressivo respeita a ordem cronológica dos dados. Dada a sequência de \textit{snapshots} $G_1, G_2, \ldots, G_T$ definida na Seção~\ref{subsec:grafos_temporais}, com seus respectivos conjuntos de instâncias $D_1, D_2, \ldots, D_T$, define-se um número mínimo $t_0$ de janelas iniciais reservadas ao treinamento. Para cada iteração $t = t_0, \ldots, T-1$, o conjunto de treino e o conjunto de teste são dados por:
+\begin{equation}
+    D_{treino}^{(t)} = \bigcup_{i=1}^{t} D_i, \qquad D_{teste}^{(t)} = D_{t+1}
+\end{equation}
+isto é, o modelo é treinado com todo o histórico acumulado até o instante $t$ e avaliado exclusivamente na janela imediatamente posterior. Como o conjunto de treino cresce a cada iteração, esse esquema é denominado \textit{expansivo}, em contraste com a variante de janela fixa (\textit{sliding}), em que apenas as $m$ janelas mais recentes são utilizadas. Em todas as iterações, vale a restrição de causalidade $\max\{\text{tempo}(x) : x \in D_{treino}^{(t)}\} < \min\{\text{tempo}(x) : x \in D_{teste}^{(t)}\}$.
+
+O desempenho final é obtido agregando a métrica de interesse $M$ (e.g., AUPRC) calculada em cada janela de teste, geralmente pela média:
+\begin{equation}
+    \overline{M} = \frac{1}{T - t_0} \sum_{t=t_0}^{T-1} M\!\left(D_{teste}^{(t)}\right)
+\end{equation}
+Além de evitar o vazamento, esse arranjo fornece uma sequência de estimativas de desempenho ao longo do tempo, o que permite observar a estabilidade do modelo diante de mudanças de comportamento e aplicar testes estatísticos pareados entre modelos concorrentes avaliados nas mesmas janelas. Quando o modelo exige o ajuste de hiperparâmetros ou de um limiar de decisão, essa calibração deve ser feita em uma partição de validação temporalmente anterior à janela de teste, extraída do próprio histórico de treino, para que a janela de teste permaneça inteiramente fora do processo de ajuste.
 
 \chapter{Metodologia e Desenvolvimento}
 \label{cap:metodologia}
@@ -717,7 +734,7 @@ O processo de modelagem preditiva foi desenhado para lidar com os dois maiores d
 
 \subsection{Divisão Cronológica dos Dados (\textit{Forward-Chaining})}
 
-Para preservar a causalidade temporal estrita e eliminar o risco de viés de antecipação e vazamento temporal de dados, adotou-se o protocolo de validação cruzada temporal por encadeamento progressivo (\textit{forward-chaining cross-validation}) \cite{sizan2025machine}. Sob esse arranjo, os \textit{snapshots} temporais do grafo e suas matrizes de atributos correspondentes foram estritamente ordenados no tempo. Esse protocolo metodológico rege tanto o treinamento do classificador XGBoost quanto o particionamento sobre o qual as métricas de desempenho são mensuradas a cada ciclo temporal.
+Para preservar a causalidade temporal estrita e eliminar o risco de viés de antecipação e vazamento temporal de dados, adotou-se o protocolo de validação cruzada temporal por encadeamento progressivo (\textit{forward-chaining cross-validation}) \cite{sizan2025machine}, apresentado teoricamente na Seção~\ref{sec:validacao_temporal}. Sob esse arranjo, os \textit{snapshots} temporais do grafo e suas matrizes de atributos correspondentes foram estritamente ordenados no tempo. Esse protocolo metodológico rege tanto o treinamento do classificador XGBoost quanto o particionamento sobre o qual as métricas de desempenho são mensuradas a cada ciclo temporal.
 
 O processo de avaliação opera de forma iterativa por meio de janelas temporais expansivas. Estabeleceu-se um período mínimo inicial de duas janelas ($W_0$ e $W_1$) para compor o histórico de treinamento. A partir da terceira janela ($t \ge 2$), em cada iteração, o modelo utiliza como treino o histórico acumulado de todas as janelas passadas ($W_0, \dots, W_{t-1}$) e é avaliado de forma cega exclusivamente na janela imediatamente subsequente ($W_t$).
 

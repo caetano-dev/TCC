@@ -79,6 +79,7 @@
 \pagestyle{plain}
 \pgfplotsset{compat=1.9}
 \usepgfplotslibrary{patchplots}
+\usetikzlibrary{positioning,arrows.meta,calc}
 \usepgfplotslibrary{fillbetween}
 
 \renewcommand{\cftfigpresnum}{Figura }
@@ -540,9 +541,45 @@ A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs})
 
 Este capítulo detalha a metodologia proposta para investigar e quantificar o impacto da adição de variáveis topológicas na detecção de esquemas de lavagem de dinheiro. O desenvolvimento do trabalho é estruturado de forma a replicar os desafios de um ambiente de \textit{compliance} do mundo real, considerando a avaliação cronológica e eficiência computacional.
 
-Na Seção 2.1, veremos a base de dados AMLworld, suas características, variações de escala e o processo de pré-processamento. Na Seção 2.2, apresentaremos a modelagem da janela temporal deslizante e a agregação das transações em arestas ponderadas. Na Seção 2.3, detalharemos a engenharia dos atributos topológicos e as métricas extraídas dos grafos. Na Seção 2.4, descreveremos a arquitetura preditiva baseada em XGBoost e o protocolo de validação temporal. Por fim, na Seção 2.5, apresentaremos os modelos preditivos, a ponderação da função de perda e o estudo de ablação utilizado para mensurar a contribuição dos atributos topológicos.
+As seções seguintes apresentam primeiro uma visão geral da arquitetura proposta e, em seguida, detalham cada uma de suas etapas na ordem em que são executadas.
+
+\section*{Visão Geral da Arquitetura Preditiva}
+
+A arquitetura proposta organiza-se como um \textit{pipeline} de cinco etapas encadeadas, ilustrado na Figura~\ref{fig:arquitetura}. Primeiro, as transações brutas da base AMLworld são limpas, padronizadas em uma única moeda (USD) e convertidas para um formato colunar. Em seguida, o fluxo cronológico é fatiado em janelas deslizantes de 3 dias, e as transações de cada janela são agregadas em um grafo direcionado e ponderado cujos vértices são entidades financeiras. Sobre cada grafo instantâneo, extraem-se dois grupos de atributos por entidade: os 21 atributos comportamentais e financeiros, calculados diretamente das transações, e os 28 atributos topológicos, calculados a partir da estrutura da rede. A matriz de atributos alimenta então dois classificadores XGBoost independentes, o modelo base (somente atributos comportamentais) e o modelo completo (comportamentais e topológicos), treinados sob validação cruzada temporal por encadeamento progressivo, com ponderação da função de perda e calibração de limiar sem vazamento de dados. Por fim, o desempenho dos dois modelos é comparado por meio de um estudo de ablação com teste estatístico pareado, de modo que a diferença observada seja atribuída exclusivamente à informação topológica adicionada.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Arquitetura preditiva proposta}
+    \label{fig:arquitetura}
+    \vspace{0.2cm}
+    \begin{tikzpicture}[
+        box/.style={draw, rounded corners=2pt, align=center, font=\footnotesize, minimum height=1.1cm, text width=2.9cm},
+        arr/.style={-{Stealth[length=2mm]}, thick},
+        node distance=0.5cm
+    ]
+        \node[box] (raw) {Transações\\AMLworld};
+        \node[box, right=of raw] (win) {Janelas\\deslizantes\\(3 dias)};
+        \node[box, right=of win] (graph) {Grafo de\\entidades\\ponderado};
+        \node[box, below=0.9cm of win] (beh) {21 atributos\\comportamentais};
+        \node[box, below=0.9cm of graph] (topo) {28 atributos\\topológicos};
+        \node[box, below=0.9cm of beh] (base) {Modelo Base\\(XGBoost)};
+        \node[box, below=0.9cm of topo] (full) {Modelo Completo\\(XGBoost)};
+        \node[box, text width=6.4cm, below=0.9cm of $(base.south)!0.5!(full.south)$] (abl) {Validação temporal \textit{forward-chaining}\\e estudo de ablação};
+        \draw[arr] (raw) -- (win);
+        \draw[arr] (win) -- (graph);
+        \draw[arr] (win) -- (beh);
+        \draw[arr] (graph) -- (topo);
+        \draw[arr] (beh) -- (base);
+        \draw[arr] (beh.south east) -- (full.north west);
+        \draw[arr] (topo) -- (full);
+        \draw[arr] (base.south) -- (base.south |- abl.north);
+        \draw[arr] (full.south) -- (full.south |- abl.north);
+    \end{tikzpicture}
+    \source{Elaborado pelo autor.}
+\end{figure}
 
 \section{Base de Dados}
+\label{sec:base_dados}
 
 Para o treinamento e a validação da arquitetura proposta, este estudo utiliza a base de dados sintética AMLworld \cite{altman2023realistic}. O conjunto de dados foi desenvolvido especificamente para pesquisas em detecção de lavagem de dinheiro e disponibilizado publicamente pelos autores sob a licença Community Data License Agreement – Sharing 1.0 (CDLA-Sharing-1.0), uma licença aberta destinada ao compartilhamento e à reutilização de dados. A escolha por uma base de dados sintética decorre, fundamentalmente, das rigorosas restrições legais de confidencialidade, sigilo bancário e proteção de dados (como a Lei Geral de Proteção de Dados -- LGPD no Brasil), as quais inviabilizam a disponibilização pública de históricos transacionais reais de ecossistemas bancários ou de pagamentos instantâneos como o Pix. Além disso, no cenário financeiro real, parcela expressiva das infrações passa despercebida pelas autoridades, resultando em conjuntos de dados com rotulagem incompleta ou ruidosa. O AMLworld foi projetado especificamente para simular padrões de lavagem de dinheiro em larga escala com alta fidelidade estrutural e oferecer rótulos confiáveis para transações lícitas e ilícitas, o que viabiliza o treinamento supervisionado.
 
@@ -674,6 +711,7 @@ Os padrões comportamentais de vizinhança foram extraídos para mapear a estrut
 Ao término da extração dos atributos, as tabelas tabulares isoladas de cada bloco (\textit{chunk}) foram concatenadas pelo DuckDB. Esse processo gerou o arquivo consolidado de entrada ($X$) do classificador (\texttt{sliding\_window\_features.parquet}) e o respectivo arquivo de métricas agregadas (\texttt{sliding\_window\_metrics.parquet}) para cada um dos atributos extraídos.
 
 \section{Arquitetura Preditiva e Calibração de Limiar com XGBoost}
+\label{sec:arquitetura}
 
 O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: desbalanceamento extremo de classes, no qual as fraudes representam uma fração minúscula do volume total, muitas vezes inferior a 0,1\%, e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)~\cite{chen2016xgboost} com calibração de limiar baseada em busca de maximização de precisão sob restrição de cobertura ~\cite{shukla2025smote}. O algoritmo busca o limiar que maximiza a precisão garantindo um Recall mínimo de 85\% para a janela de validação.
 
@@ -686,6 +724,7 @@ O processo de avaliação opera de forma iterativa por meio de janelas temporais
 Para assegurar que a calibração do limiar de decisão (visando ao \textit{Recall} mínimo de 85\%) também não incorra em vazamento de dados, o conjunto histórico de treino de cada iteração foi particionado temporalmente em treino interno (80\%) e validação interna (20\%). O limiar ótimo obtido nessa partição de validação foi então congelado e aplicado à inferência da janela de teste $W_t$. Essa formulação reproduz fielmente as condições operacionais de uma instituição financeira, na qual o motor de \textit{compliance} opera com retreinamento periódico sobre o histórico acumulado e realiza inferências sobre janelas futuras sem qualquer conhecimento prévio dos fluxos transacionais subsequentes.
 
 \section{Modelos Preditivos e Avaliação de Desempenho} 
+\label{sec:modelos}
 
 Para garantir que o comportamento real das transações seja preservado, optou-se por não aplicar algoritmos de reamostragem sintética, evitando assim distorções no espaço de dados. Em vez disso, a assimetria do problema é tratada diretamente na função de perda do \textit{Gradient Boosting}. A estrutura experimental compara dois modelos preditivos independentes submetidos à validação temporal \textit{forward-chaining}:
 

@@ -470,6 +470,14 @@ A topologia local e global da rede fornece sinais preditivos estruturais que nã
 As métricas de centralidade quantificam a importância ou influência de um vértice na rede, enquanto as de coesão avaliam seu aninhamento estrutural.
 
 \begin{itemize}
+\item \textbf{\textit{PageRank}:} Algoritmo proposto por \citeonline{page1999pagerank}, que atribui a cada vértice uma pontuação de importância definida recursivamente: um vértice é relevante na medida em que recebe fluxo de outros vértices também relevantes. O processo equivale a um passeio aleatório sobre o grafo no qual, a cada passo, o caminhante segue uma aresta de saída com probabilidade $\alpha$ (fator de amortecimento) ou salta para um vértice qualquer escolhido uniformemente com probabilidade $1-\alpha$. A pontuação de um vértice $u$ é a probabilidade estacionária desse processo, dada pelo ponto fixo de:
+\begin{equation}
+    PR(u) = \frac{1-\alpha}{N} + \alpha \sum_{v \in B_u} \frac{w_{vu}}{s_v^{out}} \, PR(v), \qquad s_v^{out} = \sum_{x \in N_{out}(v)} w_{vx}
+\end{equation}
+onde $N = |V|$ é o número total de vértices, $B_u$ é o conjunto de vértices que possuem aresta direcionada para $u$, $w_{vu}$ é o peso da aresta $(v,u)$ e $s_v^{out}$ é a força de saída de $v$, de modo que a pontuação de $v$ é repartida entre seus sucessores proporcionalmente ao peso de cada aresta. No caso não ponderado, $w_{vu}=1$ e $s_v^{out}$ reduz-se ao grau de saída $k_v^{out}$. Vértices sem arestas de saída distribuem sua pontuação uniformemente entre todos os vértices, e as pontuações são normalizadas de forma que $\sum_{u \in V} PR(u) = 1$. Em notação matricial, $\mathbf{pr} = \frac{1-\alpha}{N}\mathbf{1} + \alpha \, P^{\top}\mathbf{pr}$, em que $P$ é a matriz de transição estocástica por linhas, com $P_{vu} = w_{vu}/s_v^{out}$. A solução é obtida por iteração de potência até a convergência ou até um número máximo de iterações.
+
+O parâmetro $\alpha$ controla a profundidade de propagação: valores altos, como $\alpha=0{,}85$ permitem que a influência percorra caminhos longos, capturando cadeias extensas de circulação financeira, enquanto valores menores, como $\alpha=0{,}75$ confinam o fluxo à vizinhança imediata, favorecendo a detecção de anéis de lavagem curtos e rápidos. Além disso, a escolha dos pesos $w_{vu}$ define o que a centralidade mede: utilizar o volume financeiro ($w_{vol}$) reflete a concentração de capital no ranquamento, enquanto utilizar a frequência de transações ($w_{count}$) reflete a recorrência dos fluxos. As configurações efetivamente empregadas neste trabalho são descritas na Seção~\ref{sec:centralidade_metodologia}.
+
 \item \textbf{Grau (\textit{Degree}):} Dividido em grau de entrada (\textit{in-degree}) e de saída (\textit{out-degree}), ele mede o número de conexões distintas de um vértice. Matematicamente, dada a matriz de adjacência $A$ do digrafo, os graus de um vértice $i$ são definidos como:
 \begin{equation}
     k_i^{in} = \sum_{j \in V} A_{ji}, \quad k_i^{out} = \sum_{j \in V} A_{ij}
@@ -487,12 +495,6 @@ onde $N_{out}(u)$ e $N_{in}(v)$ representam os conjuntos de vizinhos de saída d
     C_B(v) = \sum_{s \neq v \neq t \in V} \frac{\sigma_{st}(v)}{\sigma_{st}}
 \end{equation}
 Em que $\sigma_{st}$ é o número total de caminhos mais curtos de $s$ para $t$, e $\sigma_{st}(v)$ é o número desses caminhos que passam por $v$. Na lavagem de dinheiro, contas de ofuscação atuam como pontes entre diferentes aglomerados da rede \cite{freeman1977set}.
-
-\item \textbf{\textit{PageRank} de Múltiplas Profundidades:} Processado com diferentes fatores de amortecimento ($\alpha$). A pontuação de um vértice $u$ é calculada iterativamente por:
-\begin{equation}
-    PR(u) = \frac{1-\alpha}{N} + \alpha \sum_{v \in B_u} \frac{PR(v)}{L(v)}
-\end{equation}
-onde $N$ é o número total de vértices, $B_u$ representa o conjunto de vértices adjacentes que apontam para $u$, e $L(v)$ denota o grau de saída do vértice $v$. A formulação com $\alpha=0{,}85$ (alcance profundo) permite ao algoritmo capturar cadeias de circulação mais extensas na rede, enquanto $\alpha=0{,}75$ (alcance raso) foca na influência da vizinhança imediata, otimizando a detecção de anéis de lavagem curtos e rápidos \cite{page1999pagerank}.
 
 \item \textbf{Decomposição \textit{K-Core}:} Avalia a profundidade de aninhamento de uma conta na rede \cite{shin2016corescope, shin2018patterns, conte2024kcores}. Seja $G=(V,E)$ um grafo e seja $k \in \mathbb{N}$. O \textit{k-core} de $G$ é o subgrafo induzido $G_k=(V_k,E_k)$, em que $V_k \subseteq V$ e
 \begin{equation}
@@ -617,6 +619,7 @@ A extração de atributos topológicos foi aplicada individualmente a cada um do
 Além dos atributos comportamentais de vértice pré-calculados na rotina de banco de dados, como uso de moedas em espécie, \textit{bitcoin} e contagem direcional temporal, as rotinas em Python extraíram os seguintes conjuntos de atributos estruturais:
 
 \subsection{Métricas de Centralidade e Coesão}
+\label{sec:centralidade_metodologia}
 
 O cálculo exato de algumas métricas de centralidade em grafos esparsos e de grande escala possui uma complexidade de tempo proibitiva. Portanto, foram adotadas otimizações e parametrizações específicas para o ambiente de dados massivos.
 

@@ -9,9 +9,6 @@ Siga rigorosamente as instruções abaixo para editar o código LaTeX, mantendo 
 2. REORGANIZAÇÃO E COMPLEMENTAÇÃO DA METODOLOGIA (CAPÍTULO 2):
    - Adicione o link direto para o repositório do projeto no GitHub.
 
-3. REVISÃO DO CAPÍTULO DE RESULTADOS E DISCUSSÃO (CAPÍTULO 3):
-   - Na Seção 3.3.1 e na Conclusão, liste explicitamente quais foram os principais atributos topológicos que geraram o ganho discriminativo (ex: HITS, in-degree, modularidade de comunidades) e restrinja as generalizações aos modelos de Gradient Boosting avaliados.
-
 4. ELEMENTOS PÓS-TEXTUAIS:
    - Adicione a subseção padronizada "Uso de IA" com a seguinte redação:
      "A ferramenta [nome da ferramenta], baseada em Inteligência Artificial, foi utilizada neste trabalho para [finalidade de uso, ex: suporte à revisão textual e formatação de código]. O conteúdo final foi produzido de maneira autoral, com curadoria crítica, sendo o resultado final de inteira responsabilidade dos autores."

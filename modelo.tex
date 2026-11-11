@@ -1402,7 +1402,7 @@ Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem ev
     
     \item \textbf{Identificação de atributos topológicos críticos:} A análise SHAP revelou que métricas de centralidade (HITS, grau, \textit{PageRank}), detecção de comunidades (Leiden) e agregação de vizinhança ocupam posições de destaque na hierarquia de importância preditiva, demonstrando que entidades fraudulentas exibem assinaturas estruturais distintas na rede financeira.
     
-    \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} ao longo de 6 janelas temporais no HI Small e 12 janelas no HI Medium demonstrou consistência dos ganhos ao longo do tempo, indicando que os padrões topológicos aprendidos generalizam para períodos futuros em diferentes escalas de volume transacional.
+    \item \textbf{Robustez temporal:} A validação via \textit{forward-chaining} ao longo de 6 janelas temporais no HI Small e 12 janelas no HI Medium demonstrou consistência dos ganhos ao longo do tempo nas duas bases avaliadas, indicando que, para os modelos de \textit{Gradient Boosting} (XGBoost) testados, os padrões topológicos aprendidos se mantêm em períodos futuros e em diferentes escalas de volume transacional dentro da base sintética AMLworld.
 \end{enumerate}
 
 \section*{Implicações Práticas}
@@ -1431,9 +1431,9 @@ Embora os resultados sejam promissores, o estudo apresenta limitações que deve
 
 \section*{Considerações Finais}
 
-Este trabalho demonstrou que a modelagem de redes financeiras como grafos temporais e a extração de atributos topológicos fornecem ganhos mensuráveis e estatisticamente validados para a detecção de lavagem de dinheiro. A integração de Ciência de Dados de Grafos com algoritmos de \textit{Gradient Boosting} representa uma abordagem promissora para sistemas de \textit{Anti-Money Laundering}, capaz de capturar tanto o comportamento individual das entidades quanto as propriedades estruturais das redes de transações.
+Este trabalho demonstrou que a modelagem de redes financeiras como grafos temporais e a extração de atributos topológicos fornecem ganhos mensuráveis e estatisticamente validados para a detecção de lavagem de dinheiro. A integração de Ciência de Dados de Grafos com algoritmos de \textit{Gradient Boosting} mostrou-se uma abordagem promissora para sistemas de \textit{Anti-Money Laundering}, capaz de capturar tanto o comportamento individual das entidades quanto as propriedades estruturais das redes de transações. Ressalta-se que essas conclusões se restringem aos modelos de \textit{Gradient Boosting} avaliados (XGBoost) e à base sintética AMLworld; a extensão a outras famílias de modelos, como redes neurais em grafos, ou a dados transacionais reais exige validação específica.
 
-Os resultados reforçam a importância de abordagens multimodais que combinam sinais comportamentais e topológicos, especialmente em cenários nos quais agentes ilícitos utilizam estratégias estruturadas de ofuscação, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph, tiwari2020review, chainalysis2025crypto}. À medida que os esquemas de lavagem de dinheiro tornam-se cada vez mais complexos e distribuídos, a incorporação de técnicas baseadas em grafos deixa de ser opcional e torna-se um requisito fundamental para a eficácia dos sistemas de detecção de fraudes financeiras.
+Os resultados reforçam a importância de abordagens multimodais que combinam sinais comportamentais e topológicos, especialmente em cenários nos quais agentes ilícitos utilizam estratégias estruturadas de ofuscação, como \textit{smurfing}, ciclos de transferência e estruturas de dispersão-concentração \cite{cheng2025graph, tiwari2020review, chainalysis2025crypto}. À medida que os esquemas de lavagem de dinheiro tornam-se cada vez mais complexos e distribuídos, a incorporação de técnicas baseadas em grafos mostra-se um complemento relevante para a eficácia dos sistemas de detecção de fraudes financeiras, conforme evidenciado nos experimentos realizados.
 
 
 \bibliography{bibliografia,abnt-options}

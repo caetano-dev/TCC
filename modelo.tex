@@ -298,25 +298,25 @@ While money laundering circulates between 2\% and 5\% of global GDP, traditional
 \abreviatura{COS}{Comunicações de Operações Suspeitas}
 \abreviatura{CSV}{\textit{Comma-Separated Values}}
 \abreviatura{FATF}{\textit{Financial Action Task Force}}
-\abreviatura{FN}{\textit{False Negative}}
-\abreviatura{FP}{\textit{False Positive}}
-\abreviatura{FPR}{\textit{False Positive Rate}}
+\abreviatura{FN}{Falso Negativo}
+\abreviatura{FP}{Falso Positivo}
 \abreviatura{GAFI}{Grupo de Ação Financeira contra a Lavagem de Dinheiro e o Financiamento do Terrorismo}
 \abreviatura{GPU}{\textit{Graphics Processing Unit}}
 \abreviatura{HI}{\textit{High Illicit}}
 \abreviatura{HITS}{\textit{Hyperlink-Induced Topic Search}}
-\abreviatura{LI}{\textit{Low Illicit}}
 \abreviatura{LGPD}{Lei Geral de Proteção de Dados}
+\abreviatura{LI}{\textit{Low Illicit}}
 \abreviatura{LIME}{\textit{Local Interpretable Model-agnostic Explanations}}
 \abreviatura{PIB}{Produto Interno Bruto}
 \abreviatura{RAM}{\textit{Random Access Memory}}
 \abreviatura{ROC-AUC}{\textit{Receiver Operating Characteristic - Area Under the Curve}}
 \abreviatura{SHAP}{\textit{SHapley Additive exPlanations}}
 \abreviatura{SQL}{\textit{Structured Query Language}}
-\abreviatura{TN}{\textit{True Negative}}
-\abreviatura{TP}{\textit{True Positive}}
-\abreviatura{TPR}{\textit{True Positive Rate}}
+\abreviatura{TFP}{Taxa de Falsos Positivos}
+\abreviatura{TVP}{Taxa de Verdadeiros Positivos}
 \abreviatura{USD}{\textit{United States Dollar}}
+\abreviatura{VN}{Verdadeiro Negativo}
+\abreviatura{VP}{Verdadeiro Positivo}
 \abreviatura{XGBoost}{\textit{eXtreme Gradient Boosting}}
 %
 %===========================================================
@@ -394,22 +394,22 @@ A avaliação de modelos preditivos no contexto de combate à lavagem de dinheir
 \subsection{Matriz de Confusão}
 Em problemas de classificação binária, cada entidade é rotulada como fraude (classe positiva) ou não fraude (classe negativa) \cite{bishop2006pattern}. A partir das previsões do modelo, obtêm-se quatro resultados possíveis que compõem a matriz de confusão \cite{fawcett2006introduction}:
 \begin{itemize}
-    \item \textit{True Positive} (TP): a entidade era fraudulenta e foi corretamente classificada;
-    \item \textit{True Negative} (TN): a entidade não era fraudulenta e foi corretamente classificada;
-    \item \textit{False Positive} (FP): a entidade não era fraudulenta, mas o modelo gerou um alerta falso;
-    \item \textit{False Negative} (FN): a entidade era fraudulenta e não foi detectada.
+    \item Verdadeiro Positivo (VP): a entidade era fraudulenta e foi corretamente classificada;
+    \item Verdadeiro Negativo (VN): a entidade não era fraudulenta e foi corretamente classificada;
+    \item Falso Positivo (FP): a entidade não era fraudulenta, mas o modelo gerou um alerta falso;
+    \item Falso Negativo (FN): a entidade era fraudulenta e não foi detectada.
 \end{itemize}
 
 \subsection{Métricas de Desempenho e o Problema do Desbalanceamento}
 
 A Sensibilidade (Taxa de Verdadeiros Positivos) mede a capacidade do modelo de identificar corretamente as entidades pertencentes à classe positiva, indicando a proporção de fraudadores reais detectados em relação ao total de fraudes existentes:
 \begin{equation}
-    \mathrm{Sensibilidade} = \mathrm{TPR} = \frac{TP}{TP+FN}
+    \mathrm{Sensibilidade} = \mathrm{TVP} = \frac{VP}{VP+FN}
 \end{equation}
 
 A Precisão avalia a exatidão das notificações emitidas pelo sistema, correspondendo à proporção de alertas de fraude que eram verídicos:
 \begin{equation}
-    \text{Precisão} = \frac{TP}{TP+FP}
+    \text{Precisão} = \frac{VP}{VP+FP}
 \end{equation}
 
 O \textit{F1-score} consolida ambas as métricas através de sua média harmônica, oferecendo uma medida única de equilíbrio entre a taxa de captura de fraudes e a taxa de acerto dos alertas gerados \cite{alarab2020comparative}:
@@ -417,21 +417,21 @@ O \textit{F1-score} consolida ambas as métricas através de sua média harmôni
     F1 = 2 \cdot \frac{\text{Precisão} \cdot \mathrm{Sensibilidade}}{\text{Precisão} + \mathrm{Sensibilidade}}
 \end{equation}
 
-Embora a Acurácia meça a proporção global de predições corretas em relação ao total de instâncias ($ \frac{TP+TN}{TP+TN+FP+FN} $), sua aplicação direta em cenários de desbalanceamento severo é inadequada. Em bases em que fraudes representam menos de 1\% das observações, um classificador ingênuo que rotule todos os exemplos como não fraudulentos atingirá mais de 99\% de acurácia, falhando integralmente no objetivo prático de identificação de ilícitos.
+Embora a Acurácia meça a proporção global de predições corretas em relação ao total de instâncias ($ \frac{VP+VN}{VP+VN+FP+FN} $), sua aplicação direta em cenários de desbalanceamento severo é inadequada. Em bases em que fraudes representam menos de 1\% das observações, um classificador ingênuo que rotule todos os exemplos como não fraudulentos atingirá mais de 99\% de acurácia, falhando integralmente no objetivo prático de identificação de ilícitos.
 
 Por essa razão, a literatura de combate à lavagem de dinheiro privilegia métricas que avaliam o poder de separação entre classes em diferentes limiares operacionais:
 
 \subsubsection{Área sob a Curva ROC (ROC-AUC)}
-A métrica \textit{ROC-AUC} (\textit{Receiver Operating Characteristic - Area Under the Curve}) quantifica a capacidade do modelo de discriminar as classes em todos os possíveis limiares de decisão $\tau \in [0, 1]$ \cite{fawcett2006introduction}. A curva ROC relaciona a Taxa de Verdadeiros Positivos ($\mathrm{TPR}(\tau)$) com a Taxa de Falsos Positivos ($\mathrm{FPR}(\tau) = \frac{FP(\tau)}{FP(\tau)+TN(\tau)}$):
+A métrica \textit{ROC-AUC} (\textit{Receiver Operating Characteristic - Area Under the Curve}) quantifica a capacidade do modelo de discriminar as classes em todos os possíveis limiares de decisão $\tau \in [0, 1]$ \cite{fawcett2006introduction}. A curva ROC relaciona a Taxa de Verdadeiros Positivos ($\mathrm{TVP}(\tau)$) com a Taxa de Falsos Positivos ($\mathrm{TFP}(\tau) = \frac{FP(\tau)}{FP(\tau)+VN(\tau)}$):
 \begin{equation}
-    \mathrm{ROC\text{-}AUC} = \int_{0}^{1} \mathrm{TPR}(\tau) \, d(\mathrm{FPR}(\tau))
+    \mathrm{ROC\text{-}AUC} = \int_{0}^{1} \mathrm{TVP}(\tau) \, d(\mathrm{TFP}(\tau))
 \end{equation}
 O valor de ROC-AUC varia no intervalo $[0{,}5; 1{,}0]$, onde 0{,}5 representa o desempenho de um classificador aleatório e 1{,}0 indica a separação perfeita entre as classes.
 
 \subsubsection{Área sob a Curva Precisão-Recall (AUPRC)}
-Embora amplamente empregada, a ROC-AUC apresenta uma limitação conceitual importante sob desbalanceamento severo: o cálculo da taxa de falsos positivos ($\mathrm{FPR}$) inclui a quantidade total de verdadeiros negativos ($TN$) em seu denominador. Dado que $TN \gg FP$ na detecção de fraudes financeiras, mesmo um volume expressivo de falsos positivos ($FP$) resulta em um $\mathrm{FPR}$ numericamente reduzido, conferindo uma impressão excessivamente otimista do poder discriminativo do classificador.
+Embora amplamente empregada, a ROC-AUC apresenta uma limitação conceitual importante sob desbalanceamento severo: o cálculo da taxa de falsos positivos ($\mathrm{TFP}$) inclui a quantidade total de verdadeiros negativos ($VN$) em seu denominador. Dado que $VN \gg FP$ na detecção de fraudes financeiras, mesmo um volume expressivo de falsos positivos ($FP$) resulta em um $\mathrm{TFP}$ numericamente reduzido, conferindo uma impressão excessivamente otimista do poder discriminativo do classificador.
 
-Para contornar essa distorção, a literatura recomenda a \textit{AUPRC} (\textit{Area Under the Precision-Recall Curve}) como métrica de referência para problemas com classes altamente desbalanceadas \cite{liu2022bond}. A curva Precisão-Recall desconsidera os verdadeiros negativos ($TN$), concentrando-se estritamente na relação entre a exatidão dos alertas e a cobertura das fraudes. Matematicamente, a AUPRC corresponde à integral da função de precisão em relação à sensibilidade $r \in [0, 1]$, sendo estimada numericamente pela Precisão Média:
+Para contornar essa distorção, a literatura recomenda a \textit{AUPRC} (\textit{Area Under the Precision-Recall Curve}) como métrica de referência para problemas com classes altamente desbalanceadas \cite{liu2022bond}. A curva Precisão-Recall desconsidera os verdadeiros negativos ($VN$), concentrando-se estritamente na relação entre a exatidão dos alertas e a cobertura das fraudes. Matematicamente, a AUPRC corresponde à integral da função de precisão em relação à sensibilidade $r \in [0, 1]$, sendo estimada numericamente pela Precisão Média:
 \begin{equation}
     \mathrm{AUPRC} = \int_{0}^{1} \text{Precisão}(r) \, dr \approx \sum_{k=1}^{N} \big( \mathrm{Sensibilidade}(k) - \mathrm{Sensibilidade}(k-1) \big) \cdot \text{Precisão}(k)
 \end{equation}

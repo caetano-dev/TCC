@@ -730,7 +730,7 @@ Ao término da extração dos atributos, as tabelas tabulares isoladas de cada b
 \section{Arquitetura Preditiva e Calibração de Limiar com XGBoost}
 \label{sec:arquitetura}
 
-O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: desbalanceamento extremo de classes, no qual as fraudes representam uma fração minúscula do volume total, muitas vezes inferior a 0,1\%, e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)~\cite{chen2016xgboost} com calibração de limiar baseada em busca de maximização de precisão sob restrição de cobertura ~\cite{shukla2025smote}. O algoritmo busca o limiar que maximiza a precisão garantindo uma Sensibilidade mínima de 85\% para a janela de validação.
+O processo de modelagem preditiva foi desenhado para lidar com os dois maiores desafios na detecção de lavagem de dinheiro: desbalanceamento extremo de classes, no qual as fraudes representam uma fração minúscula do volume total, muitas vezes inferior a 0,1\%, e a necessidade de minimizar os falsos positivos sem comprometer a descoberta de ilícitos reais. Para tanto, adotou-se o algoritmo \textit{eXtreme Gradient Boosting} (XGBoost)~\cite{chen2016xgboost} com calibração de limiar baseada na maximização da precisão sob a restrição de sensibilidade mínima de 85\% na validação interna.
 
 \subsection{Divisão Cronológica dos Dados (\textit{Forward-Chaining})}
 
@@ -738,7 +738,31 @@ Para preservar a causalidade temporal estrita e eliminar o risco de viés de ant
 
 O processo de avaliação opera de forma iterativa por meio de janelas temporais expansivas. Estabeleceu-se um período mínimo inicial de duas janelas ($W_0$ e $W_1$) para compor o histórico de treinamento. A partir da terceira janela ($t \ge 2$), em cada iteração, o modelo utiliza como treino o histórico acumulado de todas as janelas passadas ($W_0, \dots, W_{t-1}$) e é avaliado de forma cega exclusivamente na janela imediatamente subsequente ($W_t$).
 
-Para assegurar que a calibração do limiar de decisão (visando à Sensibilidade mínima de 85\%) também não incorra em vazamento de dados, o conjunto histórico de treino de cada iteração foi particionado temporalmente em treino interno (80\%) e validação interna (20\%). O limiar ótimo obtido nessa partição de validação foi então congelado e aplicado à inferência da janela de teste $W_t$. Essa formulação reproduz fielmente as condições operacionais de uma instituição financeira, na qual o motor de conformidade regulatória opera com retreinamento periódico sobre o histórico acumulado e realiza inferências sobre janelas futuras sem qualquer conhecimento prévio dos fluxos transacionais subsequentes.
+Para assegurar que a calibração do limiar de decisão (visando à Sensibilidade mínima de 85\%) também não incorra em vazamento de dados, o histórico de treino de cada iteração foi dividido em treino interno (80\% das instâncias) e validação interna (20\% das instâncias), após a ordenação das instâncias pela janela temporal. Um modelo auxiliar, com a mesma configuração do classificador final, é ajustado no treino interno, e o limiar de decisão é escolhido como o valor que maximiza a precisão na validação interna, sob a restrição de sensibilidade mínima de 85\%. Esse limiar é então aplicado às probabilidades do classificador final, ajustado sobre todo o histórico, na inferência da janela de teste $W_t$. Essa formulação reproduz fielmente as condições operacionais de uma instituição financeira, na qual o motor de conformidade regulatória opera com retreinamento periódico sobre o histórico acumulado e realiza inferências sobre janelas futuras sem qualquer conhecimento prévio dos fluxos transacionais subsequentes.
+
+Em todas as iterações, o classificador utiliza a configuração de hiperparâmetros apresentada na Tabela~\ref{tab:hiperparametros}. Não foi realizada busca de hiperparâmetros: os valores foram fixados a priori e mantidos iguais para o modelo base, para o modelo completo e para o modelo auxiliar de calibração. A semente aleatória foi fixada em 42.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Hiperparâmetros do XGBoost utilizados em todas as iterações}
+    \label{tab:hiperparametros}
+    \begin{tabular}{ll}
+        \hline
+        \textbf{Hiperparâmetro} & \textbf{Valor} \\
+        \hline
+        \texttt{n\_estimators} & 200 \\
+        \texttt{max\_depth} & 6 \\
+        \texttt{learning\_rate} & 0{,}1 \\
+        \texttt{min\_child\_weight} & 3 \\
+        \texttt{gamma} & 0{,}1 \\
+        \texttt{subsample} & 0{,}8 \\
+        \texttt{colsample\_bytree} & 0{,}8 \\
+        \texttt{objective} & \texttt{binary:logistic} \\
+        \texttt{tree\_method} & \texttt{hist} \\
+        \texttt{random\_state} & 42 \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \section{Modelos Preditivos e Avaliação de Desempenho} 
 \label{sec:modelos}
@@ -835,7 +859,7 @@ Durante cada iteração da validação temporal, a razão exata de desbalanceame
 \begin{equation}
     \text{scale\_pos\_weight} = \frac{\sum_{i=1}^{M} (1 - y_{\text{train}, i})}{\sum_{i=1}^{M} y_{\text{train}, i}}
 \end{equation}
-onde $y_{\text{train}} = (y_{\text{train}, 1}, y_{\text{train}, 2}, \dots, y_{\text{train}, M})^T \in \{0, 1\}^M$ representa o vetor de rótulos (classes reais) das $M$ instâncias de treinamento, com $y_{\text{train}, i} = 1$ para entidades associadas à lavagem de dinheiro (classe positiva/ilícita) e $y_{\text{train}, i} = 0$ para entidades lícitas (classe negativa/lícita).
+onde $y_{\text{train}} = (y_{\text{train}, 1}, y_{\text{train}, 2}, \dots, y_{\text{train}, M})^T \in \{0, 1\}^M$ representa o vetor de rótulos (classes reais) das $M$ instâncias de treinamento, com $y_{\text{train}, i} = 1$ para entidades associadas à lavagem de dinheiro (classe positiva/ilícita) e $y_{\text{train}, i} = 0$ para entidades lícitas (classe negativa/lícita). O valor é recalculado a cada ajuste do modelo: no modelo auxiliar de calibração, com base no treino interno, e no classificador final, com base em todo o histórico de treino da iteração.
 
 Ao incorporar este fator de escala diretamente no cálculo do gradiente da função de perda, o algoritmo intensifica a penalidade por falsos negativos, orientando o ajuste das fronteiras de decisão para a identificação de entidades ilícitas sem descartar a densidade informacional da classe majoritária.
 
@@ -845,7 +869,7 @@ O desempenho do sistema foi mensurado através da métrica Área Sob a Curva de 
 
 Para quantificar o impacto da adição dos atributos topológicos, implementou-se um estudo de ablação controlado, comparando estatisticamente o desempenho de dois modelos: o modelo base, treinado exclusivamente com atributos comportamentais, e o modelo completo, que inclui tanto os atributos comportamentais quanto os topológicos extraídos dos grafos.
 
-O experimento foi conduzido sob validação temporal estrita, na qual cada modelo foi treinado em janelas históricas e avaliado em janelas subsequentes. Para verificar se as diferenças de desempenho entre os dois modelos foram estatisticamente significativas, aplicou-se o teste $t$ pareado entre as janelas temporais \cite{dietterich1998approximate, japkowicz2011evaluating}.
+O experimento foi conduzido sob validação temporal estrita, na qual cada modelo foi treinado em janelas históricas e avaliado em janelas subsequentes. Para verificar se as diferenças de desempenho entre os dois modelos foram estatisticamente significativas, aplicou-se o teste $t$ pareado sobre as janelas de teste ($n = 6$ no HI Small e $n = 12$ no HI Medium) \cite{dietterich1998approximate, japkowicz2011evaluating}.
 
 Nesse teste, a hipótese nula ($H_0$) assume que não há diferença real de desempenho entre as abordagens comparadas (ou seja, a média das diferenças de desempenho entre os modelos ao longo das janelas é igual a zero), enquanto a hipótese alternativa ($H_1$) indica que a inclusão das variáveis topológicas gera alteração significativa no resultado. Adotou-se o nível de significância padrão $\alpha = 0{,}05$ ($95\%$ de confiança) para a rejeição de $H_0$. Adicionalmente, resultados com $p$-valor inferior a $\alpha = 0{,}01$ ($99\%$ de confiança) foram sinalizados com asterisco duplo.
 \chapter{Resultados e Discussão}

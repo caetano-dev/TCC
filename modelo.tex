@@ -479,7 +479,7 @@ onde $N = |V|$ é o número total de vértices, $B_u$ é o conjunto de vértices
 
 O parâmetro $\alpha$ controla a profundidade de propagação: valores altos, como $\alpha=0{,}85$ permitem que a influência percorra caminhos longos, capturando cadeias extensas de circulação financeira, enquanto valores menores, como $\alpha=0{,}75$ confinam o fluxo à vizinhança imediata, favorecendo a detecção de anéis de lavagem curtos e rápidos. Além disso, a escolha dos pesos $w_{vu}$ define o que a centralidade mede: utilizar o volume financeiro ($w_{vol}$) reflete a concentração de capital no ranquamento, enquanto utilizar a frequência de transações ($w_{count}$) reflete a recorrência dos fluxos. As configurações efetivamente empregadas neste trabalho são descritas na Seção~\ref{sec:centralidade_metodologia}.
 
-\item \textbf{Grau (\textit{Degree}):} Dividido em grau de entrada (\textit{in-degree}) e de saída (\textit{out-degree}), ele mede o número de conexões distintas de um vértice. Matematicamente, dada a matriz de adjacência $A$ do digrafo, os graus de um vértice $i$ são definidos como:
+\item \textbf{Grau:} Dividido em grau de entrada e de saída, ele mede o número de conexões distintas de um vértice. Matematicamente, dada a matriz de adjacência $A$ do digrafo, os graus de um vértice $i$ são definidos como:
 \begin{equation}
     k_i^{in} = \sum_{j \in V} A_{ji}, \quad k_i^{out} = \sum_{j \in V} A_{ij}
 \end{equation}

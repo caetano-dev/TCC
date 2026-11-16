@@ -342,7 +342,7 @@ While money laundering circulates between 2\% and 5\% of global GDP, traditional
 \hspace*{\fill}\textit{Henry E. Peterson}\\
 \end{epigrafeonline}
 
-A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de forma ilícita, ocultando sua origem \cite{coaf2021cartilha}. Segundo \citeonline{unodc2011estimating}, esse crime movimenta entre 2\% e 5\% do PIB mundial por ano. No Brasil, estima-se que entre US\$ 25,8 bilhões e US\$ 64,4 bilhões sejam lavados anualmente \cite{vinciworks, kar2014brazil, brasil2021nra}, o que exige das instituições financeiras sistemas de monitoramento em larga escala. Tradicionalmente, a detecção de anomalias no combate à lavagem de dinheiro baseia-se em heurísticas e regras estáticas, centradas em limites de valor e frequência transacional. Essa abordagem tende a gerar altas taxas de falsos positivos, sobrecarregar equipes de \textit{compliance} e falhar na identificação de tipologias criminosas mais recentes, nas quais os fraudadores fragmentam os valores em múltiplas contas e camadas de ofuscação \cite{jensen2023fighting}.
+A lavagem de dinheiro consiste em reinserir na economia recursos obtidos de forma ilícita, ocultando sua origem \cite{coaf2021cartilha}. Segundo \citeonline{unodc2011estimating}, esse crime movimenta entre 2\% e 5\% do PIB mundial por ano. No Brasil, estima-se que entre US\$ 25,8 bilhões e US\$ 64,4 bilhões sejam lavados anualmente \cite{vinciworks, kar2014brazil, brasil2021nra}, o que exige das instituições financeiras sistemas de monitoramento em larga escala. Tradicionalmente, a detecção de anomalias no combate à lavagem de dinheiro baseia-se em heurísticas e regras estáticas, centradas em limites de valor e frequência transacional. Essa abordagem tende a gerar altas taxas de falsos positivos, sobrecarregar equipes de conformidade regulatória e falhar na identificação de tipologias criminosas mais recentes, nas quais os fraudadores fragmentam os valores em múltiplas contas e camadas de ofuscação \cite{jensen2023fighting}.
 
 Para mascarar a origem ilícita dos recursos, organizações criminosas estruturam operações que geram padrões relacionais característicos na rede, tais como dispersão fracionada (\textit{smurfing}), ciclos fechados de transferência e nós intermediários de concentração \cite{cheng2025graph, dumitrescu2022anomaly, fatf2018concealment}. Enquanto a análise tabular tradicional restringe-se a atributos isolados de cada conta, a Ciência de Dados de Grafos permite mapear a arquitetura transacional por meio de métricas de centralidade, modularidade de comunidades e anomalias de vizinhança, capturando as interdependências estruturais dos agentes na rede \cite{baigabyl2025using}.
 
@@ -438,7 +438,7 @@ Para contornar essa distorção, a literatura recomenda a \textit{AUPRC} (\texti
 onde $\text{Precisão}(k)$ e $\mathrm{Sensibilidade}(k)$ representam a precisão e a sensibilidade obtidas no $k$-ésimo limiar de probabilidade ordenado. Esse limiar corresponde à $k$-ésima probabilidade predita na ordenação decrescente das probabilidades atribuídas pelo classificador, isto é, $p_{(1)} \geq p_{(2)} \geq \cdots \geq p_{(N)}$, de modo que cada ponto da curva incorpora progressivamente as instâncias a partir das maiores probabilidades preditas. Em contrapartida à ROC-AUC, a linha de base aleatória da AUPRC corresponde à proporção real de exemplos positivos na base de dados (da ordem de 1\%), de modo que qualquer incremento nessa métrica reflete um ganho concreto na detecção da classe minoritária.
 
 \subsubsection{Precisão nos Primeiros \texorpdfstring{$k$}{k} Alertas (Precisão@k)}
-Em ambientes operacionais de \textit{compliance}, os analistas humanos possuem capacidade finita de investigação diária. A métrica operacional $\text{Precisão@}k$ avalia a fração de fraudes reais identificadas entre os $k$ primeiros alertas com maior probabilidade estimada pelo modelo preditivo \cite{karim2024scalable}:
+Em ambientes operacionais de conformidade regulatória, os analistas humanos possuem capacidade finita de investigação diária. A métrica operacional $\text{Precisão@}k$ avalia a fração de fraudes reais identificadas entre os $k$ primeiros alertas com maior probabilidade estimada pelo modelo preditivo \cite{karim2024scalable}:
 \begin{equation}
     \text{Precisão@}k = \frac{\sum_{i=1}^{k} y_{(i)}}{k}
 \end{equation}
@@ -556,7 +556,7 @@ Além de evitar o vazamento, esse arranjo fornece uma sequência de estimativas 
 \hspace*{\fill}\textit{Edsger W. Dijkstra}\\
 \end{epigrafeonline}
 
-Este capítulo detalha a metodologia proposta para investigar e quantificar o impacto da adição de variáveis topológicas na detecção de esquemas de lavagem de dinheiro. O desenvolvimento do trabalho é estruturado de forma a replicar os desafios de um ambiente de \textit{compliance} do mundo real, considerando a avaliação cronológica e eficiência computacional.
+Este capítulo detalha a metodologia proposta para investigar e quantificar o impacto da adição de variáveis topológicas na detecção de esquemas de lavagem de dinheiro. O desenvolvimento do trabalho é estruturado de forma a replicar os desafios de um ambiente de conformidade regulatória do mundo real, considerando a avaliação cronológica e eficiência computacional.
 
 As seções seguintes apresentam primeiro uma visão geral da arquitetura proposta e, em seguida, detalham cada uma de suas etapas na ordem em que são executadas.
 
@@ -738,7 +738,7 @@ Para preservar a causalidade temporal estrita e eliminar o risco de viés de ant
 
 O processo de avaliação opera de forma iterativa por meio de janelas temporais expansivas. Estabeleceu-se um período mínimo inicial de duas janelas ($W_0$ e $W_1$) para compor o histórico de treinamento. A partir da terceira janela ($t \ge 2$), em cada iteração, o modelo utiliza como treino o histórico acumulado de todas as janelas passadas ($W_0, \dots, W_{t-1}$) e é avaliado de forma cega exclusivamente na janela imediatamente subsequente ($W_t$).
 
-Para assegurar que a calibração do limiar de decisão (visando à Sensibilidade mínima de 85\%) também não incorra em vazamento de dados, o conjunto histórico de treino de cada iteração foi particionado temporalmente em treino interno (80\%) e validação interna (20\%). O limiar ótimo obtido nessa partição de validação foi então congelado e aplicado à inferência da janela de teste $W_t$. Essa formulação reproduz fielmente as condições operacionais de uma instituição financeira, na qual o motor de \textit{compliance} opera com retreinamento periódico sobre o histórico acumulado e realiza inferências sobre janelas futuras sem qualquer conhecimento prévio dos fluxos transacionais subsequentes.
+Para assegurar que a calibração do limiar de decisão (visando à Sensibilidade mínima de 85\%) também não incorra em vazamento de dados, o conjunto histórico de treino de cada iteração foi particionado temporalmente em treino interno (80\%) e validação interna (20\%). O limiar ótimo obtido nessa partição de validação foi então congelado e aplicado à inferência da janela de teste $W_t$. Essa formulação reproduz fielmente as condições operacionais de uma instituição financeira, na qual o motor de conformidade regulatória opera com retreinamento periódico sobre o histórico acumulado e realiza inferências sobre janelas futuras sem qualquer conhecimento prévio dos fluxos transacionais subsequentes.
 
 \section{Modelos Preditivos e Avaliação de Desempenho} 
 \label{sec:modelos}
@@ -887,7 +887,7 @@ A Tabela~\ref{tab:model-summary-small} apresenta o resumo consolidado de desempe
     \source{Elaborado pelo autor. Todas as métricas reportam a média simples das 6 janelas temporais de teste, conforme Figura~\ref{fig:model-comparison-small}.}
 \end{table}
 
-Os resultados no HI Small indicam que a adição dos atributos topológicos resultou em melhorias substanciais em múltiplas métricas de desempenho avaliadas pela média simples entre os ciclos temporais, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, no qual a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de \textit{compliance}.
+Os resultados no HI Small indicam que a adição dos atributos topológicos resultou em melhorias substanciais em múltiplas métricas de desempenho avaliadas pela média simples entre os ciclos temporais, conforme comparado visualmente na Figura~\ref{fig:model-comparison-small}. O ganho mais expressivo ocorreu na precisão (+46,67\%), seguido pelo F1-Score (+41,86\%) e pela AUPRC (+18,00\%). Esses incrementos são particularmente relevantes no contexto de detecção de fraudes, no qual a redução de falsos positivos impacta diretamente a carga de trabalho das equipes de conformidade regulatória.
 
 \begin{figure}
     \centering
@@ -1107,7 +1107,7 @@ No HI Small, do total de 3.842 entidades ilícitas presentes no conjunto de test
     \item \textbf{Modelo Completo:} Detectou 3.632 entidades (94,53\% de cobertura).
 \end{itemize}
 
-Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,80\% na taxa de captura em relação ao modelo base, conforme ilustrado na Figura~\ref{fig:entity-recall}. Em um contexto de \textit{compliance} em larga escala, no qual cada entidade fraudulenta não detectada pode acarretar perdas financeiras expressivas e severas sanções regulatórias, esse incremento possui valor prático relevante.
+Embora a diferença absoluta seja de apenas 29 entidades adicionais (+0,75 pontos percentuais), esse ganho incremental representa uma melhoria relativa de 0,80\% na taxa de captura em relação ao modelo base, conforme ilustrado na Figura~\ref{fig:entity-recall}. Em um contexto de conformidade regulatória em larga escala, no qual cada entidade fraudulenta não detectada pode acarretar perdas financeiras expressivas e severas sanções regulatórias, esse incremento possui valor prático relevante.
 
 \begin{figure}
     \centering
@@ -1381,7 +1381,7 @@ A validação temporal do estudo de ablação, realizada através de \textit{for
     \source{Elaborado pelo autor.}
 \end{figure}
 
-Por outro lado, a redução observada na Sensibilidade geral (HI Small: $-2,61\%$, HI Medium: $-2,00\%$) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, deixando de capturar fraudes discretas. Esse comportamento é esperado e aceitável no contexto operacional de \textit{compliance}, no qual a priorização de alertas de alta confiança reduz a sobrecarga investigativa, ainda que imponha uma discreta perda marginal de cobertura total.
+Por outro lado, a redução observada na Sensibilidade geral (HI Small: $-2,61\%$, HI Medium: $-2,00\%$) e as oscilações nas métricas P@100 e P@200 evidenciam um \textit{trade-off} inerente: ao refinar a fronteira de decisão para minimizar falsos positivos, o modelo torna-se mais conservador em algumas situações, deixando de capturar fraudes discretas. Esse comportamento é esperado e aceitável no contexto operacional de conformidade regulatória, no qual a priorização de alertas de alta confiança reduz a sobrecarga investigativa, ainda que imponha uma discreta perda marginal de cobertura total.
 
 \chapter*{Conclusão}
 \addcontentsline{toc}{chapter}{\hspace{3.1em}\textbf{CONCLUSÃO}}
@@ -1407,7 +1407,7 @@ Os resultados obtidos confirmam as hipóteses centrais do trabalho e fornecem ev
 
 \section*{Implicações Práticas}
 
-Do ponto de vista operacional, os resultados possuem implicações diretas para equipes de \textit{compliance} de instituições financeiras:
+Do ponto de vista operacional, os resultados possuem implicações diretas para equipes de conformidade regulatória de instituições financeiras:
 
 \begin{itemize}
   \item \textbf{Redução de falsos positivos:} Os ganhos em precisão de +46,67\% no HI Small e +32,28\% no HI Medium implicam em uma redução substancial de alertas falsos, diminuindo a sobrecarga investigativa e permitindo que analistas foquem em casos de alto risco real.

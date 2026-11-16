@@ -361,7 +361,7 @@ Como objetivos específicos, definem-se:
 
 \chapter{Fundamentação Teórica}
 
-Neste capítulo, são apresentados os fundamentos teóricos que sustentam este trabalho. Inicialmente, abordam-se os conceitos centrais sobre o processo de lavagem de dinheiro e suas tipologias operacionais de ocultação, com ênfase na técnica de \textit{smurfing}. Em seguida, são discutidas as métricas de avaliação de modelos preditivos aplicadas ao cenário de desbalanceamento severo de classes e a formulação da Teoria dos Grafos voltada a redes temporais e a validação cruzada temporal (\textit{forward-chaining}).
+Neste capítulo, são apresentados os fundamentos teóricos que sustentam este trabalho. Inicialmente, abordam-se os conceitos centrais sobre o processo de lavagem de dinheiro e suas tipologias operacionais de ocultação, com ênfase na técnica de \textit{smurfing}. Em seguida, são discutidas as métricas de avaliação de modelos preditivos aplicadas ao cenário de desbalanceamento severo de classes e a formulação da Teoria dos Grafos voltada a redes temporais e a validação cruzada temporal.
 
 \section{Lavagem de Dinheiro e Tipologias Transacionais}
 \label{sec:aml_tipologias}
@@ -409,12 +409,12 @@ A Sensibilidade (Taxa de Verdadeiros Positivos) mede a capacidade do modelo de i
 
 A Precisão avalia a exatidão das notificações emitidas pelo sistema, correspondendo à proporção de alertas de fraude que eram verídicos:
 \begin{equation}
-    \mathrm{Precisão} = \frac{TP}{TP+FP}
+    \text{Precisão} = \frac{TP}{TP+FP}
 \end{equation}
 
 O \textit{F1-score} consolida ambas as métricas através de sua média harmônica, oferecendo uma medida única de equilíbrio entre a taxa de captura de fraudes e a taxa de acerto dos alertas gerados \cite{alarab2020comparative}:
 \begin{equation}
-    F1 = 2 \cdot \frac{\mathrm{Precisão} \cdot \mathrm{Sensibilidade}}{\mathrm{Precisão} + \mathrm{Sensibilidade}}
+    F1 = 2 \cdot \frac{\text{Precisão} \cdot \mathrm{Sensibilidade}}{\text{Precisão} + \mathrm{Sensibilidade}}
 \end{equation}
 
 Embora a Acurácia meça a proporção global de predições corretas em relação ao total de instâncias ($ \frac{TP+TN}{TP+TN+FP+FN} $), sua aplicação direta em cenários de desbalanceamento severo é inadequada. Em bases em que fraudes representam menos de 1\% das observações, um classificador ingênuo que rotule todos os exemplos como não fraudulentos atingirá mais de 99\% de acurácia, falhando integralmente no objetivo prático de identificação de ilícitos.
@@ -433,14 +433,14 @@ Embora amplamente empregada, a ROC-AUC apresenta uma limitação conceitual impo
 
 Para contornar essa distorção, a literatura recomenda a \textit{AUPRC} (\textit{Area Under the Precision-Recall Curve}) como métrica de referência para problemas com classes altamente desbalanceadas \cite{liu2022bond}. A curva Precisão-Recall desconsidera os verdadeiros negativos ($TN$), concentrando-se estritamente na relação entre a exatidão dos alertas e a cobertura das fraudes. Matematicamente, a AUPRC corresponde à integral da função de precisão em relação à sensibilidade $r \in [0, 1]$, sendo estimada numericamente pela Precisão Média:
 \begin{equation}
-    \mathrm{AUPRC} = \int_{0}^{1} \mathrm{Precisão}(r) \, dr \approx \sum_{k=1}^{N} \big( \mathrm{Sensibilidade}(k) - \mathrm{Sensibilidade}(k-1) \big) \cdot \mathrm{Precisão}(k)
+    \mathrm{AUPRC} = \int_{0}^{1} \text{Precisão}(r) \, dr \approx \sum_{k=1}^{N} \big( \mathrm{Sensibilidade}(k) - \mathrm{Sensibilidade}(k-1) \big) \cdot \text{Precisão}(k)
 \end{equation}
-onde $\mathrm{Precisão}(k)$ e $\mathrm{Sensibilidade}(k)$ representam a precisão e a sensibilidade obtidas no $k$-ésimo limiar de probabilidade ordenado. Esse limiar corresponde à $k$-ésima probabilidade predita na ordenação decrescente das probabilidades atribuídas pelo classificador, isto é, $p_{(1)} \geq p_{(2)} \geq \cdots \geq p_{(N)}$, de modo que cada ponto da curva incorpora progressivamente as instâncias a partir das maiores probabilidades preditas. Em contrapartida à ROC-AUC, a linha de base aleatória da AUPRC corresponde à proporção real de exemplos positivos na base de dados (da ordem de 1\%), de modo que qualquer incremento nessa métrica reflete um ganho concreto na detecção da classe minoritária.
+onde $\text{Precisão}(k)$ e $\mathrm{Sensibilidade}(k)$ representam a precisão e a sensibilidade obtidas no $k$-ésimo limiar de probabilidade ordenado. Esse limiar corresponde à $k$-ésima probabilidade predita na ordenação decrescente das probabilidades atribuídas pelo classificador, isto é, $p_{(1)} \geq p_{(2)} \geq \cdots \geq p_{(N)}$, de modo que cada ponto da curva incorpora progressivamente as instâncias a partir das maiores probabilidades preditas. Em contrapartida à ROC-AUC, a linha de base aleatória da AUPRC corresponde à proporção real de exemplos positivos na base de dados (da ordem de 1\%), de modo que qualquer incremento nessa métrica reflete um ganho concreto na detecção da classe minoritária.
 
 \subsubsection{Precisão nos Primeiros \texorpdfstring{$k$}{k} Alertas (Precisão@k)}
-Em ambientes operacionais de \textit{compliance}, os analistas humanos possuem capacidade finita de investigação diária. A métrica operacional $\mathrm{Precisão@}k$ avalia a fração de fraudes reais identificadas entre os $k$ primeiros alertas com maior probabilidade estimada pelo modelo preditivo \cite{karim2024scalable}:
+Em ambientes operacionais de \textit{compliance}, os analistas humanos possuem capacidade finita de investigação diária. A métrica operacional $\text{Precisão@}k$ avalia a fração de fraudes reais identificadas entre os $k$ primeiros alertas com maior probabilidade estimada pelo modelo preditivo \cite{karim2024scalable}:
 \begin{equation}
-    \mathrm{Precisão@}k = \frac{\sum_{i=1}^{k} y_{(i)}}{k}
+    \text{Precisão@}k = \frac{\sum_{i=1}^{k} y_{(i)}}{k}
 \end{equation}
 onde $y_{(i)} \in \{0, 1\}$ indica a classe real da $i$-ésima entidade ranqueada pelo modelo em ordem decrescente de probabilidade. Essa medida quantifica a eficiência imediata dos alertas prioritários entregues à equipe de auditoria.
 

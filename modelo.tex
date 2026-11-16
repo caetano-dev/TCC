@@ -523,7 +523,7 @@ Em que $W_{ij}$ representa o peso da aresta entre $i$ e $j$, $s_i=\sum_j W_{ij}$
 A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs}) captura a mecânica exata das tipologias de fraude \cite{akoglu2010oddball, mitchell2019effectiveness}.
 \begin{itemize}
 
-\item \textbf{Atributos de \textit{Egonet} (Rede de Ego):} Avaliam a vizinhança imediata (1-hop) do vértice. A extração da densidade da egorrede, quantidade de nós, arestas e peso total consolidado medem a coesão local ao redor da entidade. O coeficiente de agrupamento (\textit{local clustering coefficient}) e a contagem de triângulos refinam essa análise validando a interconectividade dos vizinhos.
+\item \textbf{Atributos de \textit{Egonet}:} Avaliam a vizinhança imediata (1-hop) do vértice. A extração da densidade da egorrede, quantidade de nós, arestas e peso total consolidado medem a coesão local ao redor da entidade. O coeficiente de agrupamento (\textit{local clustering coefficient}) e a contagem de triângulos refinam essa análise validando a interconectividade dos vizinhos.
 
 \item \textbf{Padrões Direcionais e \textit{Motifs} Complexos:} A contagem de estruturas simples de dispersão (\textit{fan-out}) e concentração (\textit{fan-in}) é expandida para \textit{motifs} compostos, como o \textit{scatter-gather} e o \textit{gather-scatter}. Estas topologias são as representações matemáticas exatas das fases de pulverização (\textit{layering}) e integração (\textit{integration}) de recursos \cite{weber2019anti}. A contagem de ciclos (\textit{cycle count}) mapeia as trajetórias circulares utilizadas para criar a ilusão de atividade econômica legítima.
 
@@ -845,7 +845,7 @@ O desempenho do sistema foi mensurado através da métrica Área Sob a Curva de 
 
 Para quantificar o impacto da adição dos atributos topológicos, implementou-se um estudo de ablação controlado, comparando estatisticamente o desempenho de dois modelos: o modelo base, treinado exclusivamente com atributos comportamentais, e o modelo completo, que inclui tanto os atributos comportamentais quanto os topológicos extraídos dos grafos.
 
-O experimento foi conduzido sob validação temporal estrita (\textit{forward-chaining}), na qual cada modelo foi treinado em janelas históricas e avaliado em janelas subsequentes. Para verificar se as diferenças de desempenho entre os dois modelos foram estatisticamente significativas, aplicou-se o teste $t$ pareado entre as janelas temporais \cite{dietterich1998approximate, japkowicz2011evaluating}.
+O experimento foi conduzido sob validação temporal estrita, na qual cada modelo foi treinado em janelas históricas e avaliado em janelas subsequentes. Para verificar se as diferenças de desempenho entre os dois modelos foram estatisticamente significativas, aplicou-se o teste $t$ pareado entre as janelas temporais \cite{dietterich1998approximate, japkowicz2011evaluating}.
 
 Nesse teste, a hipótese nula ($H_0$) assume que não há diferença real de desempenho entre as abordagens comparadas (ou seja, a média das diferenças de desempenho entre os modelos ao longo das janelas é igual a zero), enquanto a hipótese alternativa ($H_1$) indica que a inclusão das variáveis topológicas gera alteração significativa no resultado. Adotou-se o nível de significância padrão $\alpha = 0{,}05$ ($95\%$ de confiança) para a rejeição de $H_0$. Adicionalmente, resultados com $p$-valor inferior a $\alpha = 0{,}01$ ($99\%$ de confiança) foram sinalizados com asterisco duplo.
 \chapter{Resultados e Discussão}
@@ -855,7 +855,7 @@ Nesse teste, a hipótese nula ($H_0$) assume que não há diferença real de des
 \hspace*{\fill}\textit{W. Edwards Deming}\\
 \end{epigrafeonline}
 
-Este capítulo apresenta os resultados experimentais obtidos através da aplicação da metodologia descrita no Capítulo~\ref{cap:metodologia}. A avaliação foi conduzida utilizando dois conjuntos de dados sintéticos do AMLworld: o HI Small, contendo 1.245.666 instâncias de entidades ativas agregadas ao longo de 8 janelas temporais (a partir de 4,87 milhões de transações brutas, com taxa de fraude de 1,15\% no conjunto de teste composto por 920.945 observações), e o HI Medium, com 7.376.519 instâncias de teste avaliadas ao longo de 12 janelas (originadas da consolidação de 28,87 milhões de transações brutas, com taxa de fraude de 1,35\%). Os experimentos em ambos os conjuntos de dados utilizaram processamento através de janelas temporais deslizantes (\textit{forward-chaining}) para preservar a causalidade estrita.
+Este capítulo apresenta os resultados experimentais obtidos através da aplicação da metodologia descrita no Capítulo~\ref{cap:metodologia}. A avaliação foi conduzida utilizando dois conjuntos de dados sintéticos do AMLworld: o HI Small, contendo 1.245.666 instâncias de entidades ativas agregadas ao longo de 8 janelas temporais (a partir de 4,87 milhões de transações brutas, com taxa de fraude de 1,15\% no conjunto de teste composto por 920.945 observações), e o HI Medium, com 7.376.519 instâncias de teste avaliadas ao longo de 12 janelas (originadas da consolidação de 28,87 milhões de transações brutas, com taxa de fraude de 1,35\%). Os experimentos em ambos os conjuntos de dados utilizaram processamento através de janelas temporais deslizantes para preservar a causalidade estrita.
 
 \section{Desempenho dos Modelos Base e Completo}
 

@@ -491,7 +491,7 @@ Contas utilizadas como vértices de passagem ou que possuem uma concentração a
 \end{equation}
 onde $N_{out}(u)$ e $N_{in}(v)$ representam os conjuntos de vizinhos de saída de $u$ e de entrada de $v$, respectivamente.
 
-\item \textbf{Centralidade de Intermediação (\textit{Betweenness Centrality}):} Mede a frequência com que um vértice aparece nos caminhos mais curtos entre outros pares de nós. A centralidade do vértice $v$ é dada por:
+\item \textbf{Centralidade de Intermediação:} Mede a frequência com que um vértice aparece nos caminhos mais curtos entre outros pares de nós. A centralidade do vértice $v$ é dada por:
 \begin{equation}
     C_B(v) = \sum_{s \neq v \neq t \in V} \frac{\sigma_{st}(v)}{\sigma_{st}}
 \end{equation}
@@ -654,7 +654,7 @@ Dentro de cada janela de 3 dias, as transações individuais (multiarestas) fora
 
 Dessa forma, as transações ocorridas entre uma entidade de origem $u$ e uma entidade de destino $v$ foram consolidadas, resultando em um grafo direcionado simples no qual cada aresta $e = (u, v)$ resume o fluxo financeiro do período.
 
-Essa etapa de simplificação estrutural faz-se necessária porque algoritmos como o \textit{PageRank}, \textit{Betweenness Centrality} e algoritmos de detecção de comunidades operam sobre matrizes de adjacência simples ponderadas, não atuando nativamente sobre multigrafos \cite{baigabyl2025using}. Ao consolidar arestas paralelas em uma única aresta direcionada, preservam-se a magnitude e a frequência do fluxo financeiro por meio dos atributos de peso ($w_{vol}$ e $w_{count}$), viabilizando o cômputo eficiente da rede \cite{vilella2025weirdnodes}.
+Essa etapa de simplificação estrutural faz-se necessária porque algoritmos como o \textit{PageRank}, Centralidade de Intermediação e algoritmos de detecção de comunidades operam sobre matrizes de adjacência simples ponderadas, não atuando nativamente sobre multigrafos \cite{baigabyl2025using}. Ao consolidar arestas paralelas em uma única aresta direcionada, preservam-se a magnitude e a frequência do fluxo financeiro por meio dos atributos de peso ($w_{vol}$ e $w_{count}$), viabilizando o cômputo eficiente da rede \cite{vilella2025weirdnodes}.
 
 Durante este processo de agrupamento via SQL, os seguintes atributos consolidados de aresta foram extraídos:
 

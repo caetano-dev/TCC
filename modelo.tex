@@ -684,7 +684,7 @@ O cálculo exato de algumas métricas de centralidade em grafos esparsos e de gr
     
     \item \textbf{Algoritmo HITS:} O processamento das pontuações de \textit{Hub} e \textit{Authority} foi parametrizado com um limite máximo de 500 iterações (\textit{max\_iter} = 500), com o objetivo de garantir a convergência mesmo em janelas temporais com alta densidade de vértices e arestas.
     
-    \item \textbf{Decomposição \textit{K-Core}:} Devido à exigência topológica do algoritmo, o grafo direcionado ponderado foi primeiramente convertido para uma projeção simples não-direcionada e sem auto-laços (\textit{self-loops}) \cite{shin2018patterns}. A partir dessa projeção, extraiu-se o valor de \textit{coreness} máximo atingido por cada entidade na referida janela temporal.
+    \item \textbf{Decomposição \textit{K-Core}:} Devido à exigência topológica do algoritmo, o grafo direcionado ponderado foi primeiramente convertido para uma projeção simples não-direcionada e sem auto-laços \cite{shin2018patterns}. A partir dessa projeção, extraiu-se o valor de \textit{coreness} máximo atingido por cada entidade na referida janela temporal.
 \end{itemize}
 
 \subsection{Detecção de Comunidades (Leiden)}

@@ -141,7 +141,7 @@
 \grau{Bacharel}
 \curso{Ciência da Computação}
 \local{Rio de Janeiro}
-\data{\underline{\hspace{0.8cm}}}{\underline{\hspace{2.5cm}}}{2026}
+\data{5}{novembro}{2026}
 \cabecalho{CAETANO PIRES, Pedro. \emph{Detecção de Lavagem de Dinheiro via Grafos Temporais e XGBoost: Um Estudo de Ablação sobre Atributos Topológicos}. \UERJano. 62~f. \UERJdocumento\ (\UERJgrau\ em \UERJcurso) -- \UERJunidade, \UERJnome, \UERJlocal, \UERJano.}
 \cabecalh{CAETANO PIRES, Pedro. \emph{\tituloingles}. \UERJano. 62~f. \UERJdocumento\ (\UERJgrau\ em \UERJcurso) -- \UERJunidade, \UERJnome, \UERJlocal, \UERJano.}
 
@@ -200,7 +200,6 @@
 % ----------------------------------------------------------
 %
 \begin{folhadeaprovacao}
-  \assinatura{Prof. D.Sc. Bruno Porto Masquio (Orientador)\\ Instituto de Matemática, Estatística e Computação -- UERJ}
   \assinatura{Prof. D.Sc. Fabiano de Souza Oliveira\\ Instituto de Matemática, Estatística e Computação -- UERJ}
   \assinatura{Prof. D.Sc. David Sotelo Pinheiro da Silva\\ Instituto de Matemática, Estatística e Computação -- UERJ}
 \end{folhadeaprovacao}
@@ -525,7 +524,7 @@ A extração da topologia de entorno e de subgrafos frequentes (\textit{motifs})
 
 \item \textbf{Atributos de \textit{Egonet}:} Avaliam a vizinhança imediata (1-hop) do vértice. A extração da densidade da egorrede, quantidade de nós, arestas e peso total consolidado medem a coesão local ao redor da entidade. O coeficiente de agrupamento e a contagem de triângulos refinam essa análise validando a interconectividade dos vizinhos.
 
-\item \textbf{Padrões Direcionais e \textit{Motifs} Complexos:} A contagem de estruturas simples de dispersão (\textit{fan-out}) e concentração (\textit{fan-in}) é expandida para \textit{motifs} compostos, como o \textit{scatter-gather} e o \textit{gather-scatter}. Estas topologias são as representações matemáticas exatas das fases de pulverização (\textit{layering}) e integração de recursos \cite{weber2019anti}. A contagem de ciclos mapeia as trajetórias circulares utilizadas para criar a ilusão de atividade econômica legítima.
+\item \textbf{Padrões Direcionais e \textit{Motifs} Complexos:} A contagem de estruturas simples de dispersão (\textit{fan-out}) e concentração (\textit{fan-in}) é expandida para \textit{motifs} compostos, como o \textit{scatter-gather} e o \textit{gather-scatter}. Estas topologias são as representações matemáticas exatas das fases de pulverização e integração de recursos \cite{weber2019anti}. A contagem de ciclos mapeia as trajetórias circulares utilizadas para criar a ilusão de atividade econômica legítima.
 
 \item \textbf{Agregação de Vizinhança e Dinâmica Temporal:} Sinais de fraude propagam-se topologicamente. O comportamento dos vizinhos (volume médio e máximo transferido por eles) sinaliza o destino do capital pós-transferência. Adicionalmente, \textit{motifs} temporais (\textit{temporal fan-out} e \textit{temporal fan-in}) medem a estruturação de fluxos de forma cronológica, capturando operações que ocorrem em curtos intervalos de tempo.
 
